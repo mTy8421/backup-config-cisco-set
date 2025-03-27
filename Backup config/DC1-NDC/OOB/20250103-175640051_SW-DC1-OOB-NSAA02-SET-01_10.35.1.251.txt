@@ -1,0 +1,986 @@
+Connect Time : 03/01/2025 17:56:40:051
+CC
+Warning!
+*************************************************************************
+*       This system is for the use of authorized users only.            *
+*       Individuals using this computer system without authority, or in *
+*       excess of their authority, are subject to having all of their   *
+*       activities on this system monitored and recorded by system      *
+*       personnel.                                                      *
+*                                                                       *
+*       In the course of monitoring individuals improperly using this   *
+*       system, or in the course of system maintenance, the activities  *
+*       of authorized users may also be monitored.                      *
+*                                                                       *
+*       Anyone using this system expressly consents to such monitoring  *
+*       and is advised that if such monitoring reveals possible         *
+*       evidence of criminal activity, system personnel may provide the *
+*       evidence of such monitoring to law enforcement officials.       *
+*************************************************************************
+SW-DC1-OOB-NSAA02-SET-01#terminal length 0
+SW-DC1-OOB-NSAA02-SET-01#show running-config
+Building configuration...
+
+Current configuration : 10509 bytes
+!
+! Last configuration change at 08:40:28 GMT Sat Mar 30 2024 by thananan
+! NVRAM config last updated at 08:40:36 GMT Sat Mar 30 2024 by thananan
+!
+version 15.2
+no service pad
+service timestamps debug datetime msec localtime show-timezone year
+service timestamps log datetime msec localtime show-timezone year
+service password-encryption
+!
+hostname SW-DC1-OOB-NSAA02-SET-01
+!
+boot-start-marker
+boot-end-marker
+!
+logging buffered 1024000
+enable secret 5 $1$RSf8$AQFy.UDteEoYafZFZV6vv.
+!
+username admin privilege 15 secret 5 $1$FooU$9tAVQZzy1LcEzGMFNg6Xk/
+username nwadmin secret 5 $1$EAao$K0r4M/hk8djCPyfzgh3k4/
+aaa new-model
+!
+!
+aaa authentication login default group tacacs+ local
+aaa authentication enable default enable
+aaa authorization console
+aaa authorization config-commands
+aaa authorization exec default group tacacs+ local if-authenticated 
+aaa authorization commands 1 default group tacacs+ if-authenticated 
+aaa authorization commands 7 default group tacacs+ if-authenticated 
+aaa authorization commands 15 default group tacacs+ if-authenticated 
+aaa accounting commands 1 default start-stop group tacacs+
+aaa accounting commands 7 default start-stop group tacacs+
+aaa accounting commands 15 default start-stop group tacacs+
+!
+!
+!
+!
+!
+!
+aaa session-id common
+clock timezone GMT 7 0
+switch 1 provision ws-c2960x-24ts-l
+!
+!
+ip domain-name set.or.th
+vtp mode transparent
+!
+!
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-1835563648
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-1835563648
+ revocation-check none
+ rsakeypair TP-self-signed-1835563648
+!
+!
+crypto pki certificate chain TP-self-signed-1835563648
+ certificate self-signed 01
+  3082022B 30820194 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 31383335 35363336 3438301E 170D3137 30393232 30343535 
+  31365A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D31 38333535 
+  36333634 3830819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  8100AED9 73FFA58E 4117FE2A FE12D2BC 528261BD CA399CB9 67908496 E8F7A42F 
+  092B8B8D 590CBBAE 4F861FDB 7A29DEAB A60EC539 12593FD2 0CBDDA7D CC1E2352 
+  8B81D8B3 5A444912 D02F7E01 84BFBADB 45759B23 9F6E664C 3AF4E996 280D4A23 
+  FE5EF9CD B9A61E07 D4D2037C BBD42DD5 EF2017F2 6D3F95A3 4FC1FC36 919B96F1 
+  B3570203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 301F0603 
+  551D2304 18301680 14D2282A 50C37FE2 CF0C4977 67E96E2C 3A9668CB D9301D06 
+  03551D0E 04160414 D2282A50 C37FE2CF 0C497767 E96E2C3A 9668CBD9 300D0609 
+  2A864886 F70D0101 05050003 8181009B 7B990B66 BEE92E51 3170E6D9 E34B4EC3 
+  54F6346B FEDC5378 0B469EA2 799ED597 C53F76E8 1D5DDF77 A52C6122 0A1DE473 
+  1813BFC6 C4618D48 4BAD1D61 BDA6BFF1 996C68B2 862C6C9B A1B539DF 93A65A19 
+  B1DB3771 381FD1AA BA034D20 B87DDACD 09DA7372 7E8D11C6 8F65EF5B 6EA09D1E 
+  3CA085F9 60858E29 AD93F7EF A53B66
+        quit
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+vlan 2902 
+!
+vlan 2998
+ name Server_OOB
+!
+vlan 2999
+ name Network_OOB
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+interface Port-channel1
+ switchport trunk allowed vlan 2902,2998,2999
+ switchport mode trunk
+!
+interface FastEthernet0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet1/0/1
+ description ADC-DC1-Internet-NSAA02-SET-01
+ switchport access vlan 2999
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/2
+ description FW-DC1-Internet-NSAA02-SET-01
+ switchport access vlan 2999
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/3
+ description FW-DC1-NonTrading-NSAA02-SET-01
+ switchport access vlan 2999
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/4
+ description FW-DC1-External-VPN-NSAA02-SET-01_NEW
+ switchport access vlan 2999
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/5
+ description FW-DC1-External-VPN-NSAA02-SET-01
+ switchport access vlan 2999
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/6
+ description FW-DC1-Management-NSAA02-SET-01
+ switchport access vlan 2998
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/7
+ description RT-DC1-3parties-NSAA02-SET-01
+ switchport access vlan 2999
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/8
+ description RT-DC1-Internet-NSAA02-SET-01
+ switchport access vlan 2999
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/9
+ description SW-DC1-Distribute-NSAA02-SET-01
+ switchport access vlan 2999
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/10
+ description SW-DC1-Core-NSAA02-SET-01 (Act)
+ switchport access vlan 2999
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/11
+ description SW-DC1-Core-NSAB11-SET-01 (Std)
+ switchport access vlan 2999
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/12
+ description SW-DC1-Internet-NSAA02-SET-01
+ switchport access vlan 2999
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/13
+ description NWM-DC1-Latency-NSAA02-SET-01
+ switchport access vlan 2999
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/14
+ description FW-DC1-Trading-NSAA02-SET-01
+ switchport access vlan 2999
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/15
+ description DWDM-NSAA02
+ switchport access vlan 2999
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/16
+ description NWM-DC1-Latency-NSAA02-SET-01
+ switchport access vlan 2998
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet1/0/17
+ switchport access vlan 2999
+ switchport mode access
+!
+interface GigabitEthernet1/0/18
+ switchport access vlan 2999
+ switchport mode access
+!
+interface GigabitEthernet1/0/19
+ switchport access vlan 2999
+ switchport mode access
+!
+interface GigabitEthernet1/0/20
+ description SW-DCIM-SV3 Colo-A WS-C2960L  Native Mismatch
+ switchport access vlan 2902
+ switchport mode access
+ no cdp enable
+!
+interface GigabitEthernet1/0/21
+ description APIC-DC1-Services-NSAA03-SET-02 (CIMC)
+ switchport access vlan 2999
+ switchport mode access
+!
+interface GigabitEthernet1/0/22
+ description Connect to N7K-NSAA02
+ switchport access vlan 2999
+ switchport mode access
+!
+interface GigabitEthernet1/0/23
+ description SW-DC1-Core-NSAB11-SET-01-Core
+ switchport trunk allowed vlan 2902,2998,2999
+ switchport mode trunk
+ channel-group 1 mode active
+!
+interface GigabitEthernet1/0/24
+ description SW-DC1-Core-NSAA02-SET-01-Core
+ switchport trunk allowed vlan 2902,2998,2999
+ switchport mode trunk
+ channel-group 1 mode active
+!
+interface GigabitEthernet1/0/25
+!
+interface GigabitEthernet1/0/26
+!
+interface GigabitEthernet1/0/27
+!
+interface GigabitEthernet1/0/28
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan2999
+ ip address 10.35.1.251 255.255.255.0
+!
+ip default-gateway 10.35.1.1
+ip http server
+ip http secure-server
+!
+ip ssh version 2
+!
+logging trap debugging
+logging host 10.34.22.21
+logging host 10.3.33.200
+access-list 97 permit 10.25.1.0 0.0.0.255
+access-list 97 permit 10.25.2.0 0.0.0.255
+access-list 97 permit 10.35.1.0 0.0.0.255
+access-list 97 permit 10.35.2.0 0.0.0.255
+access-list 97 permit 10.24.21.0 0.0.0.255
+access-list 97 permit 10.34.21.0 0.0.0.255
+access-list 98 permit 10.0.0.0 0.0.0.255
+!
+snmp-server community R3@donly RO 97
+snmp-server community R3@dwrite RW 98
+snmp-server location SET-DC1
+snmp-server enable traps snmp authentication linkdown linkup coldstart warmstart
+snmp-server enable traps transceiver all
+snmp-server enable traps call-home message-send-fail server-fail
+snmp-server enable traps tty
+snmp-server enable traps license
+snmp-server enable traps auth-framework sec-violation
+snmp-server enable traps cluster
+snmp-server enable traps config-copy
+snmp-server enable traps config
+snmp-server enable traps config-ctid
+snmp-server enable traps energywise
+snmp-server enable traps fru-ctrl
+snmp-server enable traps entity
+snmp-server enable traps event-manager
+snmp-server enable traps power-ethernet police
+snmp-server enable traps cpu threshold
+snmp-server enable traps vstack
+snmp-server enable traps bridge newroot topologychange
+snmp-server enable traps stpx inconsistency root-inconsistency loop-inconsistency
+snmp-server enable traps syslog
+snmp-server enable traps vtp
+snmp-server enable traps vlancreate
+snmp-server enable traps vlandelete
+snmp-server enable traps flash insertion removal
+snmp-server enable traps port-security
+snmp-server enable traps envmon fan shutdown supply temperature status
+snmp-server enable traps stackwise
+snmp-server enable traps errdisable
+snmp-server enable traps mac-notification change move threshold
+snmp-server enable traps vlan-membership
+tacacs-server host 10.35.2.200
+tacacs-server directed-request
+tacacs-server key 7 0235015819551B2A495743
+!
+!
+!
+banner motd ^CCC
+Warning!
+*************************************************************************
+*       This system is for the use of authorized users only.            *
+*       Individuals using this computer system without authority, or in *
+*       excess of their authority, are subject to having all of their   *
+*       activities on this system monitored and recorded by system      *
+*       personnel.                                                      *
+*                                                                       *
+*       In the course of monitoring individuals improperly using this   *
+*       system, or in the course of system maintenance, the activities  *
+*       of authorized users may also be monitored.                      *
+*                                                                       *
+*       Anyone using this system expressly consents to such monitoring  *
+*       and is advised that if such monitoring reveals possible         *
+*       evidence of criminal activity, system personnel may provide the *
+*       evidence of such monitoring to law enforcement officials.       *
+*************************************************************************
+^C
+!
+line con 0
+ logging synchronous
+line vty 0 4
+ privilege level 15
+ transport input ssh
+line vty 5 15
+ privilege level 15
+ transport input ssh
+!
+ntp server 10.34.1.27 prefer
+ntp server 10.24.1.27
+ntp server 10.34.1.28
+ntp server 10.24.1.28
+end
+
+SW-DC1-OOB-NSAA02-SET-01#show interface description
+Interface                      Status         Protocol Description
+Vl1                            admin down     down     
+Vl2999                         up             up       
+Fa0                            admin down     down     
+Gi1/0/1                        down           down     ADC-DC1-Internet-NSAA02-SET-01
+Gi1/0/2                        up             up       FW-DC1-Internet-NSAA02-SET-01
+Gi1/0/3                        up             up       FW-DC1-NonTrading-NSAA02-SET-01
+Gi1/0/4                        up             up       FW-DC1-External-VPN-NSAA02-SET-01_NEW
+Gi1/0/5                        up             up       FW-DC1-External-VPN-NSAA02-SET-01
+Gi1/0/6                        up             up       FW-DC1-Management-NSAA02-SET-01
+Gi1/0/7                        up             up       RT-DC1-3parties-NSAA02-SET-01
+Gi1/0/8                        up             up       RT-DC1-Internet-NSAA02-SET-01
+Gi1/0/9                        up             up       SW-DC1-Distribute-NSAA02-SET-01
+Gi1/0/10                       up             up       SW-DC1-Core-NSAA02-SET-01 (Act)
+Gi1/0/11                       up             up       SW-DC1-Core-NSAB11-SET-01 (Std)
+Gi1/0/12                       up             up       SW-DC1-Internet-NSAA02-SET-01
+Gi1/0/13                       up             up       NWM-DC1-Latency-NSAA02-SET-01
+Gi1/0/14                       up             up       FW-DC1-Trading-NSAA02-SET-01
+Gi1/0/15                       up             up       DWDM-NSAA02
+Gi1/0/16                       up             up       NWM-DC1-Latency-NSAA02-SET-01
+Gi1/0/17                       down           down     
+Gi1/0/18                       down           down     
+Gi1/0/19                       down           down     
+Gi1/0/20                       up             up       SW-DCIM-SV3 Colo-A WS-C2960L  Native Mismatch
+Gi1/0/21                       up             up       APIC-DC1-Services-NSAA03-SET-02 (CIMC)
+Gi1/0/22                       down           down     Connect to N7K-NSAA02
+Gi1/0/23                       up             up       SW-DC1-Core-NSAB11-SET-01-Core
+Gi1/0/24                       up             up       SW-DC1-Core-NSAA02-SET-01-Core
+Gi1/0/25                       down           down     
+Gi1/0/26                       down           down     
+Gi1/0/27                       down           down     
+Gi1/0/28                       down           down     
+Po1                            up             up       
+SW-DC1-OOB-NSAA02-SET-01#show ip int brief
+Interface              IP-Address      OK? Method Status                Protocol
+Vlan1                  unassigned      YES NVRAM  administratively down down    
+Vlan2999               10.35.1.251     YES NVRAM  up                    up      
+FastEthernet0          unassigned      YES NVRAM  administratively down down    
+GigabitEthernet1/0/1   unassigned      YES unset  down                  down    
+GigabitEthernet1/0/2   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/3   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/4   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/5   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/6   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/7   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/8   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/9   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/10  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/11  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/12  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/13  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/14  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/15  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/16  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/17  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/18  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/19  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/20  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/21  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/22  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/23  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/24  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/25  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/26  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/27  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/28  unassigned      YES unset  down                  down    
+Port-channel1          unassigned      YES unset  up                    up      
+SW-DC1-OOB-NSAA02-SET-01#show interface status
+
+Port      Name               Status       Vlan       Duplex  Speed Type 
+Gi1/0/1   ADC-DC1-Internet-N notconnect   2999         auto   auto 10/100/1000BaseTX
+Gi1/0/2   FW-DC1-Internet-NS connected    2999       a-full a-1000 10/100/1000BaseTX
+Gi1/0/3   FW-DC1-NonTrading- connected    2999       a-full a-1000 10/100/1000BaseTX
+Gi1/0/4   FW-DC1-External-VP connected    2999       a-full a-1000 10/100/1000BaseTX
+Gi1/0/5   FW-DC1-External-VP connected    2999       a-full a-1000 10/100/1000BaseTX
+Gi1/0/6   FW-DC1-Management- connected    2998       a-full  a-100 10/100/1000BaseTX
+Gi1/0/7   RT-DC1-3parties-NS connected    2999       a-full a-1000 10/100/1000BaseTX
+Gi1/0/8   RT-DC1-Internet-NS connected    2999       a-full a-1000 10/100/1000BaseTX
+Gi1/0/9   SW-DC1-Distribute- connected    2999       a-full  a-100 10/100/1000BaseTX
+Gi1/0/10  SW-DC1-Core-NSAA02 connected    2999       a-full a-1000 10/100/1000BaseTX
+Gi1/0/11  SW-DC1-Core-NSAB11 connected    2999       a-full a-1000 10/100/1000BaseTX
+Gi1/0/12  SW-DC1-Internet-NS connected    2999       a-full a-1000 10/100/1000BaseTX
+Gi1/0/13  NWM-DC1-Latency-NS connected    2999       a-full a-1000 10/100/1000BaseTX
+Gi1/0/14  FW-DC1-Trading-NSA connected    2999       a-full a-1000 10/100/1000BaseTX
+Gi1/0/15  DWDM-NSAA02        connected    2999       a-full  a-100 10/100/1000BaseTX
+Gi1/0/16  NWM-DC1-Latency-NS connected    2998       a-full a-1000 10/100/1000BaseTX
+Gi1/0/17                     notconnect   2999         auto   auto 10/100/1000BaseTX
+Gi1/0/18                     notconnect   2999         auto   auto 10/100/1000BaseTX
+Gi1/0/19                     notconnect   2999         auto   auto 10/100/1000BaseTX
+Gi1/0/20  SW-DCIM-SV3 Colo-A connected    2902       a-full a-1000 10/100/1000BaseTX
+Gi1/0/21  APIC-DC1-Services- connected    2999       a-full a-1000 10/100/1000BaseTX
+Gi1/0/22  Connect to N7K-NSA notconnect   2999         auto   auto 10/100/1000BaseTX
+Gi1/0/23  SW-DC1-Core-NSAB11 connected    trunk      a-full a-1000 10/100/1000BaseTX
+Gi1/0/24  SW-DC1-Core-NSAA02 connected    trunk      a-full a-1000 10/100/1000BaseTX
+Gi1/0/25                     notconnect   1            auto   auto Not Present
+Gi1/0/26                     notconnect   1            auto   auto Not Present
+Gi1/0/27                     notconnect   1            auto   auto Not Present
+Gi1/0/28                     notconnect   1            auto   auto Not Present
+Po1                          connected    trunk      a-full a-1000 
+Fa0                          disabled     routed       auto   auto 10/100BaseTX
+SW-DC1-OOB-NSAA02-SET-01#show vlan
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi1/0/25, Gi1/0/26, Gi1/0/27
+                                                Gi1/0/28
+1002 fddi-default                     act/unsup 
+1003 token-ring-default               act/unsup 
+1004 fddinet-default                  act/unsup 
+1005 trnet-default                    act/unsup 
+2902 VLAN2902                         active    Gi1/0/20
+2998 Server_OOB                       active    Gi1/0/6, Gi1/0/16
+2999 Network_OOB                      active    Gi1/0/1, Gi1/0/2, Gi1/0/3
+                                                Gi1/0/4, Gi1/0/5, Gi1/0/7
+                                                Gi1/0/8, Gi1/0/9, Gi1/0/10
+                                                Gi1/0/11, Gi1/0/12, Gi1/0/13
+                                                Gi1/0/14, Gi1/0/15, Gi1/0/17
+                                                Gi1/0/18, Gi1/0/19, Gi1/0/21
+                                                Gi1/0/22
+
+VLAN Type  SAID       MTU   Parent RingNo BridgeNo Stp  BrdgMode Trans1 Trans2
+---- ----- ---------- ----- ------ ------ -------- ---- -------- ------ ------
+1    enet  100001     1500  -      -      -        -    -        0      0   
+1002 fddi  101002     1500  -      -      -        -    -        0      0   
+1003 tr    101003     1500  -      -      -        -    -        0      0   
+1004 fdnet 101004     1500  -      -      -        ieee -        0      0   
+1005 trnet 101005     1500  -      -      -        ibm  -        0      0   
+2902 enet  102902     1500  -      -      -        -    -        0      0   
+2998 enet  102998     1500  -      -      -        -    -        0      0   
+2999 enet  102999     1500  -      -      -        -    -        0      0   
+
+Remote SPAN VLANs
+------------------------------------------------------------------------------
+
+
+Primary Secondary Type              Ports
+------- --------- ----------------- ------------------------------------------
+
+SW-DC1-OOB-NSAA02-SET-01#show version
+Cisco IOS Software, C2960X Software (C2960X-UNIVERSALK9-M), Version 15.2(2)E6, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2016 by Cisco Systems, Inc.
+Compiled Fri 16-Dec-16 21:27 by prod_rel_team
+
+ROM: Bootstrap program is C2960X boot loader
+BOOTLDR: C2960X Boot Loader (C2960X-HBOOT-M) Version 15.2(3r)E1, RELEASE SOFTWARE (fc1)
+
+SW-DC1-OOB-NSAA02-SET-01 uptime is 6 years, 14 weeks, 13 hours, 30 minutes
+System returned to ROM by power-on
+System restarted at 03:27:05 GMT Sat Sep 29 2018
+System image file is "flash:/c2960x-universalk9-mz.152-2.E6/c2960x-universalk9-mz.152-2.E6.bin"
+Last reload reason: power-on
+
+
+
+This product contains cryptographic features and is subject to United
+States and local country laws governing import, export, transfer and
+use. Delivery of Cisco cryptographic products does not imply
+third-party authority to import, export, distribute or use encryption.
+Importers, exporters, distributors and users are responsible for
+compliance with U.S. and local country laws. By using this product you
+agree to comply with applicable laws and regulations. If you are unable
+to comply with U.S. and local laws, return this product immediately.
+
+A summary of U.S. laws governing Cisco cryptographic products may be found at:
+http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+
+If you require further assistance please contact us by sending email to
+export@cisco.com.
+
+cisco WS-C2960X-24TS-L (APM86XXX) processor (revision M0) with 524288K bytes of memory.
+Processor board ID FCW2117B4AL
+Last reset from power-on
+2 Virtual Ethernet interfaces
+1 FastEthernet interface
+28 Gigabit Ethernet interfaces
+The password-recovery mechanism is enabled.
+
+512K bytes of flash-simulated non-volatile configuration memory.
+Base ethernet MAC Address       : 70:6E:6D:68:7A:80
+Motherboard assembly number     : 73-16695-05
+Power supply part number        : 341-0529-02
+Motherboard serial number       : FOC21156LFJ
+Power supply serial number      : LIT21133W4Q
+Model revision number           : M0
+Motherboard revision number     : A0
+Model number                    : WS-C2960X-24TS-L
+Daughterboard assembly number   : 73-14200-03
+Daughterboard serial number     : FOC2116067R
+System serial number            : FCW2117B4AL
+Top Assembly Part Number        : 68-100473-02
+Top Assembly Revision Number    : A0
+Version ID                      : V05
+CLEI Code Number                : CMMMU00ARD
+Daughterboard revision number   : A0
+Hardware Board Revision Number  : 0x19
+
+
+Switch Ports Model                     SW Version            SW Image                 
+------ ----- -----                     ----------            ----------               
+*    1 28    WS-C2960X-24TS-L          15.2(2)E6             C2960X-UNIVERSALK9-M     
+
+
+Configuration register is 0xF
+
+SW-DC1-OOB-NSAA02-SET-01#show cdp nei
+Capability Codes: R - Router, T - Trans Bridge, B - Source Route Bridge
+                  S - Switch, H - Host, I - IGMP, r - Repeater, P - Phone, 
+                  D - Remote, C - CVTA, M - Two-port Mac Relay 
+
+Device ID        Local Intrfce     Holdtme    Capability  Platform  Port ID
+SW-DC1-Distritubute-NSAA02-SET-01.set.or
+                 Gig 1/0/9         132              S I   WS-C2960X Fas 0
+SW-DC1-Core-NSAB11-SET-01.set.or.th(FOX2829PH5V)
+                 Gig 1/0/23        156            R S I C N9K-C9504 Eth 2/9
+SW-DC1-Core-NSAA02-SET-01.set.or.th(FOX2829PH60)
+                 Gig 1/0/24        153            R S I C N9K-C9504 Eth 2/9
+SW-DC1-Core-NSAA02-SET-01.set.or.th(FOX2829PH60)
+                 Gig 1/0/10        156             R S C  N9K-C9504 mgmt0
+
+Total cdp entries displayed : 4
+SW-DC1-OOB-NSAA02-SET-01#show lldp nei
+% LLDP is not enabled
+SW-DC1-OOB-NSAA02-SET-01#show ip arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  10.35.1.1              14   0000.0c9f.fbb7  ARPA   Vlan2999
+Internet  10.35.1.251             -   706e.6d68.7ac1  ARPA   Vlan2999
+SW-DC1-OOB-NSAA02-SET-01#show mac address
+          Mac Address Table
+-------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       --------    -----
+ All    0100.0ccc.cccc    STATIC      CPU
+ All    0100.0ccc.cccd    STATIC      CPU
+ All    0180.c200.0000    STATIC      CPU
+ All    0180.c200.0001    STATIC      CPU
+ All    0180.c200.0002    STATIC      CPU
+ All    0180.c200.0003    STATIC      CPU
+ All    0180.c200.0004    STATIC      CPU
+ All    0180.c200.0005    STATIC      CPU
+ All    0180.c200.0006    STATIC      CPU
+ All    0180.c200.0007    STATIC      CPU
+ All    0180.c200.0008    STATIC      CPU
+ All    0180.c200.0009    STATIC      CPU
+ All    0180.c200.000a    STATIC      CPU
+ All    0180.c200.000b    STATIC      CPU
+ All    0180.c200.000c    STATIC      CPU
+ All    0180.c200.000d    STATIC      CPU
+ All    0180.c200.000e    STATIC      CPU
+ All    0180.c200.000f    STATIC      CPU
+ All    0180.c200.0010    STATIC      CPU
+ All    ffff.ffff.ffff    STATIC      CPU
+2999    0000.0c9f.fbb7    DYNAMIC     Po1
+2999    0026.f079.0000    DYNAMIC     Po1
+2999    0080.ea35.1a30    DYNAMIC     Gi1/0/15
+2999    0866.1f05.6d95    DYNAMIC     Po1
+2999    0866.1f05.9e93    DYNAMIC     Gi1/0/14
+2999    0896.ad9a.b5b8    DYNAMIC     Gi1/0/13
+2999    14a9.d03a.0b8f    DYNAMIC     Gi1/0/7
+2999    14a9.d03a.0bff    DYNAMIC     Gi1/0/7
+2999    3838.a6db.0aa6    DYNAMIC     Gi1/0/12
+2999    4874.1012.c63c    DYNAMIC     Gi1/0/10
+2999    706e.6d68.6239    DYNAMIC     Gi1/0/9
+2999    706e.6d7e.8e41    DYNAMIC     Po1
+2999    70b3.17ae.c3cb    DYNAMIC     Gi1/0/5
+2999    70df.2fae.6146    DYNAMIC     Gi1/0/21
+2999    9433.d82a.d307    DYNAMIC     Gi1/0/8
+2999    cc6a.33f1.90bf    DYNAMIC     Po1
+2999    cc6a.33f1.97bf    DYNAMIC     Po1
+2999    d4f4.bec3.358c    DYNAMIC     Po1
+2999    d4f4.bec3.364e    DYNAMIC     Po1
+2999    d4f4.bec3.3b3c    DYNAMIC     Gi1/0/3
+2999    d4f4.bec3.3bfa    DYNAMIC     Gi1/0/2
+2999    f4db.e6f0.28a3    DYNAMIC     Gi1/0/4
+2998    0000.0c9f.fbb6    DYNAMIC     Po1
+2998    0002.c959.c4f8    DYNAMIC     Po1
+2998    001d.ac39.119f    DYNAMIC     Po1
+2998    001e.6798.d21e    DYNAMIC     Gi1/0/16
+2998    0026.f079.0000    DYNAMIC     Po1
+2998    0050.56b6.06be    DYNAMIC     Po1
+2998    0050.56b6.3fe9    DYNAMIC     Po1
+2998    2892.4a37.1dae    DYNAMIC     Po1
+2998    5ced.8cbe.7068    DYNAMIC     Po1
+2998    cc6a.33f1.90bf    DYNAMIC     Po1
+2998    cc6a.33f1.97bf    DYNAMIC     Po1
+2998    ec01.d570.c698    DYNAMIC     Po1
+2902    0000.0c9f.fb56    DYNAMIC     Po1
+2902    0026.f079.0000    DYNAMIC     Po1
+2902    00a5.bf27.dfc0    DYNAMIC     Gi1/0/20
+2902    00a5.bf27.e9b0    DYNAMIC     Gi1/0/20
+2902    00a5.bf27.e9c0    DYNAMIC     Gi1/0/20
+2902    00a5.bf44.5740    DYNAMIC     Gi1/0/20
+2902    00a5.bf44.5bc0    DYNAMIC     Gi1/0/20
+2902    00c0.b7db.1cd2    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.02c8    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.02e5    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.02f0    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.0304    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.0306    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.030e    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.0310    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2380    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2575    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2963    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2a02    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2d77    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2d81    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2d8e    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2d96    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2d97    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2d99    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2da7    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2da8    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2dae    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2daf    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2db9    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2dbd    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2dc2    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2dc3    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2dc5    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2dc7    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2dc8    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2dc9    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2dca    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2dcf    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2dd3    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2dd4    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2dd5    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2ddd    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2df9    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2dfb    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.2dfd    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.8c36    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.8ca7    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.8cdc    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.8cee    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.8cf2    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.8cff    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.8d0f    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.8d2f    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.b328    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.b8dc    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.b8ec    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.b93c    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.b986    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.ba1f    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.ba57    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.ba6c    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.ba7e    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.ba9b    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.d3cf    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.d3ef    DYNAMIC     Gi1/0/20
+2902    00c0.b7e0.d3f0    DYNAMIC     Gi1/0/20
+2902    00c0.b7e3.0271    DYNAMIC     Gi1/0/20
+2902    00c0.b7e3.035c    DYNAMIC     Gi1/0/20
+2902    00c0.b7e3.0361    DYNAMIC     Gi1/0/20
+2902    00c0.b7e3.0367    DYNAMIC     Gi1/0/20
+2902    00c0.b7e3.0372    DYNAMIC     Gi1/0/20
+2902    00c0.b7e3.037d    DYNAMIC     Gi1/0/20
+2902    00c0.b7e3.037e    DYNAMIC     Gi1/0/20
+2902    00c0.b7e3.0382    DYNAMIC     Gi1/0/20
+2902    00c0.b7e3.038b    DYNAMIC     Gi1/0/20
+2902    00c0.b7e3.038d    DYNAMIC     Gi1/0/20
+2902    00c0.b7e3.038e    DYNAMIC     Gi1/0/20
+2902    00c0.b7e3.0393    DYNAMIC     Gi1/0/20
+2902    00c0.b7e3.0398    DYNAMIC     Gi1/0/20
+2902    00c0.b7e3.039f    DYNAMIC     Gi1/0/20
+2902    00c0.b7e3.03a1    DYNAMIC     Gi1/0/20
+2902    00c0.b7e3.03a3    DYNAMIC     Gi1/0/20
+2902    00c0.b7e3.03a5    DYNAMIC     Gi1/0/20
+2902    00c0.b7e3.03aa    DYNAMIC     Gi1/0/20
+2902    00c0.b7e3.1a51    DYNAMIC     Gi1/0/20
+2902    00c0.b7e4.f3d4    DYNAMIC     Gi1/0/20
+2902    00c0.b7e4.f3d7    DYNAMIC     Gi1/0/20
+2902    00c0.b7e4.f466    DYNAMIC     Gi1/0/20
+2902    00c0.b7e4.f472    DYNAMIC     Gi1/0/20
+2902    00c0.b7e4.f475    DYNAMIC     Gi1/0/20
+2902    00c0.b7e4.f488    DYNAMIC     Gi1/0/20
+2902    00c0.b7e4.f4b8    DYNAMIC     Gi1/0/20
+2902    00c0.b7e4.f4bc    DYNAMIC     Gi1/0/20
+2902    2829.8603.9150    DYNAMIC     Gi1/0/20
+2902    2829.8608.f2d0    DYNAMIC     Gi1/0/20
+2902    2829.8614.ea7a    DYNAMIC     Gi1/0/20
+2902    2829.8614.ea7b    DYNAMIC     Gi1/0/20
+2902    2829.8614.ea83    DYNAMIC     Gi1/0/20
+2902    2829.8618.77b4    DYNAMIC     Gi1/0/20
+2902    2829.861a.7af9    DYNAMIC     Gi1/0/20
+2902    2829.861a.7b03    DYNAMIC     Gi1/0/20
+2902    2829.861a.7b06    DYNAMIC     Gi1/0/20
+2902    2829.861a.7b07    DYNAMIC     Gi1/0/20
+2902    2829.861a.7b09    DYNAMIC     Gi1/0/20
+2902    2829.861a.7b0b    DYNAMIC     Gi1/0/20
+2902    2829.861a.7b0c    DYNAMIC     Gi1/0/20
+2902    2829.861a.7b11    DYNAMIC     Gi1/0/20
+2902    2829.861a.7b12    DYNAMIC     Gi1/0/20
+2902    2829.861a.7b21    DYNAMIC     Gi1/0/20
+2902    2829.861a.7b22    DYNAMIC     Gi1/0/20
+2902    2829.861a.7b23    DYNAMIC     Gi1/0/20
+2902    2829.861a.7b25    DYNAMIC     Gi1/0/20
+2902    2829.861a.7b26    DYNAMIC     Gi1/0/20
+2902    2829.861a.7b29    DYNAMIC     Gi1/0/20
+2902    2829.861a.7b2e    DYNAMIC     Gi1/0/20
+2902    2829.861a.7b2f    DYNAMIC     Gi1/0/20
+2902    2829.861a.7b46    DYNAMIC     Gi1/0/20
+2902    2829.861a.7b63    DYNAMIC     Gi1/0/20
+2902    2829.861c.17c9    DYNAMIC     Gi1/0/20
+2902    2829.861c.1a5f    DYNAMIC     Gi1/0/20
+2902    2829.861c.1a8b    DYNAMIC     Gi1/0/20
+2902    2829.861c.1a98    DYNAMIC     Gi1/0/20
+2902    2829.861c.1aa8    DYNAMIC     Gi1/0/20
+2902    2829.861c.1ab3    DYNAMIC     Gi1/0/20
+2902    2829.861c.1ab6    DYNAMIC     Gi1/0/20
+2902    2829.861c.1abb    DYNAMIC     Gi1/0/20
+2902    2829.861c.1ac0    DYNAMIC     Gi1/0/20
+2902    2829.861c.1ac1    DYNAMIC     Gi1/0/20
+2902    2829.861c.1ac3    DYNAMIC     Gi1/0/20
+2902    2829.861c.1ac5    DYNAMIC     Gi1/0/20
+2902    2829.861c.1ac6    DYNAMIC     Gi1/0/20
+2902    2829.861c.1ac7    DYNAMIC     Gi1/0/20
+2902    2829.861c.1ac8    DYNAMIC     Gi1/0/20
+2902    2829.861c.1ac9    DYNAMIC     Gi1/0/20
+2902    2829.861c.1aca    DYNAMIC     Gi1/0/20
+2902    2829.861c.1acc    DYNAMIC     Gi1/0/20
+2902    2829.861c.1ace    DYNAMIC     Gi1/0/20
+2902    2829.861c.1acf    DYNAMIC     Gi1/0/20
+2902    2829.861c.1ad0    DYNAMIC     Gi1/0/20
+2902    2829.861c.1ad1    DYNAMIC     Gi1/0/20
+2902    2829.861c.1ad4    DYNAMIC     Gi1/0/20
+2902    2829.861c.1ad6    DYNAMIC     Gi1/0/20
+2902    2829.861c.1adb    DYNAMIC     Gi1/0/20
+2902    2829.861c.1adc    DYNAMIC     Gi1/0/20
+2902    2829.861c.1add    DYNAMIC     Gi1/0/20
+2902    2829.861c.1ade    DYNAMIC     Gi1/0/20
+2902    2829.861c.1ae0    DYNAMIC     Gi1/0/20
+2902    2829.861c.1bca    DYNAMIC     Gi1/0/20
+2902    2829.861c.1bd5    DYNAMIC     Gi1/0/20
+2902    2829.861c.1bde    DYNAMIC     Gi1/0/20
+2902    2829.861c.1bdf    DYNAMIC     Gi1/0/20
+2902    2829.861c.1be1    DYNAMIC     Gi1/0/20
+2902    2829.861c.1bf8    DYNAMIC     Gi1/0/20
+2902    2829.861c.5707    DYNAMIC     Gi1/0/20
+2902    2829.861c.5714    DYNAMIC     Gi1/0/20
+2902    2829.861c.5716    DYNAMIC     Gi1/0/20
+2902    2829.861c.5720    DYNAMIC     Gi1/0/20
+2902    2829.861c.5736    DYNAMIC     Gi1/0/20
+2902    2829.861c.574c    DYNAMIC     Gi1/0/20
+2902    2829.861c.5793    DYNAMIC     Gi1/0/20
+2902    2829.861c.579e    DYNAMIC     Gi1/0/20
+2902    2829.861c.57ad    DYNAMIC     Gi1/0/20
+2902    2829.861c.5809    DYNAMIC     Gi1/0/20
+2902    2829.861c.5829    DYNAMIC     Gi1/0/20
+2902    2829.861c.5832    DYNAMIC     Gi1/0/20
+2902    2829.861c.5834    DYNAMIC     Gi1/0/20
+2902    2829.861c.5835    DYNAMIC     Gi1/0/20
+2902    2829.861c.5837    DYNAMIC     Gi1/0/20
+2902    2829.861c.583c    DYNAMIC     Gi1/0/20
+2902    2829.861c.583e    DYNAMIC     Gi1/0/20
+2902    2829.861c.5841    DYNAMIC     Gi1/0/20
+2902    2829.861c.5849    DYNAMIC     Gi1/0/20
+2902    2829.861c.584a    DYNAMIC     Gi1/0/20
+2902    2829.861e.d9eb    DYNAMIC     Gi1/0/20
+2902    2829.8624.339c    DYNAMIC     Gi1/0/20
+2902    2829.8624.33a6    DYNAMIC     Gi1/0/20
+2902    2829.8624.6807    DYNAMIC     Gi1/0/20
+2902    2829.863f.e8ef    DYNAMIC     Gi1/0/20
+2902    2829.8653.3b46    DYNAMIC     Gi1/0/20
+2902    2829.8654.6502    DYNAMIC     Gi1/0/20
+2902    2829.8654.650f    DYNAMIC     Gi1/0/20
+2902    2829.8654.6520    DYNAMIC     Gi1/0/20
+2902    2829.8654.6530    DYNAMIC     Gi1/0/20
+2902    cc6a.33f1.90bf    DYNAMIC     Po1
+2902    cc6a.33f1.97bf    DYNAMIC     Po1
+Total Mac Addresses for this criterion: 240
+SW-DC1-OOB-NSAA02-SET-01#show spanning-tree root
+
+                                        Root    Hello Max Fwd
+Vlan                   Root ID          Cost    Time  Age Dly  Root Port
+---------------- -------------------- --------- ----- --- ---  ------------
+VLAN2902          6998 0023.04ee.be01         3    2   20  15  Po1             
+VLAN2998          7094 0023.04ee.be01         3    2   20  15  Po1             
+VLAN2999          7095 0023.04ee.be01         3    2   20  15  Po1             
+SW-DC1-OOB-NSAA02-SET-01#show spanning-tree
+
+VLAN2902
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    6998
+             Address     0023.04ee.be01
+             Cost        3
+             Port        456 (Port-channel1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    35670  (priority 32768 sys-id-ext 2902)
+             Address     706e.6d68.7a80
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi1/0/20            Desg FWD 4         128.20   P2p 
+Po1                 Root FWD 3         128.456  P2p 
+
+
+
+VLAN2998
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    7094
+             Address     0023.04ee.be01
+             Cost        3
+             Port        456 (Port-channel1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    35766  (priority 32768 sys-id-ext 2998)
+             Address     706e.6d68.7a80
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi1/0/6             Desg FWD 19        128.6    P2p Edge 
+Gi1/0/16            Desg FWD 4         128.16   P2p Edge 
+Po1                 Root FWD 3         128.456  P2p 
+
+
+
+VLAN2999
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    7095
+             Address     0023.04ee.be01
+             Cost        3
+             Port        456 (Port-channel1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    35767  (priority 32768 sys-id-ext 2999)
+             Address     706e.6d68.7a80
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi1/0/2             Desg FWD 4         128.2    P2p Edge 
+Gi1/0/3             Desg FWD 4         128.3    P2p Edge 
+Gi1/0/4             Desg FWD 4         128.4    P2p Edge 
+Gi1/0/5             Desg FWD 4         128.5    P2p Edge 
+Gi1/0/7             Desg FWD 4         128.7    P2p Edge 
+Gi1/0/8             Desg FWD 4         128.8    P2p Edge 
+Gi1/0/9             Desg FWD 19        128.9    P2p Edge 
+Gi1/0/10            Desg FWD 4         128.10   P2p Edge 
+Gi1/0/11            Desg FWD 4         128.11   P2p Edge 
+Gi1/0/12            Desg FWD 4         128.12   P2p Edge 
+Gi1/0/13            Desg FWD 4         128.13   P2p Edge 
+Gi1/0/14            Desg FWD 4         128.14   P2p Edge 
+Gi1/0/15            Desg FWD 19        128.15   P2p Edge 
+Gi1/0/21            Desg FWD 4         128.21   P2p 
+Po1                 Root FWD 3         128.456  P2p 
+
+
+SW-DC1-OOB-NSAA02-SET-01#show inventory
+NAME: "1", DESCR: "WS-C2960X-24TS-L"
+PID: WS-C2960X-24TS-L  , VID: V05  , SN: FCW2117B4AL
+
+
+SW-DC1-OOB-NSAA02-SET-01#show etherchannel summary
+Flags:  D - down        P - bundled in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      f - failed to allocate aggregator
+
+        M - not in use, minimum links not met
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+
+
+Number of channel-groups in use: 1
+Number of aggregators:           1
+
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+-----------------------------------------------
+1      Po1(SU)         LACP      Gi1/0/23(P) Gi1/0/24(P) 
+
+SW-DC1-OOB-NSAA02-SET-01#show vtp status
+VTP Version capable             : 1 to 3
+VTP version running             : 1
+VTP Domain Name                 : 
+VTP Pruning Mode                : Disabled
+VTP Traps Generation            : Enabled
+Device ID                       : 706e.6d68.7a80
+Configuration last modified by 0.0.0.0 at 0-0-00 00:00:00
+
+Feature VLAN:
+--------------
+VTP Operating Mode                : Transparent
+Maximum VLANs supported locally   : 1005
+Number of existing VLANs          : 5
+Configuration Revision            : 0
+MD5 digest                        : 0x57 0xCD 0x40 0x65 0x63 0x59 0x47 0xBD 
+                                    0x56 0x9D 0x4A 0x3E 0xA5 0x69 0x35 0xBC 
+SW-DC1-OOB-NSAA02-SET-01#
+SW-DC1-OOB-NSAA02-SET-01#
+Disconnect Time : 03/01/2025 18:06:46:506

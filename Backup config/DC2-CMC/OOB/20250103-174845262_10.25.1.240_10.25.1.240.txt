@@ -1,0 +1,930 @@
+Connect Time : 03/01/2025 17:48:45:262
+
+Warning!
+*************************************************************************
+*       This system is for the use of authorized users only.            *
+*       Individuals using this computer system without authority, or in *
+*       excess of their authority, are subject to having all of their   *
+*       activities on this system monitored and recorded by system      *
+*       personnel.                                                      *
+*                                                                       *
+*       In the course of monitoring individuals improperly using this   *
+*       system, or in the course of system maintenance, the activities  *
+*       of authorized users may also be monitored.                      *
+*                                                                       *
+*       Anyone using this system expressly consents to such monitoring  *
+*       and is advised that if such monitoring reveals possible         *
+*       evidence of criminal activity, system personnel may provide the *
+*       evidence of such monitoring to law enforcement officials.       *
+*************************************************************************
+SW-DC2-DCIM-CHAD01-SET-01#terminal length 0
+SW-DC2-DCIM-CHAD01-SET-01#show running-config
+Building configuration...
+
+Current configuration : 9290 bytes
+!
+! Last configuration change at 08:48:54 GMT+7 Sat Mar 30 2024 by thananan
+! NVRAM config last updated at 08:48:54 GMT+7 Sat Mar 30 2024 by thananan
+!
+version 15.2
+no service pad
+service timestamps debug datetime msec localtime show-timezone year
+service timestamps log datetime msec localtime show-timezone year
+no service password-encryption
+!
+hostname SW-DC2-DCIM-CHAD01-SET-01
+!
+boot-start-marker
+boot-end-marker
+!
+logging buffered 1024000
+enable secret 5 $1$5CJ1$1t7YFuOAXMjK5bDgNL5WV.
+!
+username admin privilege 15 secret 5 $1$sH..$kL3BF8e.6h57YKSLYIu2T0
+username nwadmin privilege 15 password 0 0yfdkifh;pot
+aaa new-model
+!
+!
+aaa authentication login default group tacacs+ local
+!
+!
+!
+!
+!
+!
+aaa session-id common
+clock timezone GMT+7 7 0
+switch 1 provision ws-c2960x-24ps-l
+!
+!
+no ip dhcp snooping information option
+no ip domain-lookup
+ip domain-name set.or.th
+vtp mode transparent
+!
+!
+!
+!
+!
+!
+mls qos
+!
+crypto pki trustpoint TP-self-signed-1771643392
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-1771643392
+ revocation-check none
+ rsakeypair TP-self-signed-1771643392
+!
+!
+crypto pki certificate chain TP-self-signed-1771643392
+ certificate self-signed 01
+  3082022B 30820194 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 31373731 36343333 3932301E 170D3136 31303032 30383236 
+  35345A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D31 37373136 
+  34333339 3230819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  8100EE4D DB4BB555 CD8B4C36 A6314B61 2013A7D3 F2DAEDF4 8A1F85D4 9A41C00C 
+  766A5637 3EF99234 3798A726 10C05E30 1F09C5B3 E73B8880 7486C4D4 D6859CA3 
+  7270A4A4 4C367D19 07AB0D2E 7345ECF5 0AD4D1ED 52208CC7 4FBE14D3 0CE998C3 
+  81C1AA39 1EB630D6 02057F48 6BF4A119 A944D3D6 CE9E6238 A53C1AF8 25907933 
+  45EB0203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 301F0603 
+  551D2304 18301680 14B82E53 42754353 E01DED03 1DA8A59D EDA69792 C6301D06 
+  03551D0E 04160414 B82E5342 754353E0 1DED031D A8A59DED A69792C6 300D0609 
+  2A864886 F70D0101 05050003 81810012 CF9883C5 3CDEE76B 76C29FA2 56E8C7ED 
+  C1C3FC9E A56A6833 950D592E E9E48443 1D04EB35 19BEFCD1 67F1EF8E CA39B7F5 
+  514E7157 811B7C84 1D5B6397 4C1DA41B 4DA246C5 4C18E78A FD4E8858 B7590867 
+  905E8A81 EDA0FCB3 773EBFAF 25994656 AF564ADB 0008B7F5 2ED90173 EA31EBDA 
+  B110D38A F823E22F F474D30A 945FB6
+        quit
+spanning-tree mode pvst
+spanning-tree extend system-id
+auto qos srnd4
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+vlan 1901
+ name DCIM
+!
+vlan 1999
+ name MGMT
+!
+lldp run
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet1/0/1
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/0/2
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/0/3
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/0/4
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/0/5
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/0/6
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/0/7
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/0/8
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/0/9
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/0/10
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/0/11
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/0/12
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/0/13
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/0/14
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/0/15
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/0/16
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/0/17
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/0/18
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/0/19
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/0/20
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/0/21
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/0/22
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/0/23
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/0/24
+ description SW-DC2-Server-OOB-CHAD01-SET-01 : Gi1/0/46
+ switchport trunk allowed vlan 1901,1999
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/25
+!
+interface GigabitEthernet1/0/26
+!
+interface GigabitEthernet1/0/27
+!
+interface GigabitEthernet1/0/28
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan1999
+ ip address 10.25.1.240 255.255.255.0
+!
+ip default-gateway 10.25.1.1
+no ip http server
+no ip http secure-server
+!
+ip ssh version 2
+!
+logging host 10.24.22.21
+access-list 97 permit 10.24.21.0 0.0.0.255
+access-list 97 permit 10.3.5.0 0.0.0.255
+access-list 97 permit 10.25.2.0 0.0.0.255
+!
+snmp-server community R3@donly RO 97
+snmp-server community R3@dwrite RW 97
+snmp-server enable traps snmp authentication linkdown linkup coldstart warmstart
+snmp-server enable traps transceiver all
+snmp-server enable traps call-home message-send-fail server-fail
+snmp-server enable traps tty
+snmp-server enable traps license
+snmp-server enable traps auth-framework sec-violation
+snmp-server enable traps cluster
+snmp-server enable traps config-copy
+snmp-server enable traps config
+snmp-server enable traps config-ctid
+snmp-server enable traps energywise
+snmp-server enable traps fru-ctrl
+snmp-server enable traps entity
+snmp-server enable traps event-manager
+snmp-server enable traps power-ethernet police
+snmp-server enable traps cpu threshold
+snmp-server enable traps vstack
+snmp-server enable traps bridge newroot topologychange
+snmp-server enable traps stpx inconsistency root-inconsistency loop-inconsistency
+snmp-server enable traps syslog
+snmp-server enable traps vtp
+snmp-server enable traps vlancreate
+snmp-server enable traps vlandelete
+snmp-server enable traps flash insertion removal
+snmp-server enable traps port-security
+snmp-server enable traps envmon fan shutdown supply temperature status
+snmp-server enable traps stackwise
+snmp-server enable traps errdisable
+snmp-server enable traps mac-notification change move threshold
+snmp-server enable traps vlan-membership
+tacacs-server host 10.25.2.200 key Secr3tkey*
+!
+!
+!
+privilege interface level 10 shutdown
+privilege interface level 10 switchport
+privilege interface level 10 description
+privilege interface level 10 no shutdown
+privilege interface level 10 no switchport
+privilege interface level 10 no description
+privilege interface level 10 no
+privilege configure level 10 interface
+privilege exec level 10 copy running-config startup-config
+privilege exec level 10 copy running-config
+privilege exec level 10 copy
+privilege exec level 10 write memory
+privilege exec level 10 write
+privilege exec level 10 configure terminal
+privilege exec level 10 configure
+privilege exec level 10 show mac address-table
+privilege exec level 10 show mac
+privilege exec level 10 show vlan
+privilege exec level 10 show cdp neighbors
+privilege exec level 10 show cdp
+privilege exec level 10 show version
+privilege exec level 10 show running-config
+privilege exec level 10 show logging
+privilege exec level 10 show interfaces status
+privilege exec level 10 show interfaces
+privilege exec level 10 show
+banner motd ^C
+Warning!
+*************************************************************************
+*       This system is for the use of authorized users only.            *
+*       Individuals using this computer system without authority, or in *
+*       excess of their authority, are subject to having all of their   *
+*       activities on this system monitored and recorded by system      *
+*       personnel.                                                      *
+*                                                                       *
+*       In the course of monitoring individuals improperly using this   *
+*       system, or in the course of system maintenance, the activities  *
+*       of authorized users may also be monitored.                      *
+*                                                                       *
+*       Anyone using this system expressly consents to such monitoring  *
+*       and is advised that if such monitoring reveals possible         *
+*       evidence of criminal activity, system personnel may provide the *
+*       evidence of such monitoring to law enforcement officials.       *
+*************************************************************************
+^C
+!
+line con 0
+line vty 0 4
+ privilege level 15
+ length 0
+ transport input ssh
+line vty 5 15
+ privilege level 15
+ length 0
+ transport input ssh
+!
+ntp server 10.24.1.27 prefer
+ntp server 10.34.1.27
+ntp server 10.24.1.28
+ntp server 10.34.1.28
+end
+
+SW-DC2-DCIM-CHAD01-SET-01#show interface description
+Interface                      Status         Protocol Description
+Vl1                            admin down     down     
+Vl1999                         up             up       
+Fa0                            admin down     down     
+Gi1/0/1                        up             up       
+Gi1/0/2                        up             up       
+Gi1/0/3                        up             up       
+Gi1/0/4                        up             up       
+Gi1/0/5                        up             up       
+Gi1/0/6                        up             up       
+Gi1/0/7                        up             up       
+Gi1/0/8                        up             up       
+Gi1/0/9                        up             up       
+Gi1/0/10                       up             up       
+Gi1/0/11                       up             up       
+Gi1/0/12                       up             up       
+Gi1/0/13                       down           down     
+Gi1/0/14                       down           down     
+Gi1/0/15                       down           down     
+Gi1/0/16                       down           down     
+Gi1/0/17                       down           down     
+Gi1/0/18                       down           down     
+Gi1/0/19                       down           down     
+Gi1/0/20                       down           down     
+Gi1/0/21                       down           down     
+Gi1/0/22                       down           down     
+Gi1/0/23                       up             up       
+Gi1/0/24                       up             up       SW-DC2-Server-OOB-CHAD01-SET-01 : Gi1/0/46
+Gi1/0/25                       down           down     
+Gi1/0/26                       down           down     
+Gi1/0/27                       down           down     
+Gi1/0/28                       down           down     
+SW-DC2-DCIM-CHAD01-SET-01#show ip int brief
+Interface              IP-Address      OK? Method Status                Protocol
+Vlan1                  unassigned      YES TFTP   administratively down down    
+Vlan1999               10.25.1.240     YES TFTP   up                    up      
+FastEthernet0          unassigned      YES TFTP   administratively down down    
+GigabitEthernet1/0/1   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/2   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/3   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/4   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/5   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/6   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/7   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/8   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/9   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/10  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/11  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/12  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/13  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/14  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/15  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/16  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/17  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/18  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/19  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/20  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/21  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/22  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/23  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/24  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/25  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/26  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/27  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/28  unassigned      YES unset  down                  down    
+SW-DC2-DCIM-CHAD01-SET-01#show interface status
+
+Port      Name               Status       Vlan       Duplex  Speed Type 
+Gi1/0/1                      connected    1901       a-full  a-100 10/100/1000BaseTX
+Gi1/0/2                      connected    1901       a-full  a-100 10/100/1000BaseTX
+Gi1/0/3                      connected    1901       a-full  a-100 10/100/1000BaseTX
+Gi1/0/4                      connected    1901       a-full  a-100 10/100/1000BaseTX
+Gi1/0/5                      connected    1901       a-full  a-100 10/100/1000BaseTX
+Gi1/0/6                      connected    1901       a-full  a-100 10/100/1000BaseTX
+Gi1/0/7                      connected    1901       a-full  a-100 10/100/1000BaseTX
+Gi1/0/8                      connected    1901       a-full  a-100 10/100/1000BaseTX
+Gi1/0/9                      connected    1901       a-half  a-100 10/100/1000BaseTX
+Gi1/0/10                     connected    1901       a-half  a-100 10/100/1000BaseTX
+Gi1/0/11                     connected    1901       a-half  a-100 10/100/1000BaseTX
+Gi1/0/12                     connected    1901       a-half  a-100 10/100/1000BaseTX
+Gi1/0/13                     notconnect   1901         auto   auto 10/100/1000BaseTX
+Gi1/0/14                     notconnect   1901         auto   auto 10/100/1000BaseTX
+Gi1/0/15                     notconnect   1901         auto   auto 10/100/1000BaseTX
+Gi1/0/16                     notconnect   1901         auto   auto 10/100/1000BaseTX
+Gi1/0/17                     notconnect   1901         auto   auto 10/100/1000BaseTX
+Gi1/0/18                     notconnect   1901         auto   auto 10/100/1000BaseTX
+Gi1/0/19                     notconnect   1901         auto   auto 10/100/1000BaseTX
+Gi1/0/20                     notconnect   1901         auto   auto 10/100/1000BaseTX
+Gi1/0/21                     notconnect   1901         auto   auto 10/100/1000BaseTX
+Gi1/0/22                     notconnect   1901         auto   auto 10/100/1000BaseTX
+Gi1/0/23                     connected    1901       a-full  a-100 10/100/1000BaseTX
+Gi1/0/24  SW-DC2-Server-OOB- connected    trunk      a-full a-1000 10/100/1000BaseTX
+Gi1/0/25                     notconnect   1            auto   auto Not Present
+Gi1/0/26                     notconnect   1            auto   auto Not Present
+Gi1/0/27                     notconnect   1            auto   auto Not Present
+Gi1/0/28                     notconnect   1            auto   auto Not Present
+Fa0                          disabled     routed       auto   auto 10/100BaseTX
+SW-DC2-DCIM-CHAD01-SET-01#show vlan
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi1/0/25, Gi1/0/26, Gi1/0/27
+                                                Gi1/0/28
+1002 fddi-default                     act/unsup 
+1003 token-ring-default               act/unsup 
+1004 fddinet-default                  act/unsup 
+1005 trnet-default                    act/unsup 
+1901 DCIM                             active    Gi1/0/1, Gi1/0/2, Gi1/0/3
+                                                Gi1/0/4, Gi1/0/5, Gi1/0/6
+                                                Gi1/0/7, Gi1/0/8, Gi1/0/9
+                                                Gi1/0/10, Gi1/0/11, Gi1/0/12
+                                                Gi1/0/13, Gi1/0/14, Gi1/0/15
+                                                Gi1/0/16, Gi1/0/17, Gi1/0/18
+                                                Gi1/0/19, Gi1/0/20, Gi1/0/21
+                                                Gi1/0/22, Gi1/0/23
+1999 MGMT                             active    
+
+VLAN Type  SAID       MTU   Parent RingNo BridgeNo Stp  BrdgMode Trans1 Trans2
+---- ----- ---------- ----- ------ ------ -------- ---- -------- ------ ------
+1    enet  100001     1500  -      -      -        -    -        0      0   
+1002 fddi  101002     1500  -      -      -        -    -        0      0   
+1003 tr    101003     1500  -      -      -        -    -        0      0   
+1004 fdnet 101004     1500  -      -      -        ieee -        0      0   
+1005 trnet 101005     1500  -      -      -        ibm  -        0      0   
+1901 enet  101901     1500  -      -      -        -    -        0      0   
+1999 enet  101999     1500  -      -      -        -    -        0      0   
+
+Remote SPAN VLANs
+------------------------------------------------------------------------------
+
+
+Primary Secondary Type              Ports
+------- --------- ----------------- ------------------------------------------
+
+SW-DC2-DCIM-CHAD01-SET-01#show version
+Cisco IOS Software, C2960X Software (C2960X-UNIVERSALK9-M), Version 15.2(2)E6, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2016 by Cisco Systems, Inc.
+Compiled Fri 16-Dec-16 21:27 by prod_rel_team
+
+ROM: Bootstrap program is C2960X boot loader
+BOOTLDR: C2960X Boot Loader (C2960X-HBOOT-M) Version 15.2(2r)E1, RELEASE SOFTWARE (fc1)
+
+SW-DC2-DCIM-CHAD01-SET-01 uptime is 1 year, 5 weeks, 1 day, 23 hours, 9 minutes
+System returned to ROM by power-on
+System restarted at 18:12:34 GMT+7 Tue Nov 28 2023
+System image file is "flash:/c2960x-universalk9-mz.152-2.E6.bin"
+Last reload reason: power-on
+
+
+
+This product contains cryptographic features and is subject to United
+States and local country laws governing import, export, transfer and
+use. Delivery of Cisco cryptographic products does not imply
+third-party authority to import, export, distribute or use encryption.
+Importers, exporters, distributors and users are responsible for
+compliance with U.S. and local country laws. By using this product you
+agree to comply with applicable laws and regulations. If you are unable
+to comply with U.S. and local laws, return this product immediately.
+
+A summary of U.S. laws governing Cisco cryptographic products may be found at:
+http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+
+If you require further assistance please contact us by sending email to
+export@cisco.com.
+
+cisco WS-C2960X-24PS-L (APM86XXX) processor (revision F0) with 524288K bytes of memory.
+Processor board ID FCW1848A01C
+Last reset from power-on
+2 Virtual Ethernet interfaces
+1 FastEthernet interface
+28 Gigabit Ethernet interfaces
+The password-recovery mechanism is enabled.
+
+512K bytes of flash-simulated non-volatile configuration memory.
+Base ethernet MAC Address       : 54:7C:69:99:22:00
+Motherboard assembly number     : 73-15972-02
+Power supply part number        : 341-0528-01
+Motherboard serial number       : FOC184797N1
+Power supply serial number      : DCB184172LB
+Model revision number           : F0
+Motherboard revision number     : C0
+Model number                    : WS-C2960X-24PS-L
+Daughterboard assembly number   : 73-14200-03
+Daughterboard serial number     : FOC18479F5A
+System serial number            : FCW1848A01C
+Top Assembly Part Number        : 800-41469-01
+Top Assembly Revision Number    : C0
+Version ID                      : V02
+CLEI Code Number                : CMMLR00ARB
+Daughterboard revision number   : A0
+Hardware Board Revision Number  : 0x12
+
+
+Switch Ports Model                     SW Version            SW Image                 
+------ ----- -----                     ----------            ----------               
+*    1 28    WS-C2960X-24PS-L          15.2(2)E6             C2960X-UNIVERSALK9-M     
+
+
+Configuration register is 0xF
+
+SW-DC2-DCIM-CHAD01-SET-01#show cdp nei
+Capability Codes: R - Router, T - Trans Bridge, B - Source Route Bridge
+                  S - Switch, H - Host, I - IGMP, r - Repeater, P - Phone, 
+                  D - Remote, C - CVTA, M - Two-port Mac Relay 
+
+Device ID        Local Intrfce     Holdtme    Capability  Platform  Port ID
+SW-DC2-Server-OOB-CHAD01-SET-01.set.or.t
+                 Gig 1/0/24        126              S I   WS-C2960X Gig 1/0/46
+
+Total cdp entries displayed : 1
+SW-DC2-DCIM-CHAD01-SET-01#show lldp nei
+Capability codes:
+    (R) Router, (B) Bridge, (T) Telephone, (C) DOCSIS Cable Device
+    (W) WLAN Access Point, (P) Repeater, (S) Station, (O) Other
+
+Device ID           Local Intf     Hold-time  Capability      Port ID
+
+Total entries displayed: 0
+
+SW-DC2-DCIM-CHAD01-SET-01#show ip arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  10.25.1.1             221   0000.0c9f.f7cf  ARPA   Vlan1999
+Internet  10.25.1.240             -   547c.6999.2241  ARPA   Vlan1999
+SW-DC2-DCIM-CHAD01-SET-01#show mac address
+          Mac Address Table
+-------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       --------    -----
+ All    0100.0ccc.cccc    STATIC      CPU
+ All    0100.0ccc.cccd    STATIC      CPU
+ All    0180.c200.0000    STATIC      CPU
+ All    0180.c200.0001    STATIC      CPU
+ All    0180.c200.0002    STATIC      CPU
+ All    0180.c200.0003    STATIC      CPU
+ All    0180.c200.0004    STATIC      CPU
+ All    0180.c200.0005    STATIC      CPU
+ All    0180.c200.0006    STATIC      CPU
+ All    0180.c200.0007    STATIC      CPU
+ All    0180.c200.0008    STATIC      CPU
+ All    0180.c200.0009    STATIC      CPU
+ All    0180.c200.000a    STATIC      CPU
+ All    0180.c200.000b    STATIC      CPU
+ All    0180.c200.000c    STATIC      CPU
+ All    0180.c200.000d    STATIC      CPU
+ All    0180.c200.000e    STATIC      CPU
+ All    0180.c200.000f    STATIC      CPU
+ All    0180.c200.0010    STATIC      CPU
+ All    ffff.ffff.ffff    STATIC      CPU
+1901    0000.0c9f.f76d    DYNAMIC     Gi1/0/24
+1901    000a.5c91.f7b1    DYNAMIC     Gi1/0/24
+1901    0050.56bf.c514    DYNAMIC     Gi1/0/24
+1901    0050.56bf.f17f    DYNAMIC     Gi1/0/24
+1901    0080.f470.fab8    DYNAMIC     Gi1/0/24
+1901    009e.1e1e.a6dc    DYNAMIC     Gi1/0/24
+1901    009e.1e1e.a851    DYNAMIC     Gi1/0/24
+1901    00c0.b785.9c99    DYNAMIC     Gi1/0/24
+1901    00c0.b786.74d1    DYNAMIC     Gi1/0/24
+1901    00c0.b786.74de    DYNAMIC     Gi1/0/24
+1901    00c0.b786.74e7    DYNAMIC     Gi1/0/24
+1901    00c0.b786.74eb    DYNAMIC     Gi1/0/24
+1901    00c0.b786.750e    DYNAMIC     Gi1/0/24
+1901    00c0.b786.7522    DYNAMIC     Gi1/0/24
+1901    00c0.b786.7538    DYNAMIC     Gi1/0/24
+1901    00c0.b786.7552    DYNAMIC     Gi1/0/24
+1901    00c0.b786.ceba    DYNAMIC     Gi1/0/23
+1901    00c0.b788.5e73    DYNAMIC     Gi1/0/24
+1901    00c0.b78b.1b22    DYNAMIC     Gi1/0/5
+1901    00c0.b78b.1b2d    DYNAMIC     Gi1/0/3
+1901    00c0.b78b.1b48    DYNAMIC     Gi1/0/4
+1901    00c0.b78b.1b4b    DYNAMIC     Gi1/0/7
+1901    00c0.b78b.1b54    DYNAMIC     Gi1/0/6
+1901    00c0.b78b.1b56    DYNAMIC     Gi1/0/8
+1901    00c0.b78c.4bca    DYNAMIC     Gi1/0/24
+1901    00c0.b7b6.907a    DYNAMIC     Gi1/0/24
+1901    00c0.b7b6.f44e    DYNAMIC     Gi1/0/24
+1901    00c0.b7b6.f480    DYNAMIC     Gi1/0/24
+1901    00c0.b7b6.f4d9    DYNAMIC     Gi1/0/24
+1901    00c0.b7b9.27ca    DYNAMIC     Gi1/0/24
+1901    00c0.b7b9.462d    DYNAMIC     Gi1/0/24
+1901    00c0.b7b9.4c98    DYNAMIC     Gi1/0/24
+1901    00c0.b7b9.4c9b    DYNAMIC     Gi1/0/24
+1901    00c0.b7b9.4ca0    DYNAMIC     Gi1/0/24
+1901    00c0.b7b9.4cb3    DYNAMIC     Gi1/0/24
+1901    00c0.b7b9.4cce    DYNAMIC     Gi1/0/24
+1901    00c0.b7df.f79d    DYNAMIC     Gi1/0/24
+1901    00c0.b7e0.02f2    DYNAMIC     Gi1/0/24
+1901    00c0.b7e0.2dd1    DYNAMIC     Gi1/0/24
+1901    00c0.b7e0.8ced    DYNAMIC     Gi1/0/24
+1901    00c0.b7e0.8d10    DYNAMIC     Gi1/0/24
+1901    00c0.b7e0.8d36    DYNAMIC     Gi1/0/24
+1901    00c0.b7e0.b7e5    DYNAMIC     Gi1/0/24
+1901    00c0.b7e0.b829    DYNAMIC     Gi1/0/24
+1901    00c0.b7e0.b85a    DYNAMIC     Gi1/0/24
+1901    00c0.b7e0.b85b    DYNAMIC     Gi1/0/24
+1901    00c0.b7e0.b8f5    DYNAMIC     Gi1/0/24
+1901    00c0.b7e8.f23a    DYNAMIC     Gi1/0/24
+1901    00c0.b7e8.f240    DYNAMIC     Gi1/0/24
+1901    00c0.b7e9.1489    DYNAMIC     Gi1/0/2
+1901    00c0.b7e9.1494    DYNAMIC     Gi1/0/1
+1901    00c0.b7e9.62db    DYNAMIC     Gi1/0/24
+1901    00c0.b7e9.62e8    DYNAMIC     Gi1/0/24
+1901    00c0.b7e9.62ee    DYNAMIC     Gi1/0/24
+1901    00c0.b7e9.62f0    DYNAMIC     Gi1/0/24
+1901    00c0.b7e9.62fd    DYNAMIC     Gi1/0/24
+1901    00c0.b7e9.6301    DYNAMIC     Gi1/0/24
+1901    00c0.b7e9.6302    DYNAMIC     Gi1/0/24
+1901    00c0.b7e9.6306    DYNAMIC     Gi1/0/24
+1901    00c0.b7e9.630a    DYNAMIC     Gi1/0/24
+1901    00c0.b7e9.630c    DYNAMIC     Gi1/0/24
+1901    00c0.b7e9.6313    DYNAMIC     Gi1/0/24
+1901    00c0.b7e9.f791    DYNAMIC     Gi1/0/24
+1901    00c0.b7e9.f7a4    DYNAMIC     Gi1/0/24
+1901    00c0.b7e9.f7a5    DYNAMIC     Gi1/0/24
+1901    00c0.b7e9.f8ae    DYNAMIC     Gi1/0/24
+1901    00c0.b7eb.12b8    DYNAMIC     Gi1/0/24
+1901    00c0.b7eb.a687    DYNAMIC     Gi1/0/24
+1901    00c0.b7eb.a68c    DYNAMIC     Gi1/0/24
+1901    00c0.b7eb.a68d    DYNAMIC     Gi1/0/24
+1901    00c0.b7eb.a6a8    DYNAMIC     Gi1/0/24
+1901    00c0.b7eb.a6b2    DYNAMIC     Gi1/0/24
+1901    00c0.b7eb.a6b6    DYNAMIC     Gi1/0/24
+1901    00c0.b7eb.d3a8    DYNAMIC     Gi1/0/24
+1901    00c0.b7eb.d3a9    DYNAMIC     Gi1/0/24
+1901    00c0.b7ec.73ef    DYNAMIC     Gi1/0/24
+1901    00c0.b7ec.7584    DYNAMIC     Gi1/0/24
+1901    00c0.b7ed.5664    DYNAMIC     Gi1/0/24
+1901    00c0.b7ed.e413    DYNAMIC     Gi1/0/24
+1901    00c0.b7ed.e417    DYNAMIC     Gi1/0/24
+1901    00c0.b7ed.e418    DYNAMIC     Gi1/0/24
+1901    00c0.b7ed.e41a    DYNAMIC     Gi1/0/24
+1901    00c0.b7ed.e420    DYNAMIC     Gi1/0/24
+1901    00c0.b7ed.e422    DYNAMIC     Gi1/0/24
+1901    00c0.b7ed.e42a    DYNAMIC     Gi1/0/24
+1901    00c0.b7ed.e42d    DYNAMIC     Gi1/0/24
+1901    00c0.b7ed.e42e    DYNAMIC     Gi1/0/24
+1901    00c0.b7ed.e432    DYNAMIC     Gi1/0/24
+1901    00c0.b7ed.e436    DYNAMIC     Gi1/0/24
+1901    00c0.b7ed.e439    DYNAMIC     Gi1/0/24
+1901    00c0.b7ed.e43c    DYNAMIC     Gi1/0/24
+1901    00c0.b7ed.e448    DYNAMIC     Gi1/0/24
+1901    00c0.b7ed.e459    DYNAMIC     Gi1/0/24
+1901    00c0.b7ed.e45a    DYNAMIC     Gi1/0/24
+1901    00c0.b7ed.e463    DYNAMIC     Gi1/0/24
+1901    00c0.b7ed.e465    DYNAMIC     Gi1/0/24
+1901    00c0.b7ed.e467    DYNAMIC     Gi1/0/24
+1901    00c0.b7f1.bb8a    DYNAMIC     Gi1/0/24
+1901    00c0.b7f1.be3e    DYNAMIC     Gi1/0/24
+1901    00c0.b7f1.bfd1    DYNAMIC     Gi1/0/24
+1901    00c0.b7f1.bfdb    DYNAMIC     Gi1/0/24
+1901    00c0.b7f1.c037    DYNAMIC     Gi1/0/24
+1901    00c0.b7fc.1149    DYNAMIC     Gi1/0/24
+1901    00c0.b7fc.1184    DYNAMIC     Gi1/0/24
+1901    02e0.ed94.79f1    DYNAMIC     Gi1/0/24
+1901    02e0.ed94.7b61    DYNAMIC     Gi1/0/24
+1901    02e0.ed94.7dbf    DYNAMIC     Gi1/0/24
+1901    02e0.ed94.7e2f    DYNAMIC     Gi1/0/24
+1901    2829.8610.a65f    DYNAMIC     Gi1/0/24
+1901    2829.8646.1bf9    DYNAMIC     Gi1/0/24
+1901    2829.8654.53c2    DYNAMIC     Gi1/0/24
+1901    2829.8662.e40a    DYNAMIC     Gi1/0/24
+1901    2829.8662.e415    DYNAMIC     Gi1/0/24
+1901    2829.8662.e41d    DYNAMIC     Gi1/0/24
+1901    2829.8662.e42d    DYNAMIC     Gi1/0/24
+1901    2829.8662.e434    DYNAMIC     Gi1/0/24
+1901    2829.8662.e438    DYNAMIC     Gi1/0/24
+1901    2829.8662.e881    DYNAMIC     Gi1/0/24
+1901    2829.8662.e8a3    DYNAMIC     Gi1/0/24
+1901    2829.8662.eb98    DYNAMIC     Gi1/0/24
+1901    2829.8662.ebab    DYNAMIC     Gi1/0/24
+1901    2829.8662.ebc3    DYNAMIC     Gi1/0/24
+1901    2829.8662.ebdb    DYNAMIC     Gi1/0/24
+1901    2829.8662.ebf0    DYNAMIC     Gi1/0/24
+1901    2829.8662.ed4e    DYNAMIC     Gi1/0/24
+1901    2829.8662.ed52    DYNAMIC     Gi1/0/24
+1901    2829.8662.ef2e    DYNAMIC     Gi1/0/24
+1901    2829.8662.ef43    DYNAMIC     Gi1/0/24
+1901    2829.8662.ef53    DYNAMIC     Gi1/0/24
+1901    2829.8662.efef    DYNAMIC     Gi1/0/24
+1901    2829.8662.eff0    DYNAMIC     Gi1/0/24
+1901    2829.8662.f114    DYNAMIC     Gi1/0/24
+1901    2829.8662.f117    DYNAMIC     Gi1/0/24
+1901    2829.8662.f12a    DYNAMIC     Gi1/0/24
+1901    2829.8662.f1df    DYNAMIC     Gi1/0/24
+1901    2829.8662.f1e0    DYNAMIC     Gi1/0/24
+1901    2829.8662.f1ea    DYNAMIC     Gi1/0/24
+1901    2829.8662.f1ee    DYNAMIC     Gi1/0/24
+1901    2829.8662.f1f1    DYNAMIC     Gi1/0/24
+1901    2829.8662.f1f4    DYNAMIC     Gi1/0/24
+1901    2829.8662.f1f7    DYNAMIC     Gi1/0/24
+1901    2829.8662.f1ff    DYNAMIC     Gi1/0/24
+1901    2829.8662.f500    DYNAMIC     Gi1/0/24
+1901    2829.8673.a44e    DYNAMIC     Gi1/0/24
+1901    2829.8673.a526    DYNAMIC     Gi1/0/24
+1901    2829.8675.8df7    DYNAMIC     Gi1/0/24
+1901    2829.867a.fa80    DYNAMIC     Gi1/0/24
+1901    2829.867b.27b9    DYNAMIC     Gi1/0/24
+1901    2829.867b.5619    DYNAMIC     Gi1/0/24
+1901    2829.867b.561a    DYNAMIC     Gi1/0/24
+1901    2829.867b.7416    DYNAMIC     Gi1/0/24
+1901    2829.867b.741c    DYNAMIC     Gi1/0/24
+1901    2829.867b.7420    DYNAMIC     Gi1/0/24
+1901    2829.867b.7432    DYNAMIC     Gi1/0/24
+1901    2829.867b.7433    DYNAMIC     Gi1/0/24
+1901    2829.867b.7466    DYNAMIC     Gi1/0/24
+1901    2829.867b.746c    DYNAMIC     Gi1/0/24
+1901    2829.867b.747c    DYNAMIC     Gi1/0/24
+1901    2829.867b.747d    DYNAMIC     Gi1/0/24
+1901    2829.867b.7481    DYNAMIC     Gi1/0/24
+1901    2829.867b.7482    DYNAMIC     Gi1/0/24
+1901    2829.867b.7483    DYNAMIC     Gi1/0/24
+1901    2829.867b.7485    DYNAMIC     Gi1/0/24
+1901    2829.867b.7487    DYNAMIC     Gi1/0/24
+1901    2829.867b.7488    DYNAMIC     Gi1/0/24
+1901    2829.867b.7490    DYNAMIC     Gi1/0/24
+1901    2829.867b.7491    DYNAMIC     Gi1/0/12
+1901    2829.867b.7494    DYNAMIC     Gi1/0/24
+1901    2829.867b.7495    DYNAMIC     Gi1/0/24
+1901    2829.867b.7496    DYNAMIC     Gi1/0/24
+1901    2829.867b.749a    DYNAMIC     Gi1/0/24
+1901    2829.867b.74a1    DYNAMIC     Gi1/0/24
+1901    2829.867b.74a2    DYNAMIC     Gi1/0/24
+1901    2829.867b.74a9    DYNAMIC     Gi1/0/24
+1901    2829.867b.74b2    DYNAMIC     Gi1/0/24
+1901    2829.867b.74bf    DYNAMIC     Gi1/0/24
+1901    2829.867b.74cf    DYNAMIC     Gi1/0/24
+1901    2829.867b.74d2    DYNAMIC     Gi1/0/24
+1901    2829.867b.74d6    DYNAMIC     Gi1/0/24
+1901    2829.867b.74d8    DYNAMIC     Gi1/0/24
+1901    2829.867b.74d9    DYNAMIC     Gi1/0/9
+1901    2829.867b.74dd    DYNAMIC     Gi1/0/24
+1901    2829.867b.74de    DYNAMIC     Gi1/0/24
+1901    2829.867b.74e0    DYNAMIC     Gi1/0/24
+1901    2829.867b.74f2    DYNAMIC     Gi1/0/10
+1901    2829.867b.74f3    DYNAMIC     Gi1/0/24
+1901    2829.867b.74f4    DYNAMIC     Gi1/0/24
+1901    2829.867b.750a    DYNAMIC     Gi1/0/24
+1901    2829.867b.7510    DYNAMIC     Gi1/0/24
+1901    2829.867b.7516    DYNAMIC     Gi1/0/24
+1901    2829.867b.754b    DYNAMIC     Gi1/0/24
+1901    2829.867b.754f    DYNAMIC     Gi1/0/24
+1901    2829.867b.757f    DYNAMIC     Gi1/0/24
+1901    2829.867b.759e    DYNAMIC     Gi1/0/24
+1901    2829.867b.75a9    DYNAMIC     Gi1/0/24
+1901    2829.867b.75ab    DYNAMIC     Gi1/0/24
+1901    2829.867b.75ad    DYNAMIC     Gi1/0/11
+1901    2829.867b.75ce    DYNAMIC     Gi1/0/24
+1901    2829.867b.8a19    DYNAMIC     Gi1/0/24
+1901    2829.867b.8a24    DYNAMIC     Gi1/0/24
+1901    2829.867b.8a30    DYNAMIC     Gi1/0/24
+1901    2829.867b.8a43    DYNAMIC     Gi1/0/24
+1901    2829.8689.01bd    DYNAMIC     Gi1/0/24
+1901    2829.8689.01c4    DYNAMIC     Gi1/0/24
+1901    2829.8689.01dd    DYNAMIC     Gi1/0/24
+1901    c800.84dc.f4ae    DYNAMIC     Gi1/0/24
+1901    cc6a.33f1.96ff    DYNAMIC     Gi1/0/24
+1901    cc6a.33f1.983f    DYNAMIC     Gi1/0/24
+1901    d4ae.52cf.8a29    DYNAMIC     Gi1/0/24
+1901    d4ae.52cf.8a2b    DYNAMIC     Gi1/0/24
+1999    0000.0c9f.f7cf    DYNAMIC     Gi1/0/24
+1999    02e0.ed94.79f1    DYNAMIC     Gi1/0/24
+1999    02e0.ed94.7b61    DYNAMIC     Gi1/0/24
+1999    02e0.ed94.7dbf    DYNAMIC     Gi1/0/24
+1999    02e0.ed94.7e2f    DYNAMIC     Gi1/0/24
+1999    0cc4.7a44.5cab    DYNAMIC     Gi1/0/24
+1999    0cc4.7a44.5cad    DYNAMIC     Gi1/0/24
+1999    10f9.20ff.9f00    DYNAMIC     Gi1/0/24
+1999    84d4.1251.8700    DYNAMIC     Gi1/0/24
+1999    84d4.1254.7b00    DYNAMIC     Gi1/0/24
+1999    c800.84dc.f4ae    DYNAMIC     Gi1/0/24
+1999    cc6a.33f1.96ff    DYNAMIC     Gi1/0/24
+1999    cc6a.33f1.983f    DYNAMIC     Gi1/0/24
+1999    ecf4.0c0d.f2bc    DYNAMIC     Gi1/0/24
+1999    ecf4.0c0e.e554    DYNAMIC     Gi1/0/24
+Total Mac Addresses for this criterion: 245
+SW-DC2-DCIM-CHAD01-SET-01#show spanning-tree root
+
+                                        Root    Hello Max Fwd
+Vlan                   Root ID          Cost    Time  Age Dly  Root Port
+---------------- -------------------- --------- ----- --- ---  ------------
+VLAN1901          5997 0023.04ee.be01         7    2   20  15  Gi1/0/24        
+VLAN1999          6095 0023.04ee.be01         7    2   20  15  Gi1/0/24        
+SW-DC2-DCIM-CHAD01-SET-01#show spanning-tree
+
+VLAN1901
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    5997
+             Address     0023.04ee.be01
+             Cost        7
+             Port        24 (GigabitEthernet1/0/24)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    34669  (priority 32768 sys-id-ext 1901)
+             Address     547c.6999.2200
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi1/0/1             Desg FWD 19        128.1    P2p 
+Gi1/0/2             Desg FWD 19        128.2    P2p 
+Gi1/0/3             Desg FWD 19        128.3    P2p 
+Gi1/0/4             Desg FWD 19        128.4    P2p 
+Gi1/0/5             Desg FWD 19        128.5    P2p 
+Gi1/0/6             Desg FWD 19        128.6    P2p 
+Gi1/0/7             Desg FWD 19        128.7    P2p 
+Gi1/0/8             Desg FWD 19        128.8    P2p 
+Gi1/0/9             Desg FWD 19        128.9    Shr 
+Gi1/0/10            Desg FWD 19        128.10   Shr 
+Gi1/0/11            Desg FWD 19        128.11   Shr 
+Gi1/0/12            Desg FWD 19        128.12   Shr 
+Gi1/0/23            Desg FWD 19        128.23   P2p 
+Gi1/0/24            Root FWD 4         128.24   P2p 
+
+
+
+VLAN1999
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    6095
+             Address     0023.04ee.be01
+             Cost        7
+             Port        24 (GigabitEthernet1/0/24)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    34767  (priority 32768 sys-id-ext 1999)
+             Address     547c.6999.2200
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi1/0/24            Root FWD 4         128.24   P2p 
+
+
+SW-DC2-DCIM-CHAD01-SET-01#show inventory
+NAME: "1", DESCR: "WS-C2960X-24PS-L"
+PID: WS-C2960X-24PS-L  , VID: V02  , SN: FCW1848A01C
+
+
+SW-DC2-DCIM-CHAD01-SET-01#show etherchannel summary
+Flags:  D - down        P - bundled in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      f - failed to allocate aggregator
+
+        M - not in use, minimum links not met
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+
+
+Number of channel-groups in use: 0
+Number of aggregators:           0
+
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+-----------------------------------------------
+
+SW-DC2-DCIM-CHAD01-SET-01#show vtp status
+VTP Version capable             : 1 to 3
+VTP version running             : 1
+VTP Domain Name                 : 
+VTP Pruning Mode                : Disabled
+VTP Traps Generation            : Enabled
+Device ID                       : 547c.6999.2200
+Configuration last modified by 10.11.255.82 at 0-0-00 00:00:00
+
+Feature VLAN:
+--------------
+VTP Operating Mode                : Transparent
+Maximum VLANs supported locally   : 1005
+Number of existing VLANs          : 5
+Configuration Revision            : 0
+MD5 digest                        : 0x8D 0x26 0xB1 0xBE 0x96 0x93 0x3B 0x6C 
+                                    0xD4 0x98 0x17 0x79 0xE3 0x07 0x53 0x7D 
+SW-DC2-DCIM-CHAD01-SET-01#
+SW-DC2-DCIM-CHAD01-SET-01#
+Disconnect Time : 03/01/2025 17:55:57:799

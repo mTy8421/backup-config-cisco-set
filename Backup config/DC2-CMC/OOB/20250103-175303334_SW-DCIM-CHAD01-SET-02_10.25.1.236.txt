@@ -1,0 +1,1040 @@
+Connect Time : 03/01/2025 17:53:03:334
+
+Warning
+*************************************************************************
+*       This system is for the use of authorized users only.            *
+*       Individuals using this computer system without authority, or in *
+*       excess of their authority, are subject to having all of their   *
+*       activities on this system monitored and recorded by system      *
+*       personnel.                                                      *
+*                                                                       *
+*       In the course of monitoring individuals improperly using this   *
+*       system, or in the course of system maintenance, the activities  *
+*       of authorized users may also be monitored.                      *
+*                                                                       *
+*       Anyone using this system expressly consents to such monitoring  *
+*       and is advised that if such monitoring reveals possible         *
+*       evidence of criminal activity, system personnel may provide the *
+*       evidence of such monitoring to law enforcement officials.       *
+*************************************************************************
+
+SW-DCIM-CHAD01-SET-02#terminal length 0
+SW-DCIM-CHAD01-SET-02#show running-config
+Building configuration...
+
+Current configuration : 9418 bytes
+!
+! Last configuration change at 09:38:01 GMT Sun Nov 26 2023 by thananan
+! NVRAM config last updated at 09:38:03 GMT Sun Nov 26 2023 by thananan
+!
+version 15.0
+no service pad
+service tcp-keepalives-in
+service tcp-keepalives-out
+service timestamps debug datetime msec localtime show-timezone
+service timestamps log datetime msec localtime show-timezone
+service password-encryption
+service compress-config
+!
+hostname SW-DCIM-CHAD01-SET-02
+!
+boot-start-marker
+boot system flash bootflash:/cat4500e-lanbasek9-mz.150-2.SG10.bin
+boot-end-marker
+!
+logging buffered 64000
+logging event link-status global
+logging event trunk-status global
+enable secret 5 $1$ou7T$Vaju8wNJWWo.SqUBhcnEN/
+!
+username nwadmin secret 5 $1$MBKw$wjwY.x395sHOiSIds6Ad00
+!
+!
+aaa new-model
+!
+!
+aaa authentication login default group tacacs+ local
+aaa authentication enable default enable
+aaa authorization config-commands
+aaa authorization exec default group tacacs+ local if-authenticated 
+aaa authorization commands 1 default group tacacs+ if-authenticated 
+aaa authorization commands 7 default group tacacs+ if-authenticated 
+aaa authorization commands 15 default group tacacs+ if-authenticated 
+aaa accounting commands 1 default start-stop group tacacs+
+aaa accounting commands 7 default start-stop group tacacs+
+aaa accounting commands 15 default start-stop group tacacs+
+!
+!
+!
+aaa session-id common
+clock timezone GMT 7
+vtp domain Trading
+vtp mode transparent
+ip subnet-zero
+!
+!
+ip vrf mgmtVrf
+!
+no ip domain-lookup
+ip domain-name set.or.th
+!
+!
+!
+power redundancy-mode redundant
+!
+!
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+vlan 307
+ name Trading
+!
+vlan 1901
+ name DCIM
+!
+vlan 1999
+ name Network-OOB
+!
+ip ssh version 2
+!
+!
+interface FastEthernet1
+ ip vrf forwarding mgmtVrf
+ no ip address
+ speed auto
+ duplex auto
+!
+interface GigabitEthernet1/1
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/2
+ description Link Flap
+ switchport access vlan 1901
+ switchport mode access
+ shutdown
+!
+interface GigabitEthernet1/3
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/4
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/5
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/6
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/7
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/8
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/9
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/10
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/11
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/12
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/13
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/14
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/15
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/16
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/17
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/18
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/19
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/20
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/21
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/22
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/23
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/24
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/25
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/26
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/27
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/28
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/29
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/30
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/31
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/32
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/33
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/34
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/35
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/36
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/37
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/38
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/39
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/40
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/41
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/42
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/43
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/44
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/45
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/46
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/47
+ switchport access vlan 1901
+ switchport mode access
+!
+interface GigabitEthernet1/48
+ description SW-DC2-OOB-CSAD01-SET-01 : gi1/0/44
+ switchport trunk allowed vlan 1901,1999
+ switchport mode trunk
+!
+interface TenGigabitEthernet1/49
+!
+interface TenGigabitEthernet1/50
+!
+interface TenGigabitEthernet1/51
+!
+interface TenGigabitEthernet1/52
+!
+interface Vlan1
+ no ip address
+!
+interface Vlan1999
+ ip address 10.25.1.236 255.255.255.0
+!
+ip route 0.0.0.0 0.0.0.0 10.25.1.1
+no ip http server
+no ip http secure-server
+!
+!
+logging trap debugging
+logging 10.24.22.21
+access-list 97 permit 10.24.21.0 0.0.0.255
+access-list 97 permit 10.3.5.0 0.0.0.255
+access-list 97 permit 10.25.2.0 0.0.0.255
+access-list 98 permit 10.0.0.0 0.0.0.255
+access-list 99 permit 10.0.0.0 0.0.0.255
+!
+snmp-server community R3@donly RO 97
+snmp-server community R3@dwrite RW 98
+snmp-server location SET-DC2
+snmp-server enable traps snmp authentication linkdown linkup coldstart warmstart
+snmp-server enable traps transceiver all
+snmp-server enable traps tty
+snmp-server enable traps fru-ctrl
+snmp-server enable traps entity
+snmp-server enable traps flash insertion removal
+snmp-server enable traps power-ethernet police
+snmp-server enable traps cpu threshold
+snmp-server enable traps vtp
+snmp-server enable traps vlancreate
+snmp-server enable traps vlandelete
+snmp-server enable traps auth-framework sec-violation
+snmp-server enable traps envmon fan shutdown supply temperature status
+snmp-server enable traps port-security
+snmp-server enable traps event-manager
+snmp-server enable traps config-copy
+snmp-server enable traps config
+snmp-server enable traps config-ctid
+snmp-server enable traps energywise
+snmp-server enable traps bridge newroot topologychange
+snmp-server enable traps stpx inconsistency root-inconsistency loop-inconsistency
+snmp-server enable traps syslog
+snmp-server enable traps errdisable
+snmp-server enable traps vlan-membership
+snmp-server enable traps mac-notification change move threshold
+tacacs-server host 10.25.2.200
+tacacs-server directed-request
+tacacs-server key 7 097F4B0A0B5603190E154E
+banner motd ^C
+Warning
+*************************************************************************
+*       This system is for the use of authorized users only.            *
+*       Individuals using this computer system without authority, or in *
+*       excess of their authority, are subject to having all of their   *
+*       activities on this system monitored and recorded by system      *
+*       personnel.                                                      *
+*                                                                       *
+*       In the course of monitoring individuals improperly using this   *
+*       system, or in the course of system maintenance, the activities  *
+*       of authorized users may also be monitored.                      *
+*                                                                       *
+*       Anyone using this system expressly consents to such monitoring  *
+*       and is advised that if such monitoring reveals possible         *
+*       evidence of criminal activity, system personnel may provide the *
+*       evidence of such monitoring to law enforcement officials.       *
+*************************************************************************
+^C
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ privilege level 15
+ logging synchronous
+ transport input ssh
+line vty 5 15
+ privilege level 15
+ logging synchronous
+ transport input ssh
+!
+ntp clock-period 17180342
+ntp server 10.24.1.27 prefer
+ntp server 10.34.1.27
+ntp server 10.24.1.28
+ntp server 10.34.1.28
+end
+
+SW-DCIM-CHAD01-SET-02#show interface description
+Interface                      Status         Protocol Description
+Vl1                            down           down     
+Vl1999                         up             up       
+Fa1                            down           down     
+Gi1/1                          up             up       
+Gi1/2                          admin down     down     Link Flap
+Gi1/3                          up             up       
+Gi1/4                          up             up       
+Gi1/5                          up             up       
+Gi1/6                          up             up       
+Gi1/7                          up             up       
+Gi1/8                          up             up       
+Gi1/9                          up             up       
+Gi1/10                         up             up       
+Gi1/11                         up             up       
+Gi1/12                         up             up       
+Gi1/13                         down           down     
+Gi1/14                         down           down     
+Gi1/15                         up             up       
+Gi1/16                         up             up       
+Gi1/17                         up             up       
+Gi1/18                         up             up       
+Gi1/19                         up             up       
+Gi1/20                         down           down     
+Gi1/21                         up             up       
+Gi1/22                         up             up       
+Gi1/23                         up             up       
+Gi1/24                         up             up       
+Gi1/25                         up             up       
+Gi1/26                         up             up       
+Gi1/27                         up             up       
+Gi1/28                         up             up       
+Gi1/29                         up             up       
+Gi1/30                         up             up       
+Gi1/31                         up             up       
+Gi1/32                         up             up       
+Gi1/33                         down           down     
+Gi1/34                         down           down     
+Gi1/35                         up             up       
+Gi1/36                         up             up       
+Gi1/37                         down           down     
+Gi1/38                         down           down     
+Gi1/39                         down           down     
+Gi1/40                         down           down     
+Gi1/41                         down           down     
+Gi1/42                         down           down     
+Gi1/43                         down           down     
+Gi1/44                         down           down     
+Gi1/45                         down           down     
+Gi1/46                         down           down     
+Gi1/47                         down           down     
+Gi1/48                         up             up       SW-DC2-OOB-CSAD01-SET-01 : gi1/0/44
+Te1/49                         down           down     
+Te1/50                         down           down     
+Te1/51                         down           down     
+Te1/52                         down           down     
+SW-DCIM-CHAD01-SET-02#show ip int brief
+Interface              IP-Address      OK? Method Status                Protocol
+Vlan1                  unassigned      YES NVRAM  down                  down    
+Vlan1999               10.25.1.236     YES manual up                    up      
+FastEthernet1          unassigned      YES NVRAM  down                  down    
+GigabitEthernet1/1     unassigned      YES unset  up                    up      
+GigabitEthernet1/2     unassigned      YES unset  administratively down down    
+GigabitEthernet1/3     unassigned      YES unset  up                    up      
+GigabitEthernet1/4     unassigned      YES unset  up                    up      
+GigabitEthernet1/5     unassigned      YES unset  up                    up      
+GigabitEthernet1/6     unassigned      YES unset  up                    up      
+GigabitEthernet1/7     unassigned      YES unset  up                    up      
+GigabitEthernet1/8     unassigned      YES unset  up                    up      
+GigabitEthernet1/9     unassigned      YES unset  up                    up      
+GigabitEthernet1/10    unassigned      YES unset  up                    up      
+GigabitEthernet1/11    unassigned      YES unset  up                    up      
+GigabitEthernet1/12    unassigned      YES unset  up                    up      
+GigabitEthernet1/13    unassigned      YES unset  down                  down    
+GigabitEthernet1/14    unassigned      YES unset  down                  down    
+GigabitEthernet1/15    unassigned      YES unset  up                    up      
+GigabitEthernet1/16    unassigned      YES unset  up                    up      
+GigabitEthernet1/17    unassigned      YES unset  up                    up      
+GigabitEthernet1/18    unassigned      YES unset  up                    up      
+GigabitEthernet1/19    unassigned      YES unset  up                    up      
+GigabitEthernet1/20    unassigned      YES unset  down                  down    
+GigabitEthernet1/21    unassigned      YES unset  up                    up      
+GigabitEthernet1/22    unassigned      YES unset  up                    up      
+GigabitEthernet1/23    unassigned      YES unset  up                    up      
+GigabitEthernet1/24    unassigned      YES unset  up                    up      
+GigabitEthernet1/25    unassigned      YES unset  up                    up      
+GigabitEthernet1/26    unassigned      YES unset  up                    up      
+GigabitEthernet1/27    unassigned      YES unset  up                    up      
+GigabitEthernet1/28    unassigned      YES unset  up                    up      
+GigabitEthernet1/29    unassigned      YES unset  up                    up      
+GigabitEthernet1/30    unassigned      YES unset  up                    up      
+GigabitEthernet1/31    unassigned      YES unset  up                    up      
+GigabitEthernet1/32    unassigned      YES unset  up                    up      
+GigabitEthernet1/33    unassigned      YES unset  down                  down    
+GigabitEthernet1/34    unassigned      YES unset  down                  down    
+GigabitEthernet1/35    unassigned      YES unset  up                    up      
+GigabitEthernet1/36    unassigned      YES unset  up                    up      
+GigabitEthernet1/37    unassigned      YES unset  down                  down    
+GigabitEthernet1/38    unassigned      YES unset  down                  down    
+GigabitEthernet1/39    unassigned      YES unset  down                  down    
+GigabitEthernet1/40    unassigned      YES unset  down                  down    
+GigabitEthernet1/41    unassigned      YES unset  down                  down    
+GigabitEthernet1/42    unassigned      YES unset  down                  down    
+GigabitEthernet1/43    unassigned      YES unset  down                  down    
+GigabitEthernet1/44    unassigned      YES unset  down                  down    
+GigabitEthernet1/45    unassigned      YES unset  down                  down    
+GigabitEthernet1/46    unassigned      YES unset  down                  down    
+GigabitEthernet1/47    unassigned      YES unset  down                  down    
+GigabitEthernet1/48    unassigned      YES unset  up                    up      
+TenGigabitEthernet1/49 unassigned      YES unset  down                  down    
+TenGigabitEthernet1/50 unassigned      YES unset  down                  down    
+TenGigabitEthernet1/51 unassigned      YES unset  down                  down    
+TenGigabitEthernet1/52 unassigned      YES unset  down                  down    
+SW-DCIM-CHAD01-SET-02#show interface status
+
+Port      Name               Status       Vlan       Duplex  Speed Type
+Gi1/1                        connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/2     Link Flap          disabled     1901         auto   auto 10/100/1000-TX
+Gi1/3                        connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/4                        connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/5                        connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/6                        connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/7                        connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/8                        connected    1901       a-half  a-100 10/100/1000-TX
+Gi1/9                        connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/10                       connected    1901       a-half  a-100 10/100/1000-TX
+Gi1/11                       connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/12                       connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/13                       notconnect   1901         auto   auto 10/100/1000-TX
+Gi1/14                       notconnect   1901         auto   auto 10/100/1000-TX
+Gi1/15                       connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/16                       connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/17                       connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/18                       connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/19                       connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/20                       notconnect   1901         auto   auto 10/100/1000-TX
+Gi1/21                       connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/22                       connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/23                       connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/24                       connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/25                       connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/26                       connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/27                       connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/28                       connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/29                       connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/30                       connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/31                       connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/32                       connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/33                       notconnect   1901         auto   auto 10/100/1000-TX
+Gi1/34                       notconnect   1901         auto   auto 10/100/1000-TX
+Gi1/35                       connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/36                       connected    1901       a-full  a-100 10/100/1000-TX
+Gi1/37                       notconnect   1901         auto   auto 10/100/1000-TX
+Gi1/38                       notconnect   1901         auto   auto 10/100/1000-TX
+Gi1/39                       notconnect   1901         auto   auto 10/100/1000-TX
+Gi1/40                       notconnect   1901         auto   auto 10/100/1000-TX
+Gi1/41                       notconnect   1901         auto   auto 10/100/1000-TX
+Gi1/42                       notconnect   1901         auto   auto 10/100/1000-TX
+Gi1/43                       notconnect   1901         auto   auto 10/100/1000-TX
+Gi1/44                       notconnect   1901         auto   auto 10/100/1000-TX
+Gi1/45                       notconnect   1901         auto   auto 10/100/1000-TX
+Gi1/46                       notconnect   1901         auto   auto 10/100/1000-TX
+Gi1/47                       notconnect   1901         auto   auto 10/100/1000-TX
+Gi1/48    SW-DC2-OOB-CSAD01- connected    trunk      a-full a-1000 10/100/1000-TX
+Te1/49                       notconnect   1            full   auto No X2
+Te1/50                       notconnect   1            full   auto No X2
+Te1/51                       notconnect   1            full   auto No X2
+Te1/52                       notconnect   1            full   auto No X2
+SW-DCIM-CHAD01-SET-02#show vlan
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Te1/49, Te1/50, Te1/51, Te1/52
+307  Trading                          active    
+1002 fddi-default                     act/unsup 
+1003 token-ring-default               act/unsup 
+1004 fddinet-default                  act/unsup 
+1005 trnet-default                    act/unsup 
+1901 DCIM                             active    Gi1/1, Gi1/2, Gi1/3, Gi1/4
+                                                Gi1/5, Gi1/6, Gi1/7, Gi1/8
+                                                Gi1/9, Gi1/10, Gi1/11, Gi1/12
+                                                Gi1/13, Gi1/14, Gi1/15, Gi1/16
+                                                Gi1/17, Gi1/18, Gi1/19, Gi1/20
+                                                Gi1/21, Gi1/22, Gi1/23, Gi1/24
+                                                Gi1/25, Gi1/26, Gi1/27, Gi1/28
+                                                Gi1/29, Gi1/30, Gi1/31, Gi1/32
+                                                Gi1/33, Gi1/34, Gi1/35, Gi1/36
+                                                Gi1/37, Gi1/38, Gi1/39, Gi1/40
+                                                Gi1/41, Gi1/42, Gi1/43, Gi1/44
+                                                Gi1/45, Gi1/46, Gi1/47
+1999 Network-OOB                      active    
+
+VLAN Type  SAID       MTU   Parent RingNo BridgeNo Stp  BrdgMode Trans1 Trans2
+---- ----- ---------- ----- ------ ------ -------- ---- -------- ------ ------
+1    enet  100001     1500  -      -      -        -    -        0      0   
+307  enet  100307     1500  -      -      -        -    -        0      0   
+1002 fddi  101002     1500  -      -      -        -    -        0      0   
+1003 tr    101003     1500  -      -      -        -    -        0      0   
+1004 fdnet 101004     1500  -      -      -        ieee -        0      0   
+1005 trnet 101005     1500  -      -      -        ibm  -        0      0   
+1901 enet  101901     1500  -      -      -        -    -        0      0   
+1999 enet  101999     1500  -      -      -        -    -        0      0   
+
+Remote SPAN VLANs
+------------------------------------------------------------------------------
+
+
+Primary Secondary Type              Ports
+------- --------- ----------------- ------------------------------------------
+
+SW-DCIM-CHAD01-SET-02#show version
+Cisco IOS Software, Catalyst 4500 L3 Switch Software (cat4500e-LANBASEK9-M), Version 15.0(2)SG10, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2015 by Cisco Systems, Inc.
+Compiled Thu 07-May-15 00:49 by prod_rel_team
+Image text-base: 0x10000000, data-base: 0x12B5F8A4
+
+ROM: 12.2(44r)SG9
+Hobgoblin Revision 20, Fortooine Revision 1.32
+
+SW-DCIM-CHAD01-SET-02 uptime is 6 years, 11 weeks, 22 hours, 31 minutes
+System returned to ROM by reload
+System restarted at 18:26:35 GMT Fri Oct 19 2018
+System image file is "bootflash:/cat4500e-lanbasek9-mz.150-2.SG10.bin"
+Last reload reason: Reload command
+
+
+
+This product contains cryptographic features and is subject to United
+States and local country laws governing import, export, transfer and
+use. Delivery of Cisco cryptographic products does not imply
+third-party authority to import, export, distribute or use encryption.
+Importers, exporters, distributors and users are responsible for
+compliance with U.S. and local country laws. By using this product you
+agree to comply with applicable laws and regulations. If you are unable
+to comply with U.S. and local laws, return this product immediately.
+
+A summary of U.S. laws governing Cisco cryptographic products may be found at:
+http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+
+If you require further assistance please contact us by sending email to
+export@cisco.com.
+
+cisco WS-C4948E (MPC8548) processor (revision 5) with 1048576K bytes of memory.
+Processor board ID CAT1530S6JS
+MPC8548 CPU at 1GHz, Cisco Catalyst 4948E
+Last reset from Reload
+2 Virtual Ethernet interfaces
+48 Gigabit Ethernet interfaces
+4 Ten Gigabit Ethernet interfaces
+511K bytes of non-volatile configuration memory.
+
+Configuration register is 0x2102
+
+SW-DCIM-CHAD01-SET-02#show cdp nei
+Capability Codes: R - Router, T - Trans Bridge, B - Source Route Bridge
+                  S - Switch, H - Host, I - IGMP, r - Repeater, P - Phone, 
+                  D - Remote, C - CVTA, M - Two-port Mac Relay 
+
+Device ID        Local Intrfce     Holdtme    Capability  Platform  Port ID
+SW-DC2-Server-OOB-CHAD01-SET-01.set.or.t
+                 Gig 1/48          125              S I   WS-C2960X Gig 1/0/44
+SW-DCIM-CHAD01-SET-02#show lldp nei
+% LLDP is not enabled
+SW-DCIM-CHAD01-SET-02#show ip arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  10.25.1.2               4   cc6a.33f1.983f  ARPA   Vlan1999
+Internet  10.25.1.3               0   cc6a.33f1.96ff  ARPA   Vlan1999
+Internet  10.25.1.1              79   0000.0c9f.f7cf  ARPA   Vlan1999
+Internet  10.25.1.150            78   0080.ea61.6bbf  ARPA   Vlan1999
+Internet  10.25.1.246           114   c800.84dc.f4c1  ARPA   Vlan1999
+Internet  10.25.1.236             -   44d3.cadc.3ebf  ARPA   Vlan1999
+SW-DCIM-CHAD01-SET-02#show mac address
+Unicast Entries
+ vlan   mac address     type        protocols               port
+-------+---------------+--------+---------------------+--------------------
+1901    0000.0c9f.f76d   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    0000.54e5.6a95   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    0050.56bf.c514   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    0050.56bf.ddc4   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    0050.56bf.ecce   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    0050.56bf.f17f   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    0080.f446.784c   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    0080.f470.fab8   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    009e.1e1e.a6dc   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    009e.1e1e.a851   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b785.11d4   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b785.9c99   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b786.74d1   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b786.74de   dynamic ip,ipx,assigned,other GigabitEthernet1/9    
+1901    00c0.b786.74e7   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b786.74eb   dynamic ip,ipx,assigned,other GigabitEthernet1/19   
+1901    00c0.b786.750e   dynamic ip,ipx,assigned,other GigabitEthernet1/1    
+1901    00c0.b786.7522   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b786.7538   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b786.7552   dynamic ip,ipx,assigned,other GigabitEthernet1/28   
+1901    00c0.b786.7f0c   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b786.ceba   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b788.5e73   dynamic ip,ipx,assigned,other GigabitEthernet1/15   
+1901    00c0.b78b.1b22   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b78b.1b2d   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b78b.1b48   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b78b.1b4b   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b78b.1b54   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b78b.1b56   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b78c.4bca   dynamic ip,ipx,assigned,other GigabitEthernet1/18   
+1901    00c0.b7b6.907a   dynamic ip,ipx,assigned,other GigabitEthernet1/11   
+1901    00c0.b7b6.f44e   dynamic ip,ipx,assigned,other GigabitEthernet1/32   
+1901    00c0.b7b6.f480   dynamic ip,ipx,assigned,other GigabitEthernet1/21   
+1901    00c0.b7b6.f4d9   dynamic ip,ipx,assigned,other GigabitEthernet1/12   
+1901    00c0.b7b8.e022   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7b9.27ca   dynamic ip,ipx,assigned,other GigabitEthernet1/26   
+1901    00c0.b7b9.462d   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7b9.4c98   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7b9.4c9b   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7b9.4ca0   dynamic ip,ipx,assigned,other GigabitEthernet1/6    
+1901    00c0.b7b9.4cb3   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7b9.4cce   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7df.f79d   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7e0.02f2   dynamic ip,ipx,assigned,other GigabitEthernet1/22   
+1901    00c0.b7e0.2dd1   dynamic ip,ipx,assigned,other GigabitEthernet1/17   
+1901    00c0.b7e0.8ced   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7e0.8d10   dynamic ip,ipx,assigned,other GigabitEthernet1/3    
+1901    00c0.b7e0.8d36   dynamic ip,ipx,assigned,other GigabitEthernet1/36   
+1901    00c0.b7e0.b7e5   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7e0.b829   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7e0.b85a   dynamic ip,ipx,assigned,other GigabitEthernet1/35   
+1901    00c0.b7e0.b85b   dynamic ip,ipx,assigned,other GigabitEthernet1/27   
+1901    00c0.b7e0.b8f5   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7e8.f23a   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7e8.f240   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7e9.1489   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7e9.1494   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7e9.62db   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7e9.62e8   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7e9.62ee   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7e9.62f0   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7e9.62fd   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7e9.6301   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7e9.6302   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7e9.6306   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7e9.630a   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7e9.630c   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7e9.6313   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7e9.f791   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7e9.f7a4   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7e9.f7a5   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7e9.f8ae   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7eb.12b8   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7eb.a687   dynamic ip,ipx,assigned,other GigabitEthernet1/30   
+1901    00c0.b7eb.a68c   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7eb.a68d   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7eb.a6a8   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7eb.a6b2   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7eb.a6b6   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7eb.d3a8   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7eb.d3a9   dynamic ip,ipx,assigned,other GigabitEthernet1/16   
+1901    00c0.b7ec.73ef   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7ec.7584   dynamic ip,ipx,assigned,other GigabitEthernet1/25   
+1901    00c0.b7ec.d822   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7ed.5664   dynamic ip,ipx,assigned,other GigabitEthernet1/31   
+1901    00c0.b7ed.e413   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7ed.e417   dynamic ip,ipx,assigned,other GigabitEthernet1/23   
+1901    00c0.b7ed.e418   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7ed.e41a   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7ed.e420   dynamic ip,ipx,assigned,other GigabitEthernet1/7    
+1901    00c0.b7ed.e422   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7ed.e42a   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7ed.e42d   dynamic ip,ipx,assigned,other GigabitEthernet1/24   
+1901    00c0.b7ed.e42e   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7ed.e432   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7ed.e436   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7ed.e439   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7ed.e43c   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7ed.e448   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7ed.e459   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7ed.e45a   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7ed.e463   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7ed.e465   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7ed.e467   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7f1.bb8a   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7f1.be3e   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7f1.bfd1   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7f1.bfdb   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7f1.c037   dynamic ip,ipx,assigned,other GigabitEthernet1/29   
+1901    00c0.b7fc.1149   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    00c0.b7fc.1184   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8610.a65f   dynamic ip,ipx,assigned,other GigabitEthernet1/4    
+1901    2829.8646.1bf9   dynamic ip,ipx,assigned,other GigabitEthernet1/5    
+1901    2829.8654.53c2   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.e40a   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.e415   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.e41d   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.e42d   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.e434   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.e438   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.e881   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.e8a3   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.eb98   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.ebab   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.ebc3   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.ebdb   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.ebf0   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.ed4e   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.ed52   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.ef2e   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.ef43   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.ef53   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.efef   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.eff0   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.f114   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.f117   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.f12a   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.f1df   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.f1e0   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.f1ea   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.f1ee   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.f1f1   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.f1f4   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.f1f7   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.f1ff   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8662.f500   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8673.a44e   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8673.a526   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8675.8df7   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867a.fa80   dynamic ip,ipx,assigned,other GigabitEthernet1/8    
+1901    2829.867b.27b9   dynamic ip,ipx,assigned,other GigabitEthernet1/10   
+1901    2829.867b.5619   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.561a   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.7416   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.741c   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.7420   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.7432   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.7433   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.7466   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.746c   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.747c   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.747d   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.7481   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.7482   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.7483   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.7485   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.7487   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.7488   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.7490   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.7491   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.7494   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.7495   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.7496   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.749a   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.74a1   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.74a2   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.74a9   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.74b2   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.74bf   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.74cf   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.74d2   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.74d6   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.74d8   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.74d9   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.74dd   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.74de   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.74e0   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.74f2   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.74f3   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.74f4   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.750a   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.7510   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.7516   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.754b   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.754f   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.757f   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.759e   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.75a9   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.75ab   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.75ad   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.75ce   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.8a19   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.8a24   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.8a30   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.867b.8a43   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8689.01bd   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8689.01c4   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    2829.8689.01dd   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    cc6a.33f1.96ff   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    cc6a.33f1.983f   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    d4ae.52cf.8a29   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1901    d4ae.52cf.8a2b   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1999    0000.0c9f.f7cf   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1999    0cc4.7a44.5cab   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1999    0cc4.7a44.5cad   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1999    10f9.20ff.9f00   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1999    44d3.cadc.3ebf    static ip,ipx,assigned,other Switch                
+1999    84d4.1254.7b00   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1999    cc6a.33f1.96ff   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1999    cc6a.33f1.983f   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1999    ecf4.0c0d.f2bc   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+1999    ecf4.0c0e.e554   dynamic ip,ipx,assigned,other GigabitEthernet1/48   
+
+Multicast Entries
+ vlan    mac address     type    ports
+-------+---------------+-------+--------------------------------------------
+   1    ffff.ffff.ffff   system 
+ 307    ffff.ffff.ffff   system 
+1901    ffff.ffff.ffff   system Gi1/1,Gi1/3,Gi1/4,Gi1/5,Gi1/6,Gi1/7,Gi1/8
+                                Gi1/9,Gi1/10,Gi1/11,Gi1/12,Gi1/15,Gi1/16
+                                Gi1/17,Gi1/18,Gi1/19,Gi1/21,Gi1/22,Gi1/23
+                                Gi1/24,Gi1/25,Gi1/26,Gi1/27,Gi1/28,Gi1/29
+                                Gi1/30,Gi1/31,Gi1/32,Gi1/35,Gi1/36,Gi1/48
+1999    ffff.ffff.ffff   system Gi1/48,Switch
+
+SW-DCIM-CHAD01-SET-02#show spanning-tree root
+
+                                        Root    Hello Max Fwd
+Vlan                   Root ID          Cost    Time  Age Dly  Root Port
+---------------- -------------------- --------- ----- --- ---  ------------
+VLAN1901          5997 0023.04ee.be01         7    2   20  15  Gi1/48          
+VLAN1999          6095 0023.04ee.be01         7    2   20  15  Gi1/48          
+SW-DCIM-CHAD01-SET-02#show spanning-tree
+
+VLAN1901
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    5997
+             Address     0023.04ee.be01
+             Cost        7
+             Port        48 (GigabitEthernet1/48)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    34669  (priority 32768 sys-id-ext 1901)
+             Address     44d3.cadc.3e80
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi1/1               Desg FWD 19        128.1    P2p 
+Gi1/3               Desg FWD 19        128.3    P2p 
+Gi1/4               Desg FWD 19        128.4    P2p 
+Gi1/5               Desg FWD 19        128.5    P2p 
+Gi1/6               Desg FWD 19        128.6    P2p 
+Gi1/7               Desg FWD 19        128.7    P2p 
+Gi1/8               Desg FWD 19        128.8    Shr 
+Gi1/9               Desg FWD 19        128.9    P2p 
+Gi1/10              Desg FWD 19        128.10   Shr 
+Gi1/11              Desg FWD 19        128.11   P2p 
+Gi1/12              Desg FWD 19        128.12   P2p 
+Gi1/15              Desg FWD 19        128.15   P2p 
+Gi1/16              Desg FWD 19        128.16   P2p 
+Gi1/17              Desg FWD 19        128.17   P2p 
+Gi1/18              Desg FWD 19        128.18   P2p 
+Gi1/19              Desg FWD 19        128.19   P2p 
+Gi1/21              Desg FWD 19        128.21   P2p 
+Gi1/22              Desg FWD 19        128.22   P2p 
+Gi1/23              Desg FWD 19        128.23   P2p 
+Gi1/24              Desg FWD 19        128.24   P2p 
+Gi1/25              Desg FWD 19        128.25   P2p 
+Gi1/26              Desg FWD 19        128.26   P2p 
+Gi1/27              Desg FWD 19        128.27   P2p 
+Gi1/28              Desg FWD 19        128.28   P2p 
+Gi1/29              Desg FWD 19        128.29   P2p 
+Gi1/30              Desg FWD 19        128.30   P2p 
+Gi1/31              Desg FWD 19        128.31   P2p 
+Gi1/32              Desg FWD 19        128.32   P2p 
+Gi1/35              Desg FWD 19        128.35   P2p 
+Gi1/36              Desg FWD 19        128.36   P2p 
+Gi1/48              Root FWD 4         128.48   P2p 
+
+
+
+VLAN1999
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    6095
+             Address     0023.04ee.be01
+             Cost        7
+             Port        48 (GigabitEthernet1/48)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    34767  (priority 32768 sys-id-ext 1999)
+             Address     44d3.cadc.3e80
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi1/48              Root FWD 4         128.48   P2p 
+
+
+SW-DCIM-CHAD01-SET-02#show inventory
+NAME: "Switch System", DESCR: "Cisco Systems, Inc. WS-C4948E 1 slot switch "
+PID:                   , VID:      , SN: CAT1530S6JS
+
+NAME: "Linecard(slot 1)", DESCR: "10/100/1000BaseT (RJ45), 10GE (SFP+) Supervisor with 48 10/100/1000BASET ports and 4 10GE SFP+ port"
+PID: WS-C4948E         , VID: V05  , SN: CAT1530S6JS
+
+NAME: "Power Supply 1", DESCR: "Power Supply ( AC 300W )"
+PID: PWR-C49E-300AC-R  , VID:      , SN: PAC15210PCS
+
+NAME: "Power Supply 2", DESCR: "Power Supply ( AC 300W )"
+PID: PWR-C49E-300AC-R  , VID:      , SN: PAC15210P8X
+
+
+SW-DCIM-CHAD01-SET-02#show etherchannel summary
+Flags:  D - down        P - bundled in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      f - failed to allocate aggregator
+
+        M - not in use, minimum links not met
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+
+
+Number of channel-groups in use: 0
+Number of aggregators:           0
+
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+-----------------------------------------------
+
+SW-DCIM-CHAD01-SET-02#show vtp status
+VTP Version capable             : 1 to 3
+VTP version running             : 1
+VTP Domain Name                 : Trading
+VTP Pruning Mode                : Disabled
+VTP Traps Generation            : Enabled
+Device ID                       : 44d3.cadc.3e80
+Configuration last modified by 0.0.0.0 at 0-0-00 00:00:00
+
+Feature VLAN:
+--------------
+VTP Operating Mode                : Transparent
+Maximum VLANs supported locally   : 1005
+Number of existing VLANs          : 6
+Configuration Revision            : 0
+MD5 digest                        : 0xC6 0xE1 0x76 0xDE 0x38 0x0D 0xF8 0x65 
+                                    0xB5 0x65 0xD0 0x08 0x82 0x09 0x64 0x9D 
+Disconnect Time : 03/01/2025 17:56:02:555

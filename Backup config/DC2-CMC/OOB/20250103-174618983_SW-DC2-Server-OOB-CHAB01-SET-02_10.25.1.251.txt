@@ -1,0 +1,1190 @@
+Connect Time : 03/01/2025 17:46:18:983
+
+Warning
+*************************************************************************
+*       This system is for the use of authorized users only.            *
+*       Individuals using this computer system without authority, or in *
+*       excess of their authority, are subject to having all of their   *
+*       activities on this system monitored and recorded by system      *
+*       personnel.                                                      *
+*                                                                       *
+*       In the course of monitoring individuals improperly using this   *
+*       system, or in the course of system maintenance, the activities  *
+*       of authorized users may also be monitored.                      *
+*                                                                       *
+*       Anyone using this system expressly consents to such monitoring  *
+*       and is advised that if such monitoring reveals possible         *
+*       evidence of criminal activity, system personnel may provide the *
+*       evidence of such monitoring to law enforcement officials.       *
+*************************************************************************
+
+SW-DC2-Server-OOB-CHAB01-SET-02#terminal length 0
+SW-DC2-Server-OOB-CHAB01-SET-02#show running-config
+Building configuration...
+
+Current configuration : 8192 bytes
+!
+! Last configuration change at 11:19:15 GMT Sat Jul 20 2024 by thanatl
+! NVRAM config last updated at 11:09:14 GMT Sat Jul 20 2024 by thanatl
+!
+version 15.2
+no service pad
+service tcp-keepalives-in
+service tcp-keepalives-out
+service timestamps debug datetime msec localtime show-timezone year
+service timestamps log datetime msec localtime show-timezone year
+service password-encryption
+!
+hostname SW-DC2-Server-OOB-CHAB01-SET-02
+!
+boot-start-marker
+boot-end-marker
+!
+logging buffered 1024000
+enable secret 5 $1$wBdJ$F/4LmYMFkhe0QqtLWMDUV.
+!
+username nwadmin secret 5 $1$PclZ$72fQ91Zmu.WFp6HazGkdv.
+username admin privilege 15 secret 5 $1$Rk/H$YxxLCaXewR3/jkfmwIG3K1
+aaa new-model
+!
+!
+aaa authentication login default group tacacs+ local
+aaa authentication enable default enable
+aaa authorization config-commands
+aaa authorization exec default group tacacs+ local if-authenticated 
+aaa authorization commands 1 default group tacacs+ if-authenticated 
+aaa authorization commands 7 default group tacacs+ if-authenticated 
+aaa authorization commands 15 default group tacacs+ if-authenticated 
+aaa accounting commands 1 default start-stop group tacacs+
+aaa accounting commands 7 default start-stop group tacacs+
+aaa accounting commands 15 default start-stop group tacacs+
+!
+!
+!
+!
+!
+!
+aaa session-id common
+clock timezone GMT 7 0
+switch 1 provision ws-c2960x-24ts-l
+!
+!
+no ip domain-lookup
+ip domain-name set.or.th
+vtp mode transparent
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+spanning-tree vlan 1980-1989,1998-1999 priority 61440
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+vlan 1980
+ name Server_OOB_External
+!
+vlan 1981
+ name Server_OOB_Infra
+!
+vlan 1982
+ name Server_OOB_Virtualization2(Devel
+!
+vlan 1983
+ name Server_OOB_Virtualization1(Devel
+!
+vlan 1984
+ name Server_OOB_Virtualization2(Produ
+!
+vlan 1985
+ name Server_OOB_Virtualization1(Produ
+!
+vlan 1986
+ name Server_OOB_Develop(Trading)
+!
+vlan 1987
+ name Server_OOB_Develop
+!
+vlan 1988
+ name Server_OOB_Production(Trading)
+!
+vlan 1989
+ name Server_OOB_Production
+!
+vlan 1998
+ name Network-Management
+!
+vlan 1999
+ name Network-OOB
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+interface Port-channel1
+ switchport trunk allowed vlan 1980-1989,1998,1999
+ switchport mode trunk
+!
+interface Port-channel2
+ switchport mode trunk
+!
+interface FastEthernet0
+ no ip address
+!
+interface GigabitEthernet1/0/1
+ description HP Storage 3Par
+ switchport access vlan 1989
+!
+interface GigabitEthernet1/0/2
+ description 3Par Storage Processer
+ switchport access vlan 1989
+!
+interface GigabitEthernet1/0/3
+ description STGDN-HP3PAR-8200
+ switchport access vlan 1989
+!
+interface GigabitEthernet1/0/4
+ description EXA-A
+ switchport access vlan 1981
+ switchport mode access
+!
+interface GigabitEthernet1/0/5
+ description EXA-B
+ switchport access vlan 1981
+!
+interface GigabitEthernet1/0/6
+ description ENC-VIR_CMC_18
+ switchport access vlan 1985
+ switchport mode access
+!
+interface GigabitEthernet1/0/7
+ description ENC-VIR_CMC_17
+ switchport access vlan 1985
+ switchport mode access
+!
+interface GigabitEthernet1/0/8
+ description STGDC-NetAppC250 : OOB2
+ switchport access vlan 1989
+ switchport mode access
+!
+interface GigabitEthernet1/0/9
+!
+interface GigabitEthernet1/0/10
+!
+interface GigabitEthernet1/0/11
+ description reserved virpc-hyp
+ switchport access vlan 1985
+ switchport mode access
+!
+interface GigabitEthernet1/0/12
+ description reserved virpc-hyp
+ switchport access vlan 1985
+ switchport mode access
+!
+interface GigabitEthernet1/0/13
+ description reserved virpc-hyp
+ switchport access vlan 1985
+ switchport mode access
+!
+interface GigabitEthernet1/0/14
+ description reserved virpc-hyp
+ switchport access vlan 1985
+ switchport mode access
+!
+interface GigabitEthernet1/0/15
+ description reserved virpc-hyp
+ switchport access vlan 1985
+ switchport mode access
+!
+interface GigabitEthernet1/0/16
+ description reserved virpc-hyp
+ switchport access vlan 1985
+ switchport mode access
+!
+interface GigabitEthernet1/0/17
+ description reserved virpc-hyp
+ switchport access vlan 1985
+ switchport mode access
+!
+interface GigabitEthernet1/0/18
+ description reserved virpc-hyp
+ switchport access vlan 1985
+ switchport mode access
+!
+interface GigabitEthernet1/0/19
+ description VM-DWH
+ switchport access vlan 1985
+ switchport mode access
+!
+interface GigabitEthernet1/0/20
+ description VM-DWH
+ switchport access vlan 1985
+ switchport mode access
+!
+interface GigabitEthernet1/0/21
+ description virdc-hyp086
+ switchport access vlan 1983
+ switchport mode access
+!
+interface GigabitEthernet1/0/22
+ description virdc-hyp087
+ switchport access vlan 1983
+ switchport mode access
+!
+interface GigabitEthernet1/0/23
+ description virdc-hyp088
+ switchport access vlan 1983
+ switchport mode access
+!
+interface GigabitEthernet1/0/24
+ description virdc-hyp089
+ switchport access vlan 1983
+ switchport mode access
+!
+interface GigabitEthernet1/0/25
+!
+interface GigabitEthernet1/0/26
+!
+interface GigabitEthernet1/0/27
+ switchport mode trunk
+ channel-group 2 mode on
+!
+interface GigabitEthernet1/0/28
+ switchport mode trunk
+ channel-group 2 mode on
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan1999
+ ip address 10.25.1.251 255.255.255.0
+!
+ip default-gateway 10.25.1.1
+no ip http server
+no ip http secure-server
+!
+ip ssh version 2
+!
+logging trap debugging
+logging host 10.24.22.21
+access-list 97 permit 10.25.2.30
+access-list 97 permit 10.24.21.0 0.0.0.255
+access-list 97 permit 10.3.5.0 0.0.0.255
+access-list 98 permit 10.0.0.0 0.0.0.255
+access-list 99 permit 10.0.0.0 0.0.0.255
+!
+snmp-server community R3@donly RO 97
+snmp-server community R3@dwrite RW 98
+snmp-server location SET-DC2
+snmp-server enable traps snmp authentication linkdown linkup coldstart warmstart
+snmp-server enable traps transceiver all
+snmp-server enable traps call-home message-send-fail server-fail
+snmp-server enable traps tty
+snmp-server enable traps license
+snmp-server enable traps auth-framework sec-violation
+snmp-server enable traps cluster
+snmp-server enable traps config-copy
+snmp-server enable traps config
+snmp-server enable traps config-ctid
+snmp-server enable traps energywise
+snmp-server enable traps fru-ctrl
+snmp-server enable traps entity
+snmp-server enable traps event-manager
+snmp-server enable traps power-ethernet police
+snmp-server enable traps cpu threshold
+snmp-server enable traps flash insertion removal
+snmp-server enable traps port-security
+snmp-server enable traps envmon fan shutdown supply temperature status
+snmp-server enable traps stackwise
+snmp-server enable traps errdisable
+snmp-server enable traps mac-notification change move threshold
+snmp-server enable traps vlan-membership
+tacacs-server host 10.25.2.200
+tacacs-server directed-request
+tacacs-server key 7 097F4B0A0B5603190E154E
+!
+!
+!
+banner motd ^C
+Warning
+*************************************************************************
+*       This system is for the use of authorized users only.            *
+*       Individuals using this computer system without authority, or in *
+*       excess of their authority, are subject to having all of their   *
+*       activities on this system monitored and recorded by system      *
+*       personnel.                                                      *
+*                                                                       *
+*       In the course of monitoring individuals improperly using this   *
+*       system, or in the course of system maintenance, the activities  *
+*       of authorized users may also be monitored.                      *
+*                                                                       *
+*       Anyone using this system expressly consents to such monitoring  *
+*       and is advised that if such monitoring reveals possible         *
+*       evidence of criminal activity, system personnel may provide the *
+*       evidence of such monitoring to law enforcement officials.       *
+*************************************************************************
+^C
+!
+line con 0
+line vty 0 4
+ logging synchronous
+ transport input telnet ssh
+line vty 5 15
+ logging synchronous
+ transport input telnet ssh
+!
+ntp server 10.24.1.27 prefer
+ntp server 10.34.1.27
+ntp server 10.24.1.28
+ntp server 10.34.1.28
+end
+
+SW-DC2-Server-OOB-CHAB01-SET-02#show interface description
+Interface                      Status         Protocol Description
+Vl1                            admin down     down     
+Vl1999                         up             up       
+Fa0                            down           down     
+Gi1/0/1                        down           down     HP Storage 3Par
+Gi1/0/2                        down           down     3Par Storage Processer
+Gi1/0/3                        down           down     STGDN-HP3PAR-8200
+Gi1/0/4                        up             up       EXA-A
+Gi1/0/5                        up             up       EXA-B
+Gi1/0/6                        down           down     ENC-VIR_CMC_18
+Gi1/0/7                        down           down     ENC-VIR_CMC_17
+Gi1/0/8                        up             up       STGDC-NetAppC250 : OOB2
+Gi1/0/9                        down           down     
+Gi1/0/10                       down           down     
+Gi1/0/11                       up             up       reserved virpc-hyp
+Gi1/0/12                       up             up       reserved virpc-hyp
+Gi1/0/13                       up             up       reserved virpc-hyp
+Gi1/0/14                       up             up       reserved virpc-hyp
+Gi1/0/15                       up             up       reserved virpc-hyp
+Gi1/0/16                       up             up       reserved virpc-hyp
+Gi1/0/17                       up             up       reserved virpc-hyp
+Gi1/0/18                       down           down     reserved virpc-hyp
+Gi1/0/19                       up             up       VM-DWH
+Gi1/0/20                       up             up       VM-DWH
+Gi1/0/21                       up             up       virdc-hyp086
+Gi1/0/22                       up             up       virdc-hyp087
+Gi1/0/23                       up             up       virdc-hyp088
+Gi1/0/24                       up             up       virdc-hyp089
+Gi1/0/25                       down           down     
+Gi1/0/26                       down           down     
+Gi1/0/27                       down           down     
+Gi1/0/28                       up             up       
+Po1                            down           down     
+Po2                            up             up       
+SW-DC2-Server-OOB-CHAB01-SET-02#show ip int brief
+Interface              IP-Address      OK? Method Status                Protocol
+Vlan1                  unassigned      YES NVRAM  administratively down down    
+Vlan1999               10.25.1.251     YES NVRAM  up                    up      
+FastEthernet0          unassigned      YES NVRAM  down                  down    
+GigabitEthernet1/0/1   unassigned      YES unset  down                  down    
+GigabitEthernet1/0/2   unassigned      YES unset  down                  down    
+GigabitEthernet1/0/3   unassigned      YES unset  down                  down    
+GigabitEthernet1/0/4   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/5   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/6   unassigned      YES unset  down                  down    
+GigabitEthernet1/0/7   unassigned      YES unset  down                  down    
+GigabitEthernet1/0/8   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/9   unassigned      YES unset  down                  down    
+GigabitEthernet1/0/10  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/11  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/12  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/13  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/14  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/15  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/16  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/17  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/18  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/19  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/20  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/21  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/22  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/23  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/24  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/25  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/26  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/27  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/28  unassigned      YES unset  up                    up      
+Port-channel1          unassigned      YES unset  down                  down    
+Port-channel2          unassigned      YES unset  up                    up      
+SW-DC2-Server-OOB-CHAB01-SET-02#show interface status
+
+Port      Name               Status       Vlan       Duplex  Speed Type 
+Gi1/0/1   HP Storage 3Par    notconnect   1989         auto   auto 10/100/1000BaseTX
+Gi1/0/2   3Par Storage Proce notconnect   1989         auto   auto 10/100/1000BaseTX
+Gi1/0/3   STGDN-HP3PAR-8200  notconnect   1989         auto   auto 10/100/1000BaseTX
+Gi1/0/4   EXA-A              connected    1981       a-full a-1000 10/100/1000BaseTX
+Gi1/0/5   EXA-B              connected    1981       a-full a-1000 10/100/1000BaseTX
+Gi1/0/6   ENC-VIR_CMC_18     notconnect   1985         auto   auto 10/100/1000BaseTX
+Gi1/0/7   ENC-VIR_CMC_17     notconnect   1985         auto   auto 10/100/1000BaseTX
+Gi1/0/8   STGDC-NetAppC250 : connected    1989       a-full a-1000 10/100/1000BaseTX
+Gi1/0/9                      notconnect   1            auto   auto 10/100/1000BaseTX
+Gi1/0/10                     notconnect   1            auto   auto 10/100/1000BaseTX
+Gi1/0/11  reserved virpc-hyp connected    1985       a-full  a-100 10/100/1000BaseTX
+Gi1/0/12  reserved virpc-hyp connected    1985       a-full a-1000 10/100/1000BaseTX
+Gi1/0/13  reserved virpc-hyp connected    1985       a-full a-1000 10/100/1000BaseTX
+Gi1/0/14  reserved virpc-hyp connected    1985       a-full a-1000 10/100/1000BaseTX
+Gi1/0/15  reserved virpc-hyp connected    1985       a-full a-1000 10/100/1000BaseTX
+Gi1/0/16  reserved virpc-hyp connected    1985       a-full a-1000 10/100/1000BaseTX
+Gi1/0/17  reserved virpc-hyp connected    1985       a-full a-1000 10/100/1000BaseTX
+Gi1/0/18  reserved virpc-hyp notconnect   1985         auto   auto 10/100/1000BaseTX
+Gi1/0/19  VM-DWH             connected    1985       a-full a-1000 10/100/1000BaseTX
+Gi1/0/20  VM-DWH             connected    1985       a-full a-1000 10/100/1000BaseTX
+Gi1/0/21  virdc-hyp086       connected    1983       a-full a-1000 10/100/1000BaseTX
+Gi1/0/22  virdc-hyp087       connected    1983       a-full a-1000 10/100/1000BaseTX
+Gi1/0/23  virdc-hyp088       connected    1983       a-full a-1000 10/100/1000BaseTX
+Gi1/0/24  virdc-hyp089       connected    1983       a-full a-1000 10/100/1000BaseTX
+Gi1/0/25                     notconnect   1            auto   auto Not Present
+Gi1/0/26                     notconnect   1            auto   auto Not Present
+Gi1/0/27                     notconnect   1            auto   auto 1000BaseSX SFP
+Gi1/0/28                     connected    trunk      a-full a-1000 1000BaseSX SFP
+Po1                          notconnect   unassigned   auto   auto 
+Po2                          connected    trunk      a-full a-1000 
+Fa0                          notconnect   routed       auto   auto 10/100BaseTX
+SW-DC2-Server-OOB-CHAB01-SET-02#show vlan
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi1/0/9, Gi1/0/10, Gi1/0/25
+                                                Gi1/0/26, Gi1/0/27
+1002 fddi-default                     act/unsup 
+1003 token-ring-default               act/unsup 
+1004 fddinet-default                  act/unsup 
+1005 trnet-default                    act/unsup 
+1980 Server_OOB_External              active    
+1981 Server_OOB_Infra                 active    Gi1/0/4, Gi1/0/5
+1982 Server_OOB_Virtualization2(Devel active    
+1983 Server_OOB_Virtualization1(Devel active    Gi1/0/21, Gi1/0/22, Gi1/0/23
+                                                Gi1/0/24
+1984 Server_OOB_Virtualization2(Produ active    
+1985 Server_OOB_Virtualization1(Produ active    Gi1/0/6, Gi1/0/7, Gi1/0/11
+                                                Gi1/0/12, Gi1/0/13, Gi1/0/14
+                                                Gi1/0/15, Gi1/0/16, Gi1/0/17
+                                                Gi1/0/18, Gi1/0/19, Gi1/0/20
+1986 Server_OOB_Develop(Trading)      active    
+1987 Server_OOB_Develop               active    
+1988 Server_OOB_Production(Trading)   active    
+1989 Server_OOB_Production            active    Gi1/0/1, Gi1/0/2, Gi1/0/3
+                                                Gi1/0/8
+1998 Network-Management               active    
+1999 Network-OOB                      active    
+
+VLAN Type  SAID       MTU   Parent RingNo BridgeNo Stp  BrdgMode Trans1 Trans2
+---- ----- ---------- ----- ------ ------ -------- ---- -------- ------ ------
+1    enet  100001     1500  -      -      -        -    -        0      0   
+1002 fddi  101002     1500  -      -      -        -    -        0      0   
+1003 tr    101003     1500  -      -      -        -    -        0      0   
+1004 fdnet 101004     1500  -      -      -        ieee -        0      0   
+1005 trnet 101005     1500  -      -      -        ibm  -        0      0   
+1980 enet  101980     1500  -      -      -        -    -        0      0   
+1981 enet  101981     1500  -      -      -        -    -        0      0   
+1982 enet  101982     1500  -      -      -        -    -        0      0   
+1983 enet  101983     1500  -      -      -        -    -        0      0   
+1984 enet  101984     1500  -      -      -        -    -        0      0   
+1985 enet  101985     1500  -      -      -        -    -        0      0   
+1986 enet  101986     1500  -      -      -        -    -        0      0   
+1987 enet  101987     1500  -      -      -        -    -        0      0   
+1988 enet  101988     1500  -      -      -        -    -        0      0   
+1989 enet  101989     1500  -      -      -        -    -        0      0   
+1998 enet  101998     1500  -      -      -        -    -        0      0   
+1999 enet  101999     1500  -      -      -        -    -        0      0   
+
+Remote SPAN VLANs
+------------------------------------------------------------------------------
+
+
+Primary Secondary Type              Ports
+------- --------- ----------------- ------------------------------------------
+
+SW-DC2-Server-OOB-CHAB01-SET-02#show version
+Cisco IOS Software, C2960X Software (C2960X-UNIVERSALK9-M), Version 15.2(2)E6, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2016 by Cisco Systems, Inc.
+Compiled Fri 16-Dec-16 21:27 by prod_rel_team
+
+ROM: Bootstrap program is C2960X boot loader
+BOOTLDR: C2960X Boot Loader (C2960X-HBOOT-M) Version 15.2(2r)E1, RELEASE SOFTWARE (fc1)
+
+SW-DC2-Server-OOB-CHAB01-SET-02 uptime is 6 years, 13 weeks, 10 hours, 57 minutes
+System returned to ROM by power-on
+System restarted at 03:49:39 GMT Sat Oct 6 2018
+System image file is "flash:/c2960x-universalk9-mz.152-2.E6.bin"
+Last reload reason: Unknown reason
+
+
+
+This product contains cryptographic features and is subject to United
+States and local country laws governing import, export, transfer and
+use. Delivery of Cisco cryptographic products does not imply
+third-party authority to import, export, distribute or use encryption.
+Importers, exporters, distributors and users are responsible for
+compliance with U.S. and local country laws. By using this product you
+agree to comply with applicable laws and regulations. If you are unable
+to comply with U.S. and local laws, return this product immediately.
+
+A summary of U.S. laws governing Cisco cryptographic products may be found at:
+http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+
+If you require further assistance please contact us by sending email to
+export@cisco.com.
+
+cisco WS-C2960X-24TS-L (APM86XXX) processor (revision G0) with 524288K bytes of memory.
+Processor board ID FCW1910B1FQ
+Last reset from power-on
+2 Virtual Ethernet interfaces
+1 FastEthernet interface
+28 Gigabit Ethernet interfaces
+The password-recovery mechanism is enabled.
+
+512K bytes of flash-simulated non-volatile configuration memory.
+Base ethernet MAC Address       : 40:A6:E8:5D:52:00
+Motherboard assembly number     : 73-15973-02
+Power supply part number        : 341-0529-02
+Motherboard serial number       : FOC1907887L
+Power supply serial number      : LIT190507D0
+Model revision number           : G0
+Motherboard revision number     : B0
+Model number                    : WS-C2960X-24TS-L
+Daughterboard assembly number   : 73-14200-03
+Daughterboard serial number     : FOC19093572
+System serial number            : FCW1910B1FQ
+Top Assembly Part Number        : 800-41470-01
+Top Assembly Revision Number    : C0
+Version ID                      : V03
+CLEI Code Number                : CMMMU00ARB
+Daughterboard revision number   : A0
+Hardware Board Revision Number  : 0x12
+
+
+Switch Ports Model                     SW Version            SW Image                 
+------ ----- -----                     ----------            ----------               
+*    1 28    WS-C2960X-24TS-L          15.2(2)E6             C2960X-UNIVERSALK9-M     
+
+
+Configuration register is 0xF
+
+SW-DC2-Server-OOB-CHAB01-SET-02#show cdp nei
+Capability Codes: R - Router, T - Trans Bridge, B - Source Route Bridge
+                  S - Switch, H - Host, I - IGMP, r - Repeater, P - Phone, 
+                  D - Remote, C - CVTA, M - Two-port Mac Relay 
+
+Device ID        Local Intrfce     Holdtme    Capability  Platform  Port ID
+exapc-sw-adm0.sharedb.set(FDO2235118K)
+                 Gig 1/0/4         139            R S I C N9K-C9348 Eth 1/2
+SW-DC2-Server-OOB-CHAB01-SET-01.set.or.t
+                 Gig 1/0/28        123              S I   WS-C2960X Gig 1/0/28
+
+Total cdp entries displayed : 2
+SW-DC2-Server-OOB-CHAB01-SET-02#show lldp nei
+% LLDP is not enabled
+SW-DC2-Server-OOB-CHAB01-SET-02#show ip arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  10.25.1.1             134   0000.0c9f.f7cf  ARPA   Vlan1999
+Internet  10.25.1.150           241   0080.ea61.6bbf  ARPA   Vlan1999
+Internet  10.25.1.248            22   40a6.e84c.8142  ARPA   Vlan1999
+Internet  10.25.1.251             -   40a6.e85d.5241  ARPA   Vlan1999
+SW-DC2-Server-OOB-CHAB01-SET-02#show mac address
+          Mac Address Table
+-------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       --------    -----
+ All    0100.0ccc.cccc    STATIC      CPU
+ All    0100.0ccc.cccd    STATIC      CPU
+ All    0180.c200.0000    STATIC      CPU
+ All    0180.c200.0001    STATIC      CPU
+ All    0180.c200.0002    STATIC      CPU
+ All    0180.c200.0003    STATIC      CPU
+ All    0180.c200.0004    STATIC      CPU
+ All    0180.c200.0005    STATIC      CPU
+ All    0180.c200.0006    STATIC      CPU
+ All    0180.c200.0007    STATIC      CPU
+ All    0180.c200.0008    STATIC      CPU
+ All    0180.c200.0009    STATIC      CPU
+ All    0180.c200.000a    STATIC      CPU
+ All    0180.c200.000b    STATIC      CPU
+ All    0180.c200.000c    STATIC      CPU
+ All    0180.c200.000d    STATIC      CPU
+ All    0180.c200.000e    STATIC      CPU
+ All    0180.c200.000f    STATIC      CPU
+ All    0180.c200.0010    STATIC      CPU
+ All    ffff.ffff.ffff    STATIC      CPU
+1989    0000.0c9f.f7c5    DYNAMIC     Po2
+1989    00a0.9865.c9c4    DYNAMIC     Po2
+1989    00a0.9865.c9c8    DYNAMIC     Po2
+1989    00a0.98aa.d87d    DYNAMIC     Po2
+1989    00a0.98aa.d881    DYNAMIC     Po2
+1989    02e0.ed94.79f1    DYNAMIC     Po2
+1989    02e0.ed94.7b61    DYNAMIC     Po2
+1989    02e0.ed94.7dbf    DYNAMIC     Po2
+1989    02e0.ed94.7e2f    DYNAMIC     Po2
+1989    40a6.e84c.811c    DYNAMIC     Po2
+1989    6c3c.8c73.313a    DYNAMIC     Po2
+1989    9440.c92a.5162    DYNAMIC     Po2
+1989    9440.c9e7.1a32    DYNAMIC     Po2
+1989    9440.c9e7.1ade    DYNAMIC     Po2
+1989    9440.c9e7.2042    DYNAMIC     Po2
+1989    9440.c9e8.ed4e    DYNAMIC     Po2
+1989    a4bf.0146.f802    DYNAMIC     Po2
+1989    a4bf.0147.c472    DYNAMIC     Po2
+1989    a4bf.0147.c473    DYNAMIC     Po2
+1989    cc6a.33f1.96ff    DYNAMIC     Po2
+1989    d039.ea33.6e44    DYNAMIC     Po2
+1989    d039.ea36.f550    DYNAMIC     Po2
+1989    d039.ea37.2533    DYNAMIC     Po2
+1989    d039.ea37.2c43    DYNAMIC     Po2
+1989    d039.ea5b.b7c6    DYNAMIC     Po2
+1989    d039.ea5b.b7c8    DYNAMIC     Po2
+1989    d039.ea5b.b855    DYNAMIC     Gi1/0/8
+1989    d039.ea5b.b857    DYNAMIC     Gi1/0/8
+1989    d039.eab2.64e7    DYNAMIC     Po2
+1989    d039.eab2.64e9    DYNAMIC     Po2
+1989    d039.eab2.6719    DYNAMIC     Po2
+1989    d039.eab2.671b    DYNAMIC     Po2
+1989    e007.1bfb.fc56    DYNAMIC     Po2
+   1    40a6.e84c.811c    DYNAMIC     Po2
+1980    0000.0c9f.f7bc    DYNAMIC     Po2
+1980    40a6.e84c.811c    DYNAMIC     Po2
+1980    cc6a.33f1.96ff    DYNAMIC     Po2
+1981    0000.0c9f.f7bd    DYNAMIC     Po2
+1981    0010.e0e7.2efe    DYNAMIC     Gi1/0/5
+1981    02e0.ed94.79f1    DYNAMIC     Po2
+1981    02e0.ed94.7b61    DYNAMIC     Po2
+1981    02e0.ed94.7dbf    DYNAMIC     Po2
+1981    02e0.ed94.7e2f    DYNAMIC     Po2
+1981    0800.1bff.1055    DYNAMIC     Po2
+1981    40a6.e84c.811c    DYNAMIC     Po2
+1981    706d.1549.b91d    DYNAMIC     Gi1/0/4
+1981    cc6a.33f1.96ff    DYNAMIC     Po2
+1982    0000.0c9f.f7be    DYNAMIC     Po2
+1982    40a6.e84c.811c    DYNAMIC     Po2
+1982    cc6a.33f1.96ff    DYNAMIC     Po2
+1983    0000.0c9f.f7bf    DYNAMIC     Po2
+1983    02e0.ed94.79f1    DYNAMIC     Po2
+1983    02e0.ed94.7b61    DYNAMIC     Po2
+1983    02e0.ed94.7dbf    DYNAMIC     Po2
+1983    02e0.ed94.7e2f    DYNAMIC     Po2
+1983    08f1.ea90.7e22    DYNAMIC     Po2
+1983    08f1.ea96.7f0c    DYNAMIC     Po2
+1983    08f1.ea96.b812    DYNAMIC     Po2
+1983    08f1.ea96.bc5c    DYNAMIC     Po2
+1983    1458.d048.0188    DYNAMIC     Po2
+1983    1c98.ec23.12c2    DYNAMIC     Po2
+1983    1c98.ec25.6606    DYNAMIC     Po2
+1983    1c98.ec25.e7cc    DYNAMIC     Po2
+1983    30e1.7158.0e50    DYNAMIC     Po2
+1983    30e1.7158.8d22    DYNAMIC     Po2
+1983    30e1.7158.cd54    DYNAMIC     Po2
+1983    30e1.7158.cd98    DYNAMIC     Po2
+1983    30e1.7158.cda6    DYNAMIC     Po2
+1983    30e1.7158.cdac    DYNAMIC     Po2
+1983    30e1.7158.cdb4    DYNAMIC     Po2
+1983    30e1.7158.cdc2    DYNAMIC     Po2
+1983    30e1.7158.cdc8    DYNAMIC     Po2
+1983    30e1.7158.cde2    DYNAMIC     Po2
+1983    30e1.7158.dccc    DYNAMIC     Po2
+1983    30e1.7158.ddf4    DYNAMIC     Po2
+1983    30e1.7158.ec16    DYNAMIC     Po2
+1983    30e1.7158.ec1e    DYNAMIC     Po2
+1983    30e1.7158.ec22    DYNAMIC     Po2
+1983    30e1.7158.ec30    DYNAMIC     Po2
+1983    30e1.7158.ec38    DYNAMIC     Po2
+1983    30e1.7158.ec40    DYNAMIC     Po2
+1983    30e1.7158.ec4a    DYNAMIC     Po2
+1983    30e1.7158.ec50    DYNAMIC     Po2
+1983    30e1.7158.ec54    DYNAMIC     Po2
+1983    30e1.7158.ec66    DYNAMIC     Po2
+1983    30e1.7158.ed2e    DYNAMIC     Po2
+1983    30e1.7158.fc44    DYNAMIC     Po2
+1983    30e1.7158.fcd8    DYNAMIC     Po2
+1983    30e1.7168.d6ea    DYNAMIC     Po2
+1983    3ca8.2a18.5b54    DYNAMIC     Po2
+1983    40a6.e84c.811c    DYNAMIC     Po2
+1983    5480.284c.d9a6    DYNAMIC     Po2
+1983    5cba.2c56.b62c    DYNAMIC     Gi1/0/23
+1983    5cba.2c56.b6b2    DYNAMIC     Gi1/0/24
+1983    5cba.2c56.c666    DYNAMIC     Gi1/0/21
+1983    5cba.2c56.d6fc    DYNAMIC     Gi1/0/22
+1983    9457.a551.14ee    DYNAMIC     Po2
+1983    cc6a.33f1.96ff    DYNAMIC     Po2
+1983    cc6a.33f1.983f    DYNAMIC     Po2
+1983    d08e.79bb.6e24    DYNAMIC     Po2
+1983    d08e.79bb.73c4    DYNAMIC     Po2
+1983    d08e.79bb.c0f4    DYNAMIC     Po2
+1983    d08e.79bb.c748    DYNAMIC     Po2
+1983    e007.1bfd.48fc    DYNAMIC     Po2
+1984    0000.0c9f.f7c0    DYNAMIC     Po2
+1984    40a6.e84c.811c    DYNAMIC     Po2
+1984    cc6a.33f1.96ff    DYNAMIC     Po2
+1985    0000.0c9f.f7c1    DYNAMIC     Po2
+1985    02e0.ed94.79f1    DYNAMIC     Po2
+1985    02e0.ed94.7b61    DYNAMIC     Po2
+1985    02e0.ed94.7dbf    DYNAMIC     Po2
+1985    02e0.ed94.7e2f    DYNAMIC     Po2
+1985    0892.04a6.11ec    DYNAMIC     Po2
+1985    40a6.e84c.811c    DYNAMIC     Po2
+1985    5cba.2c56.b632    DYNAMIC     Po2
+1985    5cba.2c56.b6be    DYNAMIC     Po2
+1985    5cba.2c56.c668    DYNAMIC     Po2
+1985    5cba.2c56.d6b2    DYNAMIC     Po2
+1985    ac1f.6b32.6f2c    DYNAMIC     Po2
+1985    ac1f.6b32.70f7    DYNAMIC     Po2
+1985    ac1f.6b32.9113    DYNAMIC     Po2
+1985    ac1f.6b32.dd66    DYNAMIC     Po2
+1985    b47a.f14f.0986    DYNAMIC     Po2
+1985    b47a.f14f.a918    DYNAMIC     Gi1/0/11
+1985    b47a.f14f.a922    DYNAMIC     Gi1/0/15
+1985    b47a.f14f.a932    DYNAMIC     Gi1/0/14
+1985    b47a.f14f.a93a    DYNAMIC     Gi1/0/13
+1985    b47a.f14f.a946    DYNAMIC     Po2
+1985    b47a.f14f.a954    DYNAMIC     Po2
+1985    b47a.f14f.a95c    DYNAMIC     Gi1/0/16
+1985    b47a.f14f.a962    DYNAMIC     Gi1/0/17
+1985    b47a.f14f.e856    DYNAMIC     Po2
+1985    b47a.f157.acc2    DYNAMIC     Po2
+1985    b47a.f159.2882    DYNAMIC     Po2
+1985    b47a.f159.2886    DYNAMIC     Po2
+1985    b47a.f1c5.086e    DYNAMIC     Po2
+1985    b47a.f1c5.58f4    DYNAMIC     Po2
+1985    b47a.f1c5.6810    DYNAMIC     Po2
+1985    b47a.f1c5.799e    DYNAMIC     Po2
+1985    cc6a.33f1.96ff    DYNAMIC     Po2
+1985    cc6a.33f1.983f    DYNAMIC     Po2
+1985    cc96.e5e7.5eac    DYNAMIC     Po2
+1985    cc96.e5e7.7d04    DYNAMIC     Po2
+1985    cc96.e5e7.7d54    DYNAMIC     Po2
+1985    cc96.e5e7.7d5c    DYNAMIC     Po2
+1985    cc96.e5e7.7fb4    DYNAMIC     Po2
+1985    cc96.e5e7.81bc    DYNAMIC     Po2
+1985    cc96.e5e7.860c    DYNAMIC     Po2
+1985    cc96.e5e7.86dc    DYNAMIC     Po2
+1985    cc96.e5e7.86f4    DYNAMIC     Po2
+1985    cc96.e5e7.871c    DYNAMIC     Po2
+1985    cc96.e5e7.991c    DYNAMIC     Po2
+1985    d08e.79cb.1b18    DYNAMIC     Gi1/0/19
+1986    0000.0c9f.f7c2    DYNAMIC     Po2
+1986    02e0.ed94.79f1    DYNAMIC     Po2
+1986    02e0.ed94.7b61    DYNAMIC     Po2
+1986    02e0.ed94.7dbf    DYNAMIC     Po2
+1986    02e0.ed94.7e2f    DYNAMIC     Po2
+1986    08f1.ea96.b34a    DYNAMIC     Po2
+1986    40a6.e84c.811c    DYNAMIC     Po2
+1986    cc6a.33f1.96ff    DYNAMIC     Po2
+1987    0000.0c9f.f7c3    DYNAMIC     Po2
+1987    02e0.ed94.79f1    DYNAMIC     Po2
+1987    02e0.ed94.7b61    DYNAMIC     Po2
+1987    02e0.ed94.7dbf    DYNAMIC     Po2
+1987    02e0.ed94.7e2f    DYNAMIC     Po2
+1987    30e1.7158.cdde    DYNAMIC     Po2
+1987    30e1.7158.cdfc    DYNAMIC     Po2
+1987    30e1.7158.dd4e    DYNAMIC     Po2
+1987    40a6.e84c.811c    DYNAMIC     Po2
+1987    5480.284c.df88    DYNAMIC     Po2
+1987    5480.284d.3c76    DYNAMIC     Po2
+1987    5480.284d.5b4e    DYNAMIC     Po2
+1987    7010.6fc4.5486    DYNAMIC     Po2
+1987    7010.6fc4.54d8    DYNAMIC     Po2
+1987    9cb6.540f.b89e    DYNAMIC     Po2
+1987    9cb6.540f.b968    DYNAMIC     Po2
+1987    9cb6.540f.babc    DYNAMIC     Po2
+1987    9cb6.5410.1baa    DYNAMIC     Po2
+1987    9cb6.5410.1bea    DYNAMIC     Po2
+1987    9cb6.5410.220c    DYNAMIC     Po2
+1987    9cb6.5410.2264    DYNAMIC     Po2
+1987    9cb6.5410.7eca    DYNAMIC     Po2
+1987    9cb6.5471.1504    DYNAMIC     Po2
+1987    cc6a.33f1.96ff    DYNAMIC     Po2
+1988    0000.0c9f.f7c4    DYNAMIC     Po2
+1988    02e0.ed94.79f1    DYNAMIC     Po2
+1988    02e0.ed94.7b61    DYNAMIC     Po2
+1988    02e0.ed94.7dbf    DYNAMIC     Po2
+1988    02e0.ed94.7e2f    DYNAMIC     Po2
+1988    08f1.ea80.54a4    DYNAMIC     Po2
+1988    40a6.e84c.811c    DYNAMIC     Po2
+1988    98f2.b33b.9aaa    DYNAMIC     Po2
+1988    98f2.b33b.af0c    DYNAMIC     Po2
+1988    cc6a.33f1.96ff    DYNAMIC     Po2
+1998    0000.0c9f.f7ce    DYNAMIC     Po2
+1998    000c.29b9.eef4    DYNAMIC     Po2
+1998    0050.56a9.98fc    DYNAMIC     Po2
+1998    02e0.ed94.79f1    DYNAMIC     Po2
+1998    02e0.ed94.7b61    DYNAMIC     Po2
+1998    02e0.ed94.7dbf    DYNAMIC     Po2
+1998    02e0.ed94.7e2f    DYNAMIC     Po2
+1998    40a6.e84c.811c    DYNAMIC     Po2
+1998    4891.d51b.02fc    DYNAMIC     Po2
+1998    4891.d51b.0302    DYNAMIC     Po2
+1998    4891.d51b.2994    DYNAMIC     Po2
+1998    cc6a.33f1.96ff    DYNAMIC     Po2
+1998    cc6a.33f1.983f    DYNAMIC     Po2
+1998    d08e.79bb.a382    DYNAMIC     Po2
+1998    ec01.d570.c350    DYNAMIC     Po2
+1998    ec01.d572.b9b4    DYNAMIC     Po2
+1999    0000.0c9f.f7cf    DYNAMIC     Po2
+1999    02e0.ed94.79f1    DYNAMIC     Po2
+1999    02e0.ed94.7b61    DYNAMIC     Po2
+1999    02e0.ed94.7dbf    DYNAMIC     Po2
+1999    02e0.ed94.7e2f    DYNAMIC     Po2
+1999    0cc4.7a44.5cad    DYNAMIC     Po2
+1999    10f9.20ff.9f00    DYNAMIC     Po2
+1999    40a6.e84c.811c    DYNAMIC     Po2
+1999    481b.a4e5.c100    DYNAMIC     Po2
+1999    481b.a4f2.0500    DYNAMIC     Po2
+1999    84d4.1254.7b00    DYNAMIC     Po2
+1999    cc6a.33f1.96ff    DYNAMIC     Po2
+1999    cc6a.33f1.983f    DYNAMIC     Po2
+1999    ecf4.0c0d.f2bc    DYNAMIC     Po2
+1999    ecf4.0c0e.e554    DYNAMIC     Po2
+Total Mac Addresses for this criterion: 246
+SW-DC2-Server-OOB-CHAB01-SET-02#show spanning-tree root
+
+                                        Root    Hello Max Fwd
+Vlan                   Root ID          Cost    Time  Age Dly  Root Port
+---------------- -------------------- --------- ----- --- ---  ------------
+VLAN0001         32769 001b.54a8.3280         8    2   20  15  Po2             
+VLAN1980          6076 0023.04ee.be01         7    2   20  15  Po2             
+VLAN1981          6077 0023.04ee.be01         7    2   20  15  Po2             
+VLAN1982          6078 0023.04ee.be01         7    2   20  15  Po2             
+VLAN1983          6079 0023.04ee.be01         7    2   20  15  Po2             
+VLAN1984          6080 0023.04ee.be01         7    2   20  15  Po2             
+VLAN1985          6081 0023.04ee.be01         7    2   20  15  Po2             
+VLAN1986          6082 0023.04ee.be01         7    2   20  15  Po2             
+VLAN1987          6083 0023.04ee.be01         7    2   20  15  Po2             
+VLAN1988          6084 0023.04ee.be01         7    2   20  15  Po2             
+VLAN1989          6085 0023.04ee.be01         7    2   20  15  Po2             
+VLAN1998          6094 0023.04ee.be01         7    2   20  15  Po2             
+VLAN1999          6095 0023.04ee.be01         7    2   20  15  Po2             
+SW-DC2-Server-OOB-CHAB01-SET-02#show spanning-tree
+
+VLAN0001
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32769
+             Address     001b.54a8.3280
+             Cost        8
+             Port        464 (Port-channel2)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     40a6.e85d.5200
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Po2                 Root FWD 4         128.464  P2p 
+
+
+
+VLAN1980
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    6076
+             Address     0023.04ee.be01
+             Cost        7
+             Port        464 (Port-channel2)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    63420  (priority 61440 sys-id-ext 1980)
+             Address     40a6.e85d.5200
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Po2                 Root FWD 4         128.464  P2p 
+
+
+
+VLAN1981
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    6077
+             Address     0023.04ee.be01
+             Cost        7
+             Port        464 (Port-channel2)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    63421  (priority 61440 sys-id-ext 1981)
+             Address     40a6.e85d.5200
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi1/0/4             Desg FWD 4         128.4    P2p 
+Gi1/0/5             Desg FWD 4         128.5    P2p 
+Po2                 Root FWD 4         128.464  P2p 
+
+
+
+VLAN1982
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    6078
+             Address     0023.04ee.be01
+             Cost        7
+             Port        464 (Port-channel2)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    63422  (priority 61440 sys-id-ext 1982)
+             Address     40a6.e85d.5200
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Po2                 Root FWD 4         128.464  P2p 
+
+
+
+VLAN1983
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    6079
+             Address     0023.04ee.be01
+             Cost        7
+             Port        464 (Port-channel2)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    63423  (priority 61440 sys-id-ext 1983)
+             Address     40a6.e85d.5200
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi1/0/21            Desg FWD 4         128.21   P2p 
+Gi1/0/22            Desg FWD 4         128.22   P2p 
+Gi1/0/23            Desg FWD 4         128.23   P2p 
+Gi1/0/24            Desg FWD 4         128.24   P2p 
+Po2                 Root FWD 4         128.464  P2p 
+
+
+
+VLAN1984
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    6080
+             Address     0023.04ee.be01
+             Cost        7
+             Port        464 (Port-channel2)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    63424  (priority 61440 sys-id-ext 1984)
+             Address     40a6.e85d.5200
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Po2                 Root FWD 4         128.464  P2p 
+
+
+
+VLAN1985
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    6081
+             Address     0023.04ee.be01
+             Cost        7
+             Port        464 (Port-channel2)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    63425  (priority 61440 sys-id-ext 1985)
+             Address     40a6.e85d.5200
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi1/0/11            Desg FWD 19        128.11   P2p 
+Gi1/0/12            Desg FWD 4         128.12   P2p 
+Gi1/0/13            Desg FWD 4         128.13   P2p 
+Gi1/0/14            Desg FWD 4         128.14   P2p 
+Gi1/0/15            Desg FWD 4         128.15   P2p 
+Gi1/0/16            Desg FWD 4         128.16   P2p 
+Gi1/0/17            Desg FWD 4         128.17   P2p 
+Gi1/0/19            Desg FWD 4         128.19   P2p 
+Gi1/0/20            Desg FWD 4         128.20   P2p 
+Po2                 Root FWD 4         128.464  P2p 
+
+
+
+VLAN1986
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    6082
+             Address     0023.04ee.be01
+             Cost        7
+             Port        464 (Port-channel2)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    63426  (priority 61440 sys-id-ext 1986)
+             Address     40a6.e85d.5200
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Po2                 Root FWD 4         128.464  P2p 
+
+
+
+VLAN1987
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    6083
+             Address     0023.04ee.be01
+             Cost        7
+             Port        464 (Port-channel2)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    63427  (priority 61440 sys-id-ext 1987)
+             Address     40a6.e85d.5200
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Po2                 Root FWD 4         128.464  P2p 
+
+
+
+VLAN1988
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    6084
+             Address     0023.04ee.be01
+             Cost        7
+             Port        464 (Port-channel2)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    63428  (priority 61440 sys-id-ext 1988)
+             Address     40a6.e85d.5200
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Po2                 Root FWD 4         128.464  P2p 
+
+
+
+VLAN1989
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    6085
+             Address     0023.04ee.be01
+             Cost        7
+             Port        464 (Port-channel2)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    63429  (priority 61440 sys-id-ext 1989)
+             Address     40a6.e85d.5200
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi1/0/8             Desg FWD 4         128.8    P2p 
+Po2                 Root FWD 4         128.464  P2p 
+
+
+
+VLAN1998
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    6094
+             Address     0023.04ee.be01
+             Cost        7
+             Port        464 (Port-channel2)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    63438  (priority 61440 sys-id-ext 1998)
+             Address     40a6.e85d.5200
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Po2                 Root FWD 4         128.464  P2p 
+
+
+
+VLAN1999
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    6095
+             Address     0023.04ee.be01
+             Cost        7
+             Port        464 (Port-channel2)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    63439  (priority 61440 sys-id-ext 1999)
+             Address     40a6.e85d.5200
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Po2                 Root FWD 4         128.464  P2p 
+
+
+SW-DC2-Server-OOB-CHAB01-SET-02#show inventory
+NAME: "1", DESCR: "WS-C2960X-24TS-L"
+PID: WS-C2960X-24TS-L  , VID: V03  , SN: FCW1910B1FQ
+
+NAME: "GigabitEthernet1/0/27", DESCR: "1000BaseSX SFP"
+PID:                   , VID:      , SN: FNS0844H0X9     
+
+NAME: "GigabitEthernet1/0/28", DESCR: "1000BaseSX SFP"
+PID:                   , VID:      , SN: FNS0844H0XL     
+
+
+SW-DC2-Server-OOB-CHAB01-SET-02#show etherchannel summary
+Flags:  D - down        P - bundled in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      f - failed to allocate aggregator
+
+        M - not in use, minimum links not met
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+
+
+Number of channel-groups in use: 2
+Number of aggregators:           2
+
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+-----------------------------------------------
+1      Po1(SD)          -        
+2      Po2(SU)          -        Gi1/0/27(D) Gi1/0/28(P) 
+
+SW-DC2-Server-OOB-CHAB01-SET-02#show vtp status
+VTP Version capable             : 1 to 3
+VTP version running             : 1
+VTP Domain Name                 : 
+VTP Pruning Mode                : Disabled
+VTP Traps Generation            : Disabled
+Device ID                       : 40a6.e85d.5200
+Configuration last modified by 0.0.0.0 at 0-0-00 00:00:00
+
+Feature VLAN:
+--------------
+VTP Operating Mode                : Transparent
+Maximum VLANs supported locally   : 1005
+Number of existing VLANs          : 5
+Configuration Revision            : 0
+MD5 digest                        : 0x57 0xCD 0x40 0x65 0x63 0x59 0x47 0xBD 
+                                    0x56 0x9D 0x4A 0x3E 0xA5 0x69 0x35 0xBC 
+SW-DC2-Server-OOB-CHAB01-SET-02#
+SW-DC2-Server-OOB-CHAB01-SET-02#
+Disconnect Time : 03/01/2025 17:55:49:199

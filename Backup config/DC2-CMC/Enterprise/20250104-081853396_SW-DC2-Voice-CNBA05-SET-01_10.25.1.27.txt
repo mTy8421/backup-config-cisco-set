@@ -1,0 +1,928 @@
+Connect Time : 04/01/2025 08:18:53:397
+C
+Warning!
+*************************************************************************
+*       This system is for the use of authorized users only.            *
+*       Individuals using this computer system without authority, or in *
+*       excess of their authority, are subject to having all of their   *
+*       activities on this system monitored and recorded by system      *
+*       personnel.                                                      *
+*                                                                       *
+*       In the course of monitoring individuals improperly using this   *
+*       system, or in the course of system maintenance, the activities  *
+*       of authorized users may also be monitored.                      *
+*                                                                       *
+*       Anyone using this system expressly consents to such monitoring  *
+*       and is advised that if such monitoring reveals possible         *
+*       evidence of criminal activity, system personnel may provide the *
+*       evidence of such monitoring to law enforcement officials.       *
+*************************************************************************
+SW-DC2-Voice-CNBA05-SET-01#
+SW-DC2-Voice-CNBA05-SET-01#
+SW-DC2-Voice-CNBA05-SET-01#terminal length 0
+SW-DC2-Voice-CNBA05-SET-01#show running-config
+Building configuration...
+
+Current configuration : 9224 bytes
+!
+! Last configuration change at 20:21:27 GMT Mon Aug 17 2020 by nwadmin
+! NVRAM config last updated at 20:21:10 GMT Mon Aug 17 2020 by nwadmin
+!
+version 15.2
+no service pad
+service timestamps debug datetime msec localtime show-timezone
+service timestamps log datetime msec localtime show-timezone
+service password-encryption
+!
+hostname SW-DC2-Voice-CNBA05-SET-01
+!
+boot-start-marker
+boot-end-marker
+!
+logging buffered 64000
+enable secret 5 $1$L4I6$K4g0gdpSEnqatT8sLWIb50
+!
+username ait privilege 15 password 7 14161B1F2C172F3F
+username nwadmin secret 5 $1$qTqj$Q1ee.BHuZ/c9BjMccbCO81
+username admin privilege 15 password 7 11591C421D191B5C1D6D
+aaa new-model
+!
+!
+aaa authentication login default group tacacs+ local
+aaa authentication enable default enable
+aaa authorization config-commands
+aaa authorization exec default group tacacs+ local if-authenticated 
+aaa authorization commands 1 default group tacacs+ if-authenticated 
+aaa authorization commands 7 default group tacacs+ if-authenticated 
+aaa authorization commands 15 default group tacacs+ if-authenticated 
+!
+!
+!
+!
+!
+!
+aaa session-id common
+clock timezone GMT 7 0
+switch 1 provision ws-c2960x-24ts-l
+!
+!
+no ip domain-lookup
+ip domain-name set.or.th
+vtp mode transparent
+!
+!
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-3539820928
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-3539820928
+ revocation-check none
+ rsakeypair TP-self-signed-3539820928
+!
+!
+crypto pki certificate chain TP-self-signed-3539820928
+ certificate self-signed 01
+  3082022B 30820194 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 33353339 38323039 3238301E 170D3137 30373235 30383235 
+  35385A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D33 35333938 
+  32303932 3830819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  8100A25A 7DFE965F 54D37329 A92C053C F33D796C EB64683D 48A61BBF 5B03FB71 
+  45EF00F3 4644E02D 380C2EAB 1090A689 CF74E914 F81D348F 65FA0852 08D4FA51 
+  46BB4EE3 7E1137F1 02EBCDD8 AFACCBEF 34E753F1 FB4A7AF2 BD574DFB 33AE0726 
+  01A641E3 AAA5DE99 8EC25C8D BC5F7F6F 8E49B849 2ED5C729 19B6F891 50EE1FE3 
+  8BCB0203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 301F0603 
+  551D2304 18301680 14ED0A75 E9DC99D0 62A7F9C9 C96104BD 717060E4 1C301D06 
+  03551D0E 04160414 ED0A75E9 DC99D062 A7F9C9C9 6104BD71 7060E41C 300D0609 
+  2A864886 F70D0101 05050003 8181009D 001013A2 22FB9D29 4081BE3D 5CDED59D 
+  6FF7C4AC C3C9C62B F881C629 E653B344 DDB74D62 8135A416 BEAE4379 7B33B86C 
+  A1600D5A 240AF224 5DD12BFA 5D0E1A0F 32C1D73B 8AB3B14E 796D445D 1CFBCAA9 
+  4A9E59C3 9803D31E FFC17AA6 7E142606 4D1F7110 0F5840F9 25006C5B FD435085 
+  55C2B0A9 5F89088D 8091D7C2 48D500
+        quit
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+vlan 71,79,81-85 
+!
+vlan 87
+ name SIP-Trunk
+!
+vlan 1999 
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+interface Port-channel1
+ switchport trunk allowed vlan 71,79,81-85,87,1999
+ switchport mode trunk
+!
+interface FastEthernet0
+ ip address 10.25.1.27 255.255.255.0
+!
+interface GigabitEthernet1/0/1
+ description Gateway
+ switchport access vlan 82
+ switchport mode access
+ speed 100
+ duplex full
+!
+interface GigabitEthernet1/0/2
+ description Gateway2
+ switchport access vlan 82
+ switchport mode access
+ speed 100
+ duplex full
+!
+interface GigabitEthernet1/0/3
+ description SBC-Data A1
+ switchport access vlan 82
+ switchport mode access
+!
+interface GigabitEthernet1/0/4
+ description VM1
+ switchport trunk allowed vlan 71,82-85
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/5
+ description VM2
+ switchport trunk allowed vlan 71,82-85
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/6
+ description VM3
+ switchport trunk allowed vlan 71,82-85
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/7
+ description SBC-Data A2
+ switchport access vlan 81
+ switchport mode access
+!
+interface GigabitEthernet1/0/8
+ description Backup Printer Server for SD
+ switchport access vlan 71
+ switchport mode access
+!
+interface GigabitEthernet1/0/9
+!
+interface GigabitEthernet1/0/10
+ description SBC-Data M1
+ switchport access vlan 82
+ switchport mode access
+!
+interface GigabitEthernet1/0/11
+ description SIP-Trunk-SBC
+ switchport access vlan 87
+ switchport mode access
+!
+interface GigabitEthernet1/0/12
+!
+interface GigabitEthernet1/0/13
+ description FAX-GATEWAY
+ switchport access vlan 82
+ switchport mode access
+!
+interface GigabitEthernet1/0/14
+ description PABX
+ switchport access vlan 79
+ switchport mode access
+!
+interface GigabitEthernet1/0/15
+ description SIP-TRUE (A) V22381B Main G0/1/0
+ switchport access vlan 87
+ switchport mode access
+ no cdp enable
+!
+interface GigabitEthernet1/0/16
+ description SIP-TRUE (B) V23382B Backup E1/0/1
+ switchport access vlan 87
+ switchport mode access
+ no cdp enable
+!
+interface GigabitEthernet1/0/17
+!
+interface GigabitEthernet1/0/18
+!
+interface GigabitEthernet1/0/19
+!
+interface GigabitEthernet1/0/20
+!
+interface GigabitEthernet1/0/21
+!
+interface GigabitEthernet1/0/22
+!
+interface GigabitEthernet1/0/23
+ description TRUE IP DID (A) V13224
+ switchport access vlan 81
+ switchport mode access
+!
+interface GigabitEthernet1/0/24
+ description TRUE IP DID (B) V03657
+ switchport access vlan 81
+ switchport mode access
+!
+interface GigabitEthernet1/0/25
+!
+interface GigabitEthernet1/0/26
+!
+interface GigabitEthernet1/0/27
+ switchport trunk allowed vlan 71,79,81-85,87,1999
+ switchport mode trunk
+ channel-group 1 mode active
+!
+interface GigabitEthernet1/0/28
+ switchport trunk allowed vlan 71,79,81-85,87,1999
+ switchport mode trunk
+ channel-group 1 mode active
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan84
+ ip address 10.18.211.254 255.255.255.0
+ shutdown
+!
+interface Vlan1999
+ no ip address
+ shutdown
+!
+ip default-gateway 10.25.1.1
+no ip http server
+no ip http secure-server
+!
+ip ssh version 2
+!
+logging host 10.24.22.21
+access-list 97 permit 10.24.21.0 0.0.0.255
+access-list 97 permit 10.3.5.0 0.0.0.255
+access-list 97 permit 10.25.2.0 0.0.0.255
+access-list 98 permit 10.0.0.0 0.0.0.255
+access-list 99 permit 10.0.0.0 0.0.0.255
+arp 10.25.1.1 0000.0c9f.f7cf ARPA
+!
+snmp-server community R3@donly RO 97
+snmp-server community R3@dwrite RW 98
+snmp-server enable traps snmp authentication linkdown linkup coldstart warmstart
+snmp-server enable traps transceiver all
+snmp-server enable traps call-home message-send-fail server-fail
+snmp-server enable traps tty
+snmp-server enable traps license
+snmp-server enable traps auth-framework sec-violation
+snmp-server enable traps cluster
+snmp-server enable traps config-copy
+snmp-server enable traps config
+snmp-server enable traps config-ctid
+snmp-server enable traps energywise
+snmp-server enable traps fru-ctrl
+snmp-server enable traps entity
+snmp-server enable traps event-manager
+snmp-server enable traps power-ethernet police
+snmp-server enable traps cpu threshold
+snmp-server enable traps vstack
+snmp-server enable traps bridge newroot topologychange
+snmp-server enable traps stpx inconsistency root-inconsistency loop-inconsistency
+snmp-server enable traps syslog
+snmp-server enable traps vtp
+snmp-server enable traps vlancreate
+snmp-server enable traps vlandelete
+snmp-server enable traps flash insertion removal
+snmp-server enable traps port-security
+snmp-server enable traps envmon fan shutdown supply temperature status
+snmp-server enable traps stackwise
+snmp-server enable traps errdisable
+snmp-server enable traps mac-notification change move threshold
+snmp-server enable traps vlan-membership
+tacacs-server host 10.25.2.200
+tacacs-server directed-request
+tacacs-server key 7 0812494D1B4A111C171246
+!
+!
+!
+banner motd ^CC
+Warning!
+*************************************************************************
+*       This system is for the use of authorized users only.            *
+*       Individuals using this computer system without authority, or in *
+*       excess of their authority, are subject to having all of their   *
+*       activities on this system monitored and recorded by system      *
+*       personnel.                                                      *
+*                                                                       *
+*       In the course of monitoring individuals improperly using this   *
+*       system, or in the course of system maintenance, the activities  *
+*       of authorized users may also be monitored.                      *
+*                                                                       *
+*       Anyone using this system expressly consents to such monitoring  *
+*       and is advised that if such monitoring reveals possible         *
+*       evidence of criminal activity, system personnel may provide the *
+*       evidence of such monitoring to law enforcement officials.       *
+*************************************************************************
+^C
+!
+line con 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ privilege level 15
+ logging synchronous
+ transport input ssh
+line vty 5 15
+ logging synchronous
+ transport input ssh
+!
+ntp server 10.34.1.27
+ntp server 10.24.1.27 prefer
+ntp server 10.34.1.28
+ntp server 10.24.1.28
+end
+
+SW-DC2-Voice-CNBA05-SET-01#show interface description
+Interface                      Status         Protocol Description
+Vl1                            admin down     down     
+Vl84                           admin down     down     
+Vl1999                         admin down     down     
+Fa0                            up             up       
+Gi1/0/1                        up             up       Gateway
+Gi1/0/2                        up             up       Gateway2
+Gi1/0/3                        up             up       SBC-Data A1
+Gi1/0/4                        down           down     VM1
+Gi1/0/5                        down           down     VM2
+Gi1/0/6                        down           down     VM3
+Gi1/0/7                        up             up       SBC-Data A2
+Gi1/0/8                        down           down     Backup Printer Server for SD
+Gi1/0/9                        down           down     
+Gi1/0/10                       up             up       SBC-Data M1
+Gi1/0/11                       up             up       SIP-Trunk-SBC
+Gi1/0/12                       down           down     
+Gi1/0/13                       up             up       FAX-GATEWAY
+Gi1/0/14                       up             up       PABX
+Gi1/0/15                       up             up       SIP-TRUE (A) V22381B Main G0/1/0
+Gi1/0/16                       up             up       SIP-TRUE (B) V23382B Backup E1/0/1
+Gi1/0/17                       down           down     
+Gi1/0/18                       down           down     
+Gi1/0/19                       down           down     
+Gi1/0/20                       down           down     
+Gi1/0/21                       up             up       
+Gi1/0/22                       down           down     
+Gi1/0/23                       up             up       TRUE IP DID (A) V13224
+Gi1/0/24                       up             up       TRUE IP DID (B) V03657
+Gi1/0/25                       down           down     
+Gi1/0/26                       down           down     
+Gi1/0/27                       up             up       
+Gi1/0/28                       up             up       
+Po1                            up             up       
+SW-DC2-Voice-CNBA05-SET-01#show ip int brief
+Interface              IP-Address      OK? Method Status                Protocol
+Vlan1                  unassigned      YES NVRAM  administratively down down    
+Vlan84                 10.18.211.254   YES NVRAM  administratively down down    
+Vlan1999               unassigned      YES unset  administratively down down    
+FastEthernet0          10.25.1.27      YES NVRAM  up                    up      
+GigabitEthernet1/0/1   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/2   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/3   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/4   unassigned      YES unset  down                  down    
+GigabitEthernet1/0/5   unassigned      YES unset  down                  down    
+GigabitEthernet1/0/6   unassigned      YES unset  down                  down    
+GigabitEthernet1/0/7   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/8   unassigned      YES unset  down                  down    
+GigabitEthernet1/0/9   unassigned      YES unset  down                  down    
+GigabitEthernet1/0/10  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/11  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/12  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/13  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/14  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/15  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/16  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/17  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/18  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/19  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/20  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/21  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/22  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/23  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/24  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/25  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/26  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/27  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/28  unassigned      YES unset  up                    up      
+Port-channel1          unassigned      YES unset  up                    up      
+SW-DC2-Voice-CNBA05-SET-01#show interface status
+
+Port      Name               Status       Vlan       Duplex  Speed Type 
+Gi1/0/1   Gateway            connected    82           full    100 10/100/1000BaseTX
+Gi1/0/2   Gateway2           connected    82           full    100 10/100/1000BaseTX
+Gi1/0/3   SBC-Data A1        connected    82         a-full a-1000 10/100/1000BaseTX
+Gi1/0/4   VM1                notconnect   1            auto   auto 10/100/1000BaseTX
+Gi1/0/5   VM2                notconnect   1            auto   auto 10/100/1000BaseTX
+Gi1/0/6   VM3                notconnect   1            auto   auto 10/100/1000BaseTX
+Gi1/0/7   SBC-Data A2        connected    81         a-full a-1000 10/100/1000BaseTX
+Gi1/0/8   Backup Printer Ser notconnect   71           auto   auto 10/100/1000BaseTX
+Gi1/0/9                      notconnect   1            auto   auto 10/100/1000BaseTX
+Gi1/0/10  SBC-Data M1        connected    82         a-full a-1000 10/100/1000BaseTX
+Gi1/0/11  SIP-Trunk-SBC      connected    87         a-full a-1000 10/100/1000BaseTX
+Gi1/0/12                     notconnect   1            auto   auto 10/100/1000BaseTX
+Gi1/0/13  FAX-GATEWAY        connected    82         a-full  a-100 10/100/1000BaseTX
+Gi1/0/14  PABX               connected    79         a-full a-1000 10/100/1000BaseTX
+Gi1/0/15  SIP-TRUE (A) V2238 connected    87         a-full a-1000 10/100/1000BaseTX
+Gi1/0/16  SIP-TRUE (B) V2338 connected    87         a-full a-1000 10/100/1000BaseTX
+Gi1/0/17                     notconnect   1            auto   auto 10/100/1000BaseTX
+Gi1/0/18                     notconnect   1            auto   auto 10/100/1000BaseTX
+Gi1/0/19                     notconnect   1            auto   auto 10/100/1000BaseTX
+Gi1/0/20                     notconnect   1            auto   auto 10/100/1000BaseTX
+Gi1/0/21                     connected    1          a-full  a-100 10/100/1000BaseTX
+Gi1/0/22                     notconnect   1            auto   auto 10/100/1000BaseTX
+Gi1/0/23  TRUE IP DID (A) V1 connected    81         a-full  a-100 10/100/1000BaseTX
+Gi1/0/24  TRUE IP DID (B) V0 connected    81         a-full  a-100 10/100/1000BaseTX
+Gi1/0/25                     notconnect   1            auto   auto Not Present
+Gi1/0/26                     notconnect   1            auto   auto Not Present
+Gi1/0/27                     connected    trunk      a-full a-1000 1000BaseSX SFP
+Gi1/0/28                     connected    trunk      a-full a-1000 1000BaseSX SFP
+Po1                          connected    trunk      a-full a-1000 
+Fa0                          connected    routed     a-full  a-100 10/100BaseTX
+SW-DC2-Voice-CNBA05-SET-01#show vlan
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi1/0/4, Gi1/0/5, Gi1/0/6, Gi1/0/9, Gi1/0/12, Gi1/0/17, Gi1/0/18, Gi1/0/19, Gi1/0/20, Gi1/0/21
+                                                Gi1/0/22, Gi1/0/25, Gi1/0/26
+71   VLAN0071                         active    Gi1/0/8
+79   VLAN0079                         active    Gi1/0/14
+81   VLAN0081                         active    Gi1/0/7, Gi1/0/23, Gi1/0/24
+82   VLAN0082                         active    Gi1/0/1, Gi1/0/2, Gi1/0/3, Gi1/0/10, Gi1/0/13
+83   VLAN0083                         active    
+84   VLAN0084                         active    
+85   VLAN0085                         active    
+87   SIP-Trunk                        active    Gi1/0/11, Gi1/0/15, Gi1/0/16
+1002 fddi-default                     act/unsup 
+1003 token-ring-default               act/unsup 
+1004 fddinet-default                  act/unsup 
+1005 trnet-default                    act/unsup 
+1999 VLAN1999                         active    
+
+VLAN Type  SAID       MTU   Parent RingNo BridgeNo Stp  BrdgMode Trans1 Trans2
+---- ----- ---------- ----- ------ ------ -------- ---- -------- ------ ------
+1    enet  100001     1500  -      -      -        -    -        0      0   
+71   enet  100071     1500  -      -      -        -    -        0      0   
+79   enet  100079     1500  -      -      -        -    -        0      0   
+81   enet  100081     1500  -      -      -        -    -        0      0   
+82   enet  100082     1500  -      -      -        -    -        0      0   
+83   enet  100083     1500  -      -      -        -    -        0      0   
+84   enet  100084     1500  -      -      -        -    -        0      0   
+85   enet  100085     1500  -      -      -        -    -        0      0   
+87   enet  100087     1500  -      -      -        -    -        0      0   
+1002 fddi  101002     1500  -      -      -        -    -        0      0   
+1003 tr    101003     1500  -      -      -        -    -        0      0   
+1004 fdnet 101004     1500  -      -      -        ieee -        0      0   
+1005 trnet 101005     1500  -      -      -        ibm  -        0      0   
+1999 enet  101999     1500  -      -      -        -    -        0      0   
+
+Remote SPAN VLANs
+------------------------------------------------------------------------------
+
+
+Primary Secondary Type              Ports
+------- --------- ----------------- ------------------------------------------
+
+SW-DC2-Voice-CNBA05-SET-01#show version
+Cisco IOS Software, C2960X Software (C2960X-UNIVERSALK9-M), Version 15.2(2)E6, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2016 by Cisco Systems, Inc.
+Compiled Fri 16-Dec-16 21:27 by prod_rel_team
+
+ROM: Bootstrap program is C2960X boot loader
+BOOTLDR: C2960X Boot Loader (C2960X-HBOOT-M) Version 15.2(2r)E2, RELEASE SOFTWARE (fc1)
+
+SW-DC2-Voice-CNBA05-SET-01 uptime is 5 years, 10 weeks, 1 day, 14 hours, 44 minutes
+System returned to ROM by power-on
+System restarted at 15:05:18 GMT Sat Oct 26 2019
+System image file is "flash:/c2960x-universalk9-mz.152-2.E6.bin"
+Last reload reason: power-on
+
+
+
+This product contains cryptographic features and is subject to United
+States and local country laws governing import, export, transfer and
+use. Delivery of Cisco cryptographic products does not imply
+third-party authority to import, export, distribute or use encryption.
+Importers, exporters, distributors and users are responsible for
+compliance with U.S. and local country laws. By using this product you
+agree to comply with applicable laws and regulations. If you are unable
+to comply with U.S. and local laws, return this product immediately.
+
+A summary of U.S. laws governing Cisco cryptographic products may be found at:
+http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+
+If you require further assistance please contact us by sending email to
+export@cisco.com.
+
+cisco WS-C2960X-24TS-L (APM86XXX) processor (revision K0) with 524288K bytes of memory.
+Processor board ID FCW1945B4AL
+Last reset from power-on
+3 Virtual Ethernet interfaces
+1 FastEthernet interface
+28 Gigabit Ethernet interfaces
+The password-recovery mechanism is enabled.
+
+512K bytes of flash-simulated non-volatile configuration memory.
+Base ethernet MAC Address       : 00:41:D2:FD:61:80
+Motherboard assembly number     : 73-15973-02
+Power supply part number        : 341-0529-02
+Motherboard serial number       : FOC19453BME
+Power supply serial number      : LIT19420D2S
+Model revision number           : K0
+Motherboard revision number     : C0
+Model number                    : WS-C2960X-24TS-L
+Daughterboard assembly number   : 73-14200-03
+Daughterboard serial number     : FOC19452BB9
+System serial number            : FCW1945B4AL
+Top Assembly Part Number        : 800-41470-01
+Top Assembly Revision Number    : F0
+Version ID                      : V03
+CLEI Code Number                : CMMMU00ARB
+Daughterboard revision number   : A0
+Hardware Board Revision Number  : 0x12
+
+
+Switch Ports Model                     SW Version            SW Image                 
+------ ----- -----                     ----------            ----------               
+*    1 28    WS-C2960X-24TS-L          15.2(2)E6             C2960X-UNIVERSALK9-M     
+
+
+Configuration register is 0xF
+
+SW-DC2-Voice-CNBA05-SET-01#show cdp nei
+Capability Codes: R - Router, T - Trans Bridge, B - Source Route Bridge
+                  S - Switch, H - Host, I - IGMP, r - Repeater, P - Phone, 
+                  D - Remote, C - CVTA, M - Two-port Mac Relay 
+
+Device ID        Local Intrfce     Holdtme    Capability  Platform  Port ID
+SW-DC2-Campus-CNAA04-SET-01-Core.set.or.th
+                 Gig 1/0/28        135             R S I  C9500-48Y TwentyFiveGigE2/0/36
+SW-DC2-Campus-CNAA04-SET-01-Core.set.or.th
+                 Gig 1/0/27        176             R S I  C9500-48Y TwentyFiveGigE1/0/36
+SW-DC2-Distribute-CNBB03-SET-01.set.or.t
+                 Gig 1/0/14        175              S I   WS-C2960X Gig 1/0/2
+V03657B.yourdomain.com
+                 Gig 1/0/24        139             R S I  2821      Fas 0/0/0
+SW-DC2-OOB-CNBA03-SET-01.set.or.th
+                 Fas 0             122              S I   WS-C2960X Gig 1/0/5
+V13224B-V18750   Gig 1/0/23        167             R S I  2821      Fas 0/0/3
+
+Total cdp entries displayed : 6
+SW-DC2-Voice-CNBA05-SET-01#show lldp nei
+% LLDP is not enabled
+SW-DC2-Voice-CNBA05-SET-01#show ip arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  10.25.1.1               -   0000.0c9f.f7cf  ARPA  
+Internet  10.25.1.2              25   cc6a.33f1.983f  ARPA   FastEthernet0
+Internet  10.25.1.27              -   0041.d2fd.61b9  ARPA   FastEthernet0
+SW-DC2-Voice-CNBA05-SET-01#show mac address
+          Mac Address Table
+-------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       --------    -----
+ All    0100.0ccc.cccc    STATIC      CPU
+ All    0100.0ccc.cccd    STATIC      CPU
+ All    0180.c200.0000    STATIC      CPU
+ All    0180.c200.0001    STATIC      CPU
+ All    0180.c200.0002    STATIC      CPU
+ All    0180.c200.0003    STATIC      CPU
+ All    0180.c200.0004    STATIC      CPU
+ All    0180.c200.0005    STATIC      CPU
+ All    0180.c200.0006    STATIC      CPU
+ All    0180.c200.0007    STATIC      CPU
+ All    0180.c200.0008    STATIC      CPU
+ All    0180.c200.0009    STATIC      CPU
+ All    0180.c200.000a    STATIC      CPU
+ All    0180.c200.000b    STATIC      CPU
+ All    0180.c200.000c    STATIC      CPU
+ All    0180.c200.000d    STATIC      CPU
+ All    0180.c200.000e    STATIC      CPU
+ All    0180.c200.000f    STATIC      CPU
+ All    0180.c200.0010    STATIC      CPU
+ All    ffff.ffff.ffff    STATIC      CPU
+  82    0050.56bf.04c1    DYNAMIC     Po1
+  82    0050.56bf.1d78    DYNAMIC     Po1
+  82    0050.56bf.1e2c    DYNAMIC     Po1
+  82    0050.56bf.387e    DYNAMIC     Po1
+  82    0050.56bf.5e66    DYNAMIC     Po1
+  82    0050.56bf.66ad    DYNAMIC     Po1
+  82    0050.56bf.cd22    DYNAMIC     Po1
+  82    481b.a4f1.ff84    DYNAMIC     Po1
+  82    481b.a4f1.ffff    DYNAMIC     Po1
+  82    6c2b.598f.56a5    DYNAMIC     Po1
+  82    6c2b.598f.587d    DYNAMIC     Gi1/0/10
+  82    a425.1bae.1798    DYNAMIC     Gi1/0/2
+  81    0000.0c07.ac01    DYNAMIC     Gi1/0/24
+  81    0007.0e55.6a58    DYNAMIC     Po1
+  81    0023.04f5.1f48    DYNAMIC     Gi1/0/24
+  81    0023.04f5.1f4b    DYNAMIC     Po1
+  81    40f4.ecbd.47c0    DYNAMIC     Gi1/0/24
+  81    481b.a4f1.ff84    DYNAMIC     Po1
+  81    f866.f24d.56bf    DYNAMIC     Gi1/0/23
+  71    0009.0f09.001e    DYNAMIC     Po1
+  71    000c.2923.1ca6    DYNAMIC     Po1
+  71    000c.2973.9f03    DYNAMIC     Po1
+  71    0050.56bf.40ba    DYNAMIC     Po1
+  71    40a6.b7b7.92ec    DYNAMIC     Po1
+  71    481b.a4f1.ff84    DYNAMIC     Po1
+  71    6c3c.8c77.6722    DYNAMIC     Po1
+  71    6c3c.8c77.7ad2    DYNAMIC     Po1
+  71    9009.d04a.0d89    DYNAMIC     Po1
+  79    0008.5d75.a1e6    DYNAMIC     Po1
+  79    40a6.e85c.d082    DYNAMIC     Gi1/0/14
+  79    481b.a4f1.ff84    DYNAMIC     Po1
+  83    481b.a4f1.ff84    DYNAMIC     Po1
+  84    0009.0f09.001e    DYNAMIC     Po1
+  85    0009.0f09.001e    DYNAMIC     Po1
+   1    000b.8406.9930    DYNAMIC     Gi1/0/21
+  87    0000.0c07.ac0a    DYNAMIC     Gi1/0/15
+  87    00ee.ab24.5b08    DYNAMIC     Gi1/0/16
+  87    00ee.ab24.5b74    DYNAMIC     Gi1/0/16
+  87    481b.a4f1.ff84    DYNAMIC     Po1
+  87    706d.15d1.6708    DYNAMIC     Gi1/0/15
+  87    706d.15d1.6774    DYNAMIC     Gi1/0/15
+  87    b496.9151.9594    DYNAMIC     Po1
+Total Mac Addresses for this criterion: 62
+SW-DC2-Voice-CNBA05-SET-01#show spanning-tree root
+
+                                        Root    Hello Max Fwd
+Vlan                   Root ID          Cost    Time  Age Dly  Root Port
+---------------- -------------------- --------- ----- --- ---  ------------
+VLAN0001         32769 0041.d2fd.6180         0    2   20  15                  
+VLAN0071         24647 481b.a4f1.ff60         3    2   20  15  Po1             
+VLAN0079         24655 481b.a4f1.ff60         3    2   20  15  Po1             
+VLAN0081         24657 481b.a4f1.ff60         3    2   20  15  Po1             
+VLAN0082         24658 481b.a4f1.ff60         3    2   20  15  Po1             
+VLAN0083         24659 481b.a4f1.ff60         3    2   20  15  Po1             
+VLAN0084         32852 0041.d2fd.6180         0    2   20  15                  
+VLAN0085         32853 0041.d2fd.6180         0    2   20  15                  
+VLAN0087         24663 481b.a4f1.ff60         3    2   20  15  Po1             
+VLAN1999         34767 0041.d2fd.6180         0    2   20  15                  
+SW-DC2-Voice-CNBA05-SET-01#show spanning-tree
+
+VLAN0001
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    32769
+             Address     0041.d2fd.6180
+             This bridge is the root
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     0041.d2fd.6180
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi1/0/21            Desg FWD 19        128.21   P2p 
+
+
+
+VLAN0071
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    24647
+             Address     481b.a4f1.ff60
+             Cost        3
+             Port        456 (Port-channel1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32839  (priority 32768 sys-id-ext 71)
+             Address     0041.d2fd.6180
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Po1                 Root FWD 3         128.456  P2p 
+
+
+
+VLAN0079
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    24655
+             Address     481b.a4f1.ff60
+             Cost        3
+             Port        456 (Port-channel1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32847  (priority 32768 sys-id-ext 79)
+             Address     0041.d2fd.6180
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi1/0/14            Desg FWD 4         128.14   P2p 
+Po1                 Root FWD 3         128.456  P2p 
+
+
+
+VLAN0081
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    24657
+             Address     481b.a4f1.ff60
+             Cost        3
+             Port        456 (Port-channel1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32849  (priority 32768 sys-id-ext 81)
+             Address     0041.d2fd.6180
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi1/0/7             Desg FWD 4         128.7    P2p 
+Gi1/0/23            Desg FWD 19        128.23   P2p 
+Gi1/0/24            Desg FWD 19        128.24   P2p 
+Po1                 Root FWD 3         128.456  P2p 
+
+
+
+VLAN0082
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    24658
+             Address     481b.a4f1.ff60
+             Cost        3
+             Port        456 (Port-channel1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32850  (priority 32768 sys-id-ext 82)
+             Address     0041.d2fd.6180
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi1/0/1             Desg FWD 19        128.1    P2p 
+Gi1/0/2             Desg FWD 19        128.2    P2p 
+Gi1/0/3             Desg FWD 4         128.3    P2p 
+Gi1/0/10            Desg FWD 4         128.10   P2p 
+Gi1/0/13            Desg FWD 19        128.13   P2p 
+Po1                 Root FWD 3         128.456  P2p 
+
+
+
+VLAN0083
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    24659
+             Address     481b.a4f1.ff60
+             Cost        3
+             Port        456 (Port-channel1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32851  (priority 32768 sys-id-ext 83)
+             Address     0041.d2fd.6180
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Po1                 Root FWD 3         128.456  P2p 
+
+
+
+VLAN0084
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    32852
+             Address     0041.d2fd.6180
+             This bridge is the root
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32852  (priority 32768 sys-id-ext 84)
+             Address     0041.d2fd.6180
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Po1                 Desg FWD 3         128.456  P2p 
+
+
+
+VLAN0085
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    32853
+             Address     0041.d2fd.6180
+             This bridge is the root
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32853  (priority 32768 sys-id-ext 85)
+             Address     0041.d2fd.6180
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Po1                 Desg FWD 3         128.456  P2p 
+
+
+
+VLAN0087
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    24663
+             Address     481b.a4f1.ff60
+             Cost        3
+             Port        456 (Port-channel1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32855  (priority 32768 sys-id-ext 87)
+             Address     0041.d2fd.6180
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi1/0/11            Desg FWD 4         128.11   P2p 
+Gi1/0/15            Desg FWD 4         128.15   P2p 
+Gi1/0/16            Desg FWD 4         128.16   P2p 
+Po1                 Root FWD 3         128.456  P2p 
+
+
+
+VLAN1999
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    34767
+             Address     0041.d2fd.6180
+             This bridge is the root
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    34767  (priority 32768 sys-id-ext 1999)
+             Address     0041.d2fd.6180
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Po1                 Desg FWD 3         128.456  P2p 
+
+
+SW-DC2-Voice-CNBA05-SET-01#show inventory
+NAME: "1", DESCR: "WS-C2960X-24TS-L"
+PID: WS-C2960X-24TS-L  , VID: V03  , SN: FCW1945B4AL
+
+NAME: "GigabitEthernet1/0/27", DESCR: "1000BaseSX SFP"
+PID: GLC-SX-MMD          , VID: V01  , SN: AGJ1839R3R9     
+
+NAME: "GigabitEthernet1/0/28", DESCR: "1000BaseSX SFP"
+PID: GLC-SX-MMD          , VID: V01  , SN: AGJ1839R4Y9     
+
+
+SW-DC2-Voice-CNBA05-SET-01#show etherchannel summary
+Flags:  D - down        P - bundled in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      f - failed to allocate aggregator
+
+        M - not in use, minimum links not met
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+
+
+Number of channel-groups in use: 1
+Number of aggregators:           1
+
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+-----------------------------------------------
+1      Po1(SU)         LACP      Gi1/0/27(P) Gi1/0/28(P) 
+
+SW-DC2-Voice-CNBA05-SET-01#show vtp status
+VTP Version capable             : 1 to 3
+VTP version running             : 1
+VTP Domain Name                 : 
+VTP Pruning Mode                : Disabled
+VTP Traps Generation            : Enabled
+Device ID                       : 0041.d2fd.6180
+Configuration last modified by 10.18.211.254 at 0-0-00 00:00:00
+
+Feature VLAN:
+--------------
+VTP Operating Mode                : Transparent
+Maximum VLANs supported locally   : 1005
+Number of existing VLANs          : 13
+Configuration Revision            : 0
+MD5 digest                        : 0x35 0xF3 0xE1 0xA5 0x04 0xA7 0xDE 0xCA 
+                                    0xA1 0xFB 0xD1 0xF1 0xC8 0x1B 0x56 0x36 
+SW-DC2-Voice-CNBA05-SET-01#
+SW-DC2-Voice-CNBA05-SET-01#

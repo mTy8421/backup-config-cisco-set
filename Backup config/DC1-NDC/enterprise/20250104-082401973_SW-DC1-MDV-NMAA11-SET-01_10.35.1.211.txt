@@ -1,0 +1,896 @@
+Connect Time : 04/01/2025 08:24:01:973
+
+Warning!
+*************************************************************************
+*       This system is for the use of authorized users only.            *
+*       Individuals using this computer system without authority, or in *
+*       excess of their authority, are subject to having all of their   *
+*       activities on this system monitored and recorded by system      *
+*       personnel.                                                      *
+*                                                                       *
+*       In the course of monitoring individuals improperly using this   *
+*       system, or in the course of system maintenance, the activities  *
+*       of authorized users may also be monitored.                      *
+*                                                                       *
+*       Anyone using this system expressly consents to such monitoring  *
+*       and is advised that if such monitoring reveals possible         *
+*       evidence of criminal activity, system personnel may provide the *
+*       evidence of such monitoring to law enforcement officials.       *
+*************************************************************************
+SW-DC1-MDV-NMAA11-SET-01#terminal length 0
+SW-DC1-MDV-NMAA11-SET-01#show running-config
+Building configuration...
+
+Current configuration : 10125 bytes
+!
+! Last configuration change at 13:10:48 GMT+7 Sat Dec 24 2022 by thanatl
+! NVRAM config last updated at 13:00:46 GMT+7 Sat Dec 24 2022 by thanatl
+!
+version 15.2
+no service pad
+service timestamps debug datetime msec localtime show-timezone year
+service timestamps log datetime msec localtime show-timezone year
+service password-encryption
+!
+hostname SW-DC1-MDV-NMAA11-SET-01
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$aDpv$NEY8kHYeF49aDwNq7/7Z3.
+!
+username admin privilege 15 secret 5 $1$7g47$nkveRow9mixeYNoqsDEnb/
+aaa new-model
+!
+!
+aaa group server tacacs+ tacacs1
+ server-private 10.35.2.200 key 7 122A00140058180F2F326E
+ ip tacacs source-interface FastEthernet0
+!
+aaa authentication login default group tacacs1 local
+aaa authentication enable default enable
+aaa authorization config-commands
+aaa authorization exec default group tacacs1 local 
+aaa authorization commands 15 default group tacacs1 local 
+aaa accounting exec default start-stop group tacacs1
+aaa accounting commands 15 default start-stop group tacacs1
+!
+!
+!
+!
+!
+!
+aaa session-id common
+clock timezone GMT+7 7 0
+switch 1 provision ws-c2960x-24ts-l
+!
+!
+no ip domain-lookup
+ip domain-name set.or.th
+vtp mode transparent
+!
+!
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-1837051904
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-1837051904
+ revocation-check none
+ rsakeypair TP-self-signed-1837051904
+!
+!
+crypto pki certificate chain TP-self-signed-1837051904
+ certificate self-signed 01
+  3082022B 30820194 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 31383337 30353139 3034301E 170D3138 30373031 31303537 
+  34305A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D31 38333730 
+  35313930 3430819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  8100E6EC 37099B19 B2A0BA93 156245B7 D7BD9F70 9BAA23B8 5FDFA809 628DEE34 
+  050A84EB 6171AFAA 98014FE6 82F999B5 3C72D48E E9C80D47 EF41882A BEC5EE90 
+  AD39E285 488AC64D 6981F971 9EAED408 6730E852 C7832DE5 0115A569 2053E393 
+  06FE3EAC 0B754D2C 8BE2AF72 D4F26B88 856DF509 84FA6BAE 53CC43FE 7CD4F81C 
+  04770203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 301F0603 
+  551D2304 18301680 149289AB B8BAC555 900D4EA2 564BC6D2 5C8E6BD9 30301D06 
+  03551D0E 04160414 9289ABB8 BAC55590 0D4EA256 4BC6D25C 8E6BD930 300D0609 
+  2A864886 F70D0101 05050003 818100CC 50046B09 7184051C 53A22F4F 49B5E8B2 
+  B3A8043C A5D1220A 231251CE A93CE54F FEC6CC9C 9F703CD7 FAEC66A1 6A81ADF6 
+  79623BBD 8C8EC797 B6170371 5803F856 EF5DA9CB 6FEB38A4 45261F40 D402FE0C 
+  433D3EC8 032F3EB8 6C074AB6 1B4B6DE2 15158E2D D4C0F9B6 A56FE0C6 2BE796F2 
+  6516A3DE B8DE3C88 72E2C7CD 899642
+        quit
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+vlan 2101
+ name TNS-A
+!
+vlan 2102
+ name IPC-A
+!
+vlan 2103
+ name Reuters-A
+!
+vlan 2104
+ name BBG-A
+!
+vlan 2105
+ name InterActData-A
+!
+vlan 2106
+ name ICE-A
+no cdp run
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+interface Port-channel1
+ description To SW-DC1-MDV-NMAA11-SET-02
+ switchport mode trunk
+!
+interface FastEthernet0
+ ip address 10.35.1.211 255.255.255.0
+!
+interface GigabitEthernet1/0/1
+ description IPC
+ switchport access vlan 2102
+ switchport mode access
+ no cdp enable
+!
+interface GigabitEthernet1/0/2
+ description IPC ICE
+ switchport access vlan 2102
+ switchport mode access
+ no cdp enable
+!
+interface GigabitEthernet1/0/3
+ description TNS (reserved)
+ switchport access vlan 2101
+ switchport mode access
+ no cdp enable
+!
+interface GigabitEthernet1/0/4
+ description TNS (reserved)
+ switchport access vlan 2101
+ switchport mode access
+ no cdp enable
+!
+interface GigabitEthernet1/0/5
+ description Reuters (reserved)
+ switchport access vlan 2103
+ switchport mode access
+ no cdp enable
+!
+interface GigabitEthernet1/0/6
+ description Reuters (reserved)
+ switchport access vlan 2103
+ switchport mode access
+ no cdp enable
+!
+interface GigabitEthernet1/0/7
+ description Bloomberg UIH 596786
+ switchport access vlan 2104
+ switchport mode access
+ no cdp enable
+!
+interface GigabitEthernet1/0/8
+ description Bloomberg (reserved)
+ switchport access vlan 2104
+ switchport mode access
+ no cdp enable
+!
+interface GigabitEthernet1/0/9
+ description ICE
+ switchport access vlan 2106
+ switchport mode access
+ no cdp enable
+!
+interface GigabitEthernet1/0/10
+ description ICE (reserved)
+ switchport access vlan 2106
+ switchport mode access
+ no cdp enable
+!
+interface GigabitEthernet1/0/11
+ switchport mode access
+ shutdown
+ no cdp enable
+!
+interface GigabitEthernet1/0/12
+ switchport mode access
+ shutdown
+ no cdp enable
+!
+interface GigabitEthernet1/0/13
+ switchport mode access
+ shutdown
+ no cdp enable
+!
+interface GigabitEthernet1/0/14
+ switchport mode access
+ shutdown
+ no cdp enable
+!
+interface GigabitEthernet1/0/15
+ switchport mode access
+ shutdown
+ no cdp enable
+!
+interface GigabitEthernet1/0/16
+ switchport mode access
+ shutdown
+ no cdp enable
+!
+interface GigabitEthernet1/0/17
+ switchport mode access
+ shutdown
+ no cdp enable
+!
+interface GigabitEthernet1/0/18
+ switchport mode access
+ shutdown
+ no cdp enable
+!
+interface GigabitEthernet1/0/19
+ shutdown
+ no cdp enable
+!
+interface GigabitEthernet1/0/20
+ switchport mode access
+ shutdown
+ no cdp enable
+!
+interface GigabitEthernet1/0/21
+ shutdown
+!
+interface GigabitEthernet1/0/22
+ description Uplink SW-Colo-A-01
+ switchport trunk allowed vlan 2101-2106
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/23
+ switchport mode trunk
+ channel-group 1 mode active
+!
+interface GigabitEthernet1/0/24
+ switchport mode trunk
+ channel-group 1 mode active
+!
+interface GigabitEthernet1/0/25
+!
+interface GigabitEthernet1/0/26
+!
+interface GigabitEthernet1/0/27
+!
+interface GigabitEthernet1/0/28
+!
+interface Vlan1
+ no ip address
+!
+interface Vlan2101
+ ip address 10.69.251.29 255.255.255.224
+!
+interface Vlan2102
+ ip address 10.69.251.61 255.255.255.224
+!
+interface Vlan2103
+ ip address 10.69.251.93 255.255.255.224
+!
+interface Vlan2104
+ ip address 10.69.251.125 255.255.255.224
+!
+interface Vlan2105
+ ip address 10.69.251.157 255.255.255.224
+!
+ip default-gateway 10.35.1.1
+ip http server
+ip http secure-server
+!
+ip ssh version 2
+!
+logging trap debugging
+logging host 10.34.22.21
+access-list 97 permit 10.25.1.0 0.0.0.255
+access-list 97 permit 10.25.2.0 0.0.0.255
+access-list 97 permit 10.35.1.0 0.0.0.255
+access-list 97 permit 10.35.2.0 0.0.0.255
+access-list 97 permit 10.24.21.0 0.0.0.255
+access-list 97 permit 10.34.21.0 0.0.0.255
+!
+snmp-server community R3@donly RO 97
+snmp-server community R3@dwrite RW 97
+snmp-server location SET-DC1
+snmp-server enable traps snmp authentication linkdown linkup coldstart warmstart
+snmp-server enable traps transceiver all
+snmp-server enable traps call-home message-send-fail server-fail
+snmp-server enable traps tty
+snmp-server enable traps license
+snmp-server enable traps auth-framework sec-violation
+snmp-server enable traps cluster
+snmp-server enable traps config-copy
+snmp-server enable traps config
+snmp-server enable traps config-ctid
+snmp-server enable traps trustsec-sxp conn-srcaddr-err msg-parse-err conn-config-err binding-err conn-up conn-down binding-expn-fail oper-nodeid-change binding-conflict
+snmp-server enable traps energywise
+snmp-server enable traps fru-ctrl
+snmp-server enable traps entity
+snmp-server enable traps event-manager
+snmp-server enable traps ike policy add
+snmp-server enable traps ike policy delete
+snmp-server enable traps ike tunnel start
+snmp-server enable traps ike tunnel stop
+snmp-server enable traps ipsec cryptomap add
+snmp-server enable traps ipsec cryptomap delete
+snmp-server enable traps ipsec cryptomap attach
+snmp-server enable traps ipsec cryptomap detach
+snmp-server enable traps ipsec tunnel start
+snmp-server enable traps ipsec tunnel stop
+snmp-server enable traps ipsec too-many-sas
+snmp-server enable traps power-ethernet police
+snmp-server enable traps cpu threshold
+snmp-server enable traps vstack
+snmp-server enable traps bridge newroot topologychange
+snmp-server enable traps stpx inconsistency root-inconsistency loop-inconsistency
+snmp-server enable traps syslog
+snmp-server enable traps vtp
+snmp-server enable traps vlancreate
+snmp-server enable traps vlandelete
+snmp-server enable traps flash insertion removal
+snmp-server enable traps port-security
+snmp-server enable traps envmon fan shutdown supply temperature status
+snmp-server enable traps stackwise
+snmp-server enable traps bulkstat collection transfer
+snmp-server enable traps errdisable
+snmp-server enable traps mac-notification change move threshold
+snmp-server enable traps vlan-membership
+!
+!
+!
+banner motd ^C
+Warning!
+*************************************************************************
+*       This system is for the use of authorized users only.            *
+*       Individuals using this computer system without authority, or in *
+*       excess of their authority, are subject to having all of their   *
+*       activities on this system monitored and recorded by system      *
+*       personnel.                                                      *
+*                                                                       *
+*       In the course of monitoring individuals improperly using this   *
+*       system, or in the course of system maintenance, the activities  *
+*       of authorized users may also be monitored.                      *
+*                                                                       *
+*       Anyone using this system expressly consents to such monitoring  *
+*       and is advised that if such monitoring reveals possible         *
+*       evidence of criminal activity, system personnel may provide the *
+*       evidence of such monitoring to law enforcement officials.       *
+*************************************************************************
+^C
+!
+line con 0
+line vty 0 4
+ logging synchronous
+ transport input ssh
+line vty 5 15
+ logging synchronous
+ transport input ssh
+!
+ntp server 10.34.1.27 prefer
+ntp server 10.24.1.27
+ntp server 10.34.1.28
+ntp server 10.24.1.28
+end
+
+SW-DC1-MDV-NMAA11-SET-01#show interface description
+Interface                      Status         Protocol Description
+Vl1                            up             up       
+Vl2101                         up             up       
+Vl2102                         up             up       
+Vl2103                         up             up       
+Vl2104                         up             up       
+Vl2105                         up             up       
+Fa0                            up             up       
+Gi1/0/1                        up             up       IPC
+Gi1/0/2                        up             up       IPC ICE
+Gi1/0/3                        down           down     TNS (reserved)
+Gi1/0/4                        down           down     TNS (reserved)
+Gi1/0/5                        down           down     Reuters (reserved)
+Gi1/0/6                        down           down     Reuters (reserved)
+Gi1/0/7                        up             up       Bloomberg UIH 596786
+Gi1/0/8                        down           down     Bloomberg (reserved)
+Gi1/0/9                        up             up       ICE
+Gi1/0/10                       down           down     ICE (reserved)
+Gi1/0/11                       admin down     down     
+Gi1/0/12                       admin down     down     
+Gi1/0/13                       admin down     down     
+Gi1/0/14                       admin down     down     
+Gi1/0/15                       admin down     down     
+Gi1/0/16                       admin down     down     
+Gi1/0/17                       admin down     down     
+Gi1/0/18                       admin down     down     
+Gi1/0/19                       admin down     down     
+Gi1/0/20                       admin down     down     
+Gi1/0/21                       admin down     down     
+Gi1/0/22                       up             up       Uplink SW-Colo-A-01
+Gi1/0/23                       up             up       
+Gi1/0/24                       up             up       
+Gi1/0/25                       down           down     
+Gi1/0/26                       down           down     
+Gi1/0/27                       down           down     
+Gi1/0/28                       down           down     
+Po1                            up             up       To SW-DC1-MDV-NMAA11-SET-02
+SW-DC1-MDV-NMAA11-SET-01#show ip int brief
+Interface              IP-Address      OK? Method Status                Protocol
+Vlan1                  unassigned      YES NVRAM  up                    up      
+Vlan2101               10.69.251.29    YES manual up                    up      
+Vlan2102               10.69.251.61    YES manual up                    up      
+Vlan2103               10.69.251.93    YES manual up                    up      
+Vlan2104               10.69.251.125   YES manual up                    up      
+Vlan2105               10.69.251.157   YES manual up                    up      
+FastEthernet0          10.35.1.211     YES NVRAM  up                    up      
+GigabitEthernet1/0/1   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/2   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/3   unassigned      YES unset  down                  down    
+GigabitEthernet1/0/4   unassigned      YES unset  down                  down    
+GigabitEthernet1/0/5   unassigned      YES unset  down                  down    
+GigabitEthernet1/0/6   unassigned      YES unset  down                  down    
+GigabitEthernet1/0/7   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/8   unassigned      YES unset  down                  down    
+GigabitEthernet1/0/9   unassigned      YES unset  up                    up      
+GigabitEthernet1/0/10  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/11  unassigned      YES unset  administratively down down    
+GigabitEthernet1/0/12  unassigned      YES unset  administratively down down    
+GigabitEthernet1/0/13  unassigned      YES unset  administratively down down    
+GigabitEthernet1/0/14  unassigned      YES unset  administratively down down    
+GigabitEthernet1/0/15  unassigned      YES unset  administratively down down    
+GigabitEthernet1/0/16  unassigned      YES unset  administratively down down    
+GigabitEthernet1/0/17  unassigned      YES unset  administratively down down    
+GigabitEthernet1/0/18  unassigned      YES unset  administratively down down    
+GigabitEthernet1/0/19  unassigned      YES unset  administratively down down    
+GigabitEthernet1/0/20  unassigned      YES unset  administratively down down    
+GigabitEthernet1/0/21  unassigned      YES unset  administratively down down    
+GigabitEthernet1/0/22  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/23  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/24  unassigned      YES unset  up                    up      
+GigabitEthernet1/0/25  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/26  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/27  unassigned      YES unset  down                  down    
+GigabitEthernet1/0/28  unassigned      YES unset  down                  down    
+Port-channel1          unassigned      YES unset  up                    up      
+SW-DC1-MDV-NMAA11-SET-01#show interface status
+
+Port      Name               Status       Vlan       Duplex  Speed Type 
+Gi1/0/1   IPC                connected    2102       a-full a-1000 10/100/1000BaseTX
+Gi1/0/2   IPC ICE            connected    2102       a-full a-1000 10/100/1000BaseTX
+Gi1/0/3   TNS (reserved)     notconnect   2101         auto   auto 10/100/1000BaseTX
+Gi1/0/4   TNS (reserved)     notconnect   2101         auto   auto 10/100/1000BaseTX
+Gi1/0/5   Reuters (reserved) notconnect   2103         auto   auto 10/100/1000BaseTX
+Gi1/0/6   Reuters (reserved) notconnect   2103         auto   auto 10/100/1000BaseTX
+Gi1/0/7   Bloomberg UIH 5967 connected    2104       a-full a-1000 10/100/1000BaseTX
+Gi1/0/8   Bloomberg (reserve notconnect   2104         auto   auto 10/100/1000BaseTX
+Gi1/0/9   ICE                connected    2106       a-full a-1000 10/100/1000BaseTX
+Gi1/0/10  ICE (reserved)     notconnect   2106         auto   auto 10/100/1000BaseTX
+Gi1/0/11                     disabled     1            auto   auto 10/100/1000BaseTX
+Gi1/0/12                     disabled     1            auto   auto 10/100/1000BaseTX
+Gi1/0/13                     disabled     1            auto   auto 10/100/1000BaseTX
+Gi1/0/14                     disabled     1            auto   auto 10/100/1000BaseTX
+Gi1/0/15                     disabled     1            auto   auto 10/100/1000BaseTX
+Gi1/0/16                     disabled     1            auto   auto 10/100/1000BaseTX
+Gi1/0/17                     disabled     1            auto   auto 10/100/1000BaseTX
+Gi1/0/18                     disabled     1            auto   auto 10/100/1000BaseTX
+Gi1/0/19                     disabled     1            auto   auto 10/100/1000BaseTX
+Gi1/0/20                     disabled     1            auto   auto 10/100/1000BaseTX
+Gi1/0/21                     disabled     1            auto   auto 10/100/1000BaseTX
+Gi1/0/22  Uplink SW-Colo-A-0 connected    trunk      a-full a-1000 10/100/1000BaseTX
+Gi1/0/23                     connected    trunk      a-full a-1000 10/100/1000BaseTX
+Gi1/0/24                     connected    trunk      a-full a-1000 10/100/1000BaseTX
+Gi1/0/25                     notconnect   1            auto   auto Not Present
+Gi1/0/26                     notconnect   1            auto   auto Not Present
+Gi1/0/27                     notconnect   1            auto   auto Not Present
+Gi1/0/28                     notconnect   1            auto   auto Not Present
+Po1       To SW-DC1-MDV-NMAA connected    trunk      a-full a-1000 
+Fa0                          connected    routed     a-full  a-100 10/100BaseTX
+SW-DC1-MDV-NMAA11-SET-01#show vlan
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi1/0/11, Gi1/0/12, Gi1/0/13, Gi1/0/14, Gi1/0/15, Gi1/0/16, Gi1/0/17, Gi1/0/18, Gi1/0/19
+                                                Gi1/0/20, Gi1/0/21, Gi1/0/25, Gi1/0/26, Gi1/0/27, Gi1/0/28
+1002 fddi-default                     act/unsup 
+1003 token-ring-default               act/unsup 
+1004 fddinet-default                  act/unsup 
+1005 trnet-default                    act/unsup 
+2101 TNS-A                            active    Gi1/0/3, Gi1/0/4
+2102 IPC-A                            active    Gi1/0/1, Gi1/0/2
+2103 Reuters-A                        active    Gi1/0/5, Gi1/0/6
+2104 BBG-A                            active    Gi1/0/7, Gi1/0/8
+2105 InterActData-A                   active    
+2106 ICE-A                            active    Gi1/0/9, Gi1/0/10
+
+VLAN Type  SAID       MTU   Parent RingNo BridgeNo Stp  BrdgMode Trans1 Trans2
+---- ----- ---------- ----- ------ ------ -------- ---- -------- ------ ------
+1    enet  100001     1500  -      -      -        -    -        0      0   
+1002 fddi  101002     1500  -      -      -        -    -        0      0   
+1003 tr    101003     1500  -      -      -        -    -        0      0   
+1004 fdnet 101004     1500  -      -      -        ieee -        0      0   
+1005 trnet 101005     1500  -      -      -        ibm  -        0      0   
+2101 enet  102101     1500  -      -      -        -    -        0      0   
+2102 enet  102102     1500  -      -      -        -    -        0      0   
+2103 enet  102103     1500  -      -      -        -    -        0      0   
+2104 enet  102104     1500  -      -      -        -    -        0      0   
+2105 enet  102105     1500  -      -      -        -    -        0      0   
+2106 enet  102106     1500  -      -      -        -    -        0      0   
+
+Remote SPAN VLANs
+------------------------------------------------------------------------------
+
+
+Primary Secondary Type              Ports
+------- --------- ----------------- ------------------------------------------
+
+SW-DC1-MDV-NMAA11-SET-01#show version
+Cisco IOS Software, C2960X Software (C2960X-UNIVERSALK9-M), Version 15.2(2)E6, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2016 by Cisco Systems, Inc.
+Compiled Fri 16-Dec-16 21:27 by prod_rel_team
+
+ROM: Bootstrap program is C2960X boot loader
+BOOTLDR: C2960X Boot Loader (C2960X-HBOOT-M) Version 15.2(3r)E1, RELEASE SOFTWARE (fc1)
+
+SW-DC1-MDV-NMAA11-SET-01 uptime is 6 years, 24 weeks, 20 hours, 31 minutes
+System returned to ROM by power-on
+System restarted at 10:45:37 GMT+7 Sat Jul 21 2018
+System image file is "flash:/c2960x-universalk9-mz.152-2.E6/c2960x-universalk9-mz.152-2.E6.bin"
+Last reload reason: power-on
+
+
+
+This product contains cryptographic features and is subject to United
+States and local country laws governing import, export, transfer and
+use. Delivery of Cisco cryptographic products does not imply
+third-party authority to import, export, distribute or use encryption.
+Importers, exporters, distributors and users are responsible for
+compliance with U.S. and local country laws. By using this product you
+agree to comply with applicable laws and regulations. If you are unable
+to comply with U.S. and local laws, return this product immediately.
+
+A summary of U.S. laws governing Cisco cryptographic products may be found at:
+http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+
+If you require further assistance please contact us by sending email to
+export@cisco.com.
+
+cisco WS-C2960X-24TS-L (APM86XXX) processor (revision M0) with 524288K bytes of memory.
+Processor board ID FCW2117B4L4
+Last reset from power-on
+6 Virtual Ethernet interfaces
+1 FastEthernet interface
+28 Gigabit Ethernet interfaces
+The password-recovery mechanism is enabled.
+
+512K bytes of flash-simulated non-volatile configuration memory.
+Base ethernet MAC Address       : 70:6E:6D:7F:30:00
+Motherboard assembly number     : 73-16695-05
+Power supply part number        : 341-0529-02
+Motherboard serial number       : FOC21156MPC
+Power supply serial number      : LIT21133VRT
+Model revision number           : M0
+Motherboard revision number     : A0
+Model number                    : WS-C2960X-24TS-L
+Daughterboard assembly number   : 73-14200-03
+Daughterboard serial number     : FOC211603UB
+System serial number            : FCW2117B4L4
+Top Assembly Part Number        : 68-100473-02
+Top Assembly Revision Number    : A0
+Version ID                      : V05
+CLEI Code Number                : CMMMU00ARD
+Daughterboard revision number   : A0
+Hardware Board Revision Number  : 0x19
+
+
+Switch Ports Model                     SW Version            SW Image                 
+------ ----- -----                     ----------            ----------               
+*    1 28    WS-C2960X-24TS-L          15.2(2)E6             C2960X-UNIVERSALK9-M     
+
+
+Configuration register is 0xF
+
+SW-DC1-MDV-NMAA11-SET-01#show cdp nei
+% CDP is not enabled
+SW-DC1-MDV-NMAA11-SET-01#show lldp nei
+% LLDP is not enabled
+SW-DC1-MDV-NMAA11-SET-01#show ip arp
+Protocol  Address          Age (min)  Hardware Addr   Type   Interface
+Internet  10.35.1.1              88   0000.0c9f.fbb7  ARPA   FastEthernet0
+Internet  10.35.1.211             -   706e.6d7f.3039  ARPA   FastEthernet0
+Internet  10.69.251.1           182   0000.0c9f.f835  ARPA   Vlan2101
+Internet  10.69.251.2            13   e8d3.222f.9b27  ARPA   Vlan2101
+Internet  10.69.251.29            -   706e.6d7f.3041  ARPA   Vlan2101
+Internet  10.69.251.33            9   0000.0c9f.f836  ARPA   Vlan2102
+Internet  10.69.251.34           10   e8d3.222f.9b27  ARPA   Vlan2102
+Internet  10.69.251.38          219   00fc.ba54.0ef1  ARPA   Vlan2102
+Internet  10.69.251.41          102   00fc.ba54.0ef3  ARPA   Vlan2102
+Internet  10.69.251.61            -   706e.6d7f.3042  ARPA   Vlan2102
+Internet  10.69.251.65           96   0000.0c9f.f837  ARPA   Vlan2103
+Internet  10.69.251.66            2   e8d3.222f.9b27  ARPA   Vlan2103
+Internet  10.69.251.68          228   0026.cb36.49f8  ARPA   Vlan2103
+Internet  10.69.251.93            -   706e.6d7f.3043  ARPA   Vlan2103
+Internet  10.69.251.97          121   0000.0c9f.f838  ARPA   Vlan2104
+Internet  10.69.251.98            9   e8d3.222f.9b27  ARPA   Vlan2104
+Internet  10.69.251.125           -   706e.6d7f.3044  ARPA   Vlan2104
+Internet  10.69.251.129          62   0000.0c9f.f839  ARPA   Vlan2105
+Internet  10.69.251.130           6   e8d3.222f.9b27  ARPA   Vlan2105
+Internet  10.69.251.157           -   706e.6d7f.3045  ARPA   Vlan2105
+SW-DC1-MDV-NMAA11-SET-01#show mac address
+          Mac Address Table
+-------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       --------    -----
+ All    0100.0ccc.cccc    STATIC      CPU
+ All    0100.0ccc.cccd    STATIC      CPU
+ All    0180.c200.0000    STATIC      CPU
+ All    0180.c200.0001    STATIC      CPU
+ All    0180.c200.0002    STATIC      CPU
+ All    0180.c200.0003    STATIC      CPU
+ All    0180.c200.0004    STATIC      CPU
+ All    0180.c200.0005    STATIC      CPU
+ All    0180.c200.0006    STATIC      CPU
+ All    0180.c200.0007    STATIC      CPU
+ All    0180.c200.0008    STATIC      CPU
+ All    0180.c200.0009    STATIC      CPU
+ All    0180.c200.000a    STATIC      CPU
+ All    0180.c200.000b    STATIC      CPU
+ All    0180.c200.000c    STATIC      CPU
+ All    0180.c200.000d    STATIC      CPU
+ All    0180.c200.000e    STATIC      CPU
+ All    0180.c200.000f    STATIC      CPU
+ All    0180.c200.0010    STATIC      CPU
+ All    ffff.ffff.ffff    STATIC      CPU
+2102    0000.0c9f.f064    DYNAMIC     Gi1/0/1
+2102    0000.0c9f.f836    DYNAMIC     Gi1/0/22
+2102    00fc.ba54.0ef1    DYNAMIC     Gi1/0/1
+2102    00fc.ba54.0ef3    DYNAMIC     Gi1/0/2
+2102    00fc.baad.18a1    DYNAMIC     Po1
+2102    00fc.baad.18a3    DYNAMIC     Po1
+2102    6026.aa8d.4c47    DYNAMIC     Gi1/0/22
+2102    e8d3.222f.9b27    DYNAMIC     Gi1/0/22
+2102    e8d3.222f.9b52    DYNAMIC     Gi1/0/22
+2103    0000.0c9f.f837    DYNAMIC     Gi1/0/22
+2103    0026.cb36.49f8    DYNAMIC     Po1
+2103    6026.aa8d.4c47    DYNAMIC     Gi1/0/22
+2103    e8d3.222f.9b27    DYNAMIC     Gi1/0/22
+2103    e8d3.222f.9b52    DYNAMIC     Gi1/0/22
+2104    0000.0c9f.f838    DYNAMIC     Gi1/0/22
+2104    6026.aa8d.4c47    DYNAMIC     Gi1/0/22
+2104    e8d3.222f.9b52    DYNAMIC     Gi1/0/22
+2105    0000.0c9f.f839    DYNAMIC     Gi1/0/22
+2105    6026.aa8d.4c47    DYNAMIC     Gi1/0/22
+2105    706e.6d68.6445    DYNAMIC     Po1
+2105    e8d3.222f.9b27    DYNAMIC     Gi1/0/22
+2105    e8d3.222f.9b52    DYNAMIC     Gi1/0/22
+   1    706e.6d68.6417    DYNAMIC     Po1
+   1    706e.6d68.6418    DYNAMIC     Po1
+2101    0000.0c9f.f835    DYNAMIC     Gi1/0/22
+2101    6026.aa8d.4c47    DYNAMIC     Gi1/0/22
+2101    e8d3.222f.9b52    DYNAMIC     Gi1/0/22
+2106    0000.0c9f.f83a    DYNAMIC     Gi1/0/22
+2106    444c.a892.420f    DYNAMIC     Gi1/0/9
+2106    6026.aa8d.4c47    DYNAMIC     Gi1/0/22
+2106    e8d3.222f.9b27    DYNAMIC     Gi1/0/22
+2106    e8d3.222f.9b52    DYNAMIC     Gi1/0/22
+Total Mac Addresses for this criterion: 52
+SW-DC1-MDV-NMAA11-SET-01#show spanning-tree root
+
+                                        Root    Hello Max Fwd
+Vlan                   Root ID          Cost    Time  Age Dly  Root Port
+---------------- -------------------- --------- ----- --- ---  ------------
+VLAN0001         32769 706e.6d68.6400         3    2   20  15  Po1             
+VLAN2101          2101 e8d3.222f.9b27         4    2   20  15  Gi1/0/22        
+VLAN2102          2102 e8d3.222f.9b27         4    2   20  15  Gi1/0/22        
+VLAN2103          2103 e8d3.222f.9b27         4    2   20  15  Gi1/0/22        
+VLAN2104          2104 e8d3.222f.9b27         4    2   20  15  Gi1/0/22        
+VLAN2105          2105 e8d3.222f.9b27         4    2   20  15  Gi1/0/22        
+VLAN2106         34874 6026.aa8d.4c47         5    2   20  15  Gi1/0/22        
+SW-DC1-MDV-NMAA11-SET-01#show spanning-tree
+
+VLAN0001
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    32769
+             Address     706e.6d68.6400
+             Cost        3
+             Port        456 (Port-channel1)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     706e.6d7f.3000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Po1                 Root FWD 3         128.456  P2p 
+
+
+
+VLAN2101
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    2101
+             Address     e8d3.222f.9b27
+             Cost        4
+             Port        22 (GigabitEthernet1/0/22)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    34869  (priority 32768 sys-id-ext 2101)
+             Address     706e.6d7f.3000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi1/0/22            Root FWD 4         128.22   P2p 
+Po1                 Desg FWD 3         128.456  P2p 
+
+
+
+VLAN2102
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    2102
+             Address     e8d3.222f.9b27
+             Cost        4
+             Port        22 (GigabitEthernet1/0/22)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    34870  (priority 32768 sys-id-ext 2102)
+             Address     706e.6d7f.3000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi1/0/1             Desg FWD 4         128.1    P2p 
+Gi1/0/2             Desg FWD 4         128.2    P2p 
+Gi1/0/22            Root FWD 4         128.22   P2p 
+Po1                 Desg FWD 3         128.456  P2p 
+
+
+
+VLAN2103
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    2103
+             Address     e8d3.222f.9b27
+             Cost        4
+             Port        22 (GigabitEthernet1/0/22)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    34871  (priority 32768 sys-id-ext 2103)
+             Address     706e.6d7f.3000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi1/0/22            Root FWD 4         128.22   P2p 
+Po1                 Desg FWD 3         128.456  P2p 
+
+
+
+VLAN2104
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    2104
+             Address     e8d3.222f.9b27
+             Cost        4
+             Port        22 (GigabitEthernet1/0/22)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    34872  (priority 32768 sys-id-ext 2104)
+             Address     706e.6d7f.3000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi1/0/7             Desg FWD 4         128.7    P2p 
+Gi1/0/22            Root FWD 4         128.22   P2p 
+Po1                 Desg FWD 3         128.456  P2p 
+
+
+
+VLAN2105
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    2105
+             Address     e8d3.222f.9b27
+             Cost        4
+             Port        22 (GigabitEthernet1/0/22)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    34873  (priority 32768 sys-id-ext 2105)
+             Address     706e.6d7f.3000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi1/0/22            Root FWD 4         128.22   P2p 
+Po1                 Desg FWD 3         128.456  P2p 
+
+
+
+VLAN2106
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    34874
+             Address     6026.aa8d.4c47
+             Cost        5
+             Port        22 (GigabitEthernet1/0/22)
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    34874  (priority 32768 sys-id-ext 2106)
+             Address     706e.6d7f.3000
+             Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  300 sec
+
+Interface           Role Sts Cost      Prio.Nbr Type
+------------------- ---- --- --------- -------- --------------------------------
+Gi1/0/9             Desg FWD 4         128.9    P2p 
+Gi1/0/22            Root FWD 4         128.22   P2p 
+Po1                 Desg FWD 3         128.456  P2p 
+
+
+SW-DC1-MDV-NMAA11-SET-01#show inventory
+NAME: "1", DESCR: "WS-C2960X-24TS-L"
+PID: WS-C2960X-24TS-L  , VID: V05  , SN: FCW2117B4L4
+
+
+SW-DC1-MDV-NMAA11-SET-01#show etherchannel summary
+Flags:  D - down        P - bundled in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      f - failed to allocate aggregator
+
+        M - not in use, minimum links not met
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+
+
+Number of channel-groups in use: 1
+Number of aggregators:           1
+
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+-----------------------------------------------
+1      Po1(SU)         LACP      Gi1/0/23(P) Gi1/0/24(P) 
+
+SW-DC1-MDV-NMAA11-SET-01#show vtp status
+VTP Version capable             : 1 to 3
+VTP version running             : 1
+VTP Domain Name                 : 
+VTP Pruning Mode                : Disabled
+VTP Traps Generation            : Enabled
+Device ID                       : 706e.6d7f.3000
+Configuration last modified by 10.35.1.211 at 0-0-00 00:00:00
+
+Feature VLAN:
+--------------
+VTP Operating Mode                : Transparent
+Maximum VLANs supported locally   : 1005
+Number of existing VLANs          : 5
+Configuration Revision            : 0
+MD5 digest                        : 0xEA 0x03 0xEC 0xA8 0x63 0x14 0xBE 0xB9 
+                                    0x02 0x3D 0x8D 0xF6 0x99 0x7F 0x9B 0x42 
+Disconnect Time : 04/01/2025 08:32:22:625
